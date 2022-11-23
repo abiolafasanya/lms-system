@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .card {
+    @apply py-2 px-5 m-2 bg-white shadow-sm md:w-1/2 w-3/4;
+  }
+  .btn {
+    @apply inline-block px-4 py-2 leading-none text-white bg-blue-500 hover:bg-blue-600 rounded-lg;
+  }
+  .mycontainer {
+    @apply max-w-6xl mx-auto my-3;
+  }
+  .alert-success {
+    @apply alert border-green-400 bg-green-300 text-green-900;
+  }
+  .alert-error {
+    @apply alert border-red-400 bg-red-300 text-red-900;
+  }
+  .alert-info {
+    @apply alert border-blue-400 bg-blue-300 text-blue-900;
+  }
+  .modal {
+    @apply absolute inset-x-0 inset-y-1/4 w-2/5 h-2/5 mx-auto p-5 bg-white rounded border;
+  }
+  .form-group {
+    @apply my-2 block;
+  }
+  .form-label {
+    @apply mb-2 block font-semibold capitalize;
+  }
+  .form-control {
+    @apply rounded py-2 px-5  block w-full outline-none mt-2 focus:border-blue-500 border bg-blue-50;
+  }
+  .form-group {
+    @apply block my-4;
+  }
+  .alert {
+    @apply rounded py-2 px-5 border;
+  }
+}

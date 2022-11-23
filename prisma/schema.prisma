@@ -1,0 +1,149 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Course {
+  id           String    @id @default(cuid())
+  name         String
+  description  String
+  material     String[]
+  videos       String[]
+  requirements String[]
+  category     String?
+  price        Decimal?  @default(0.0)
+  discount     Decimal?
+  stars        Int?      @default(0)
+  purchase     Int?      @default(0)
+  image        String?
+  tutorId      String?
+  userId       String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  Tutor        Tutor?    @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  User         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  student      Student[]
+}
+
+model Tutor {
+  id      String   @id @default(cuid())
+  about   String
+  rating  Decimal? @default(0.0)
+  active  Boolean? @default(false)
+  userId  String
+  date    DateTime @default(now())
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courses Course[]
+  socials Social[]
+}
+
+model Student {
+  id          String   @id @default(cuid())
+  courses     String[]
+  about       String
+  certificate String[]
+  active      Boolean? @default(false)
+  courseId    String?
+  userId      String
+  date        DateTime @default(now())
+  Course      Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  socials     Social[]
+}
+
+model Social {
+  id        String   @id @default(cuid())
+  username  String?
+  link      String?
+  tutorId   String?
+  studentId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Student   Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  Tutor     Tutor?   @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+}
+
+model Post {
+  id        String    @id @default(cuid())
+  userId    String
+  title     String    @unique
+  content   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  headlines String?
+  category  String[]
+  tags      String[]
+  image     String?
+  published Boolean   @default(false)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Comment   Comment[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  username      String?   @unique
+  avatar        String?
+  name          String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  Comment       Comment[]
+  Course        Course[]
+  Post          Post[]
+  sessions      Session[]
+  Student       Student[]
+  Tutor         Tutor[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
