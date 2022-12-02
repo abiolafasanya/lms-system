@@ -4,7 +4,7 @@
 
 @layer components {
   .card {
-    @apply py-2 px-5 m-2 bg-white shadow-sm md:w-1/2 w-3/4;
+    @apply py-2 px-5 m-2 bg-white shadow-sm;
   }
   .btn {
     @apply inline-block px-4 py-2 leading-none text-white bg-blue-500 hover:bg-blue-600 rounded-lg;
@@ -13,13 +13,16 @@
     @apply max-w-6xl mx-auto my-3;
   }
   .alert-success {
-    @apply alert border-green-400 bg-green-300 text-green-900;
+    @apply bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700;
   }
   .alert-error {
-    @apply alert border-red-400 bg-red-300 text-red-900;
+    @apply bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-red-700;
   }
   .alert-info {
-    @apply alert border-blue-400 bg-blue-300 text-blue-900;
+    @apply bg-blue-100 rounded-lg py-5 px-6 mb-4 text-base text-blue-700;
+  }
+  .alert-warning {
+    @apply bg-yellow-100 rounded-lg py-5 px-6 mb-4 text-base text-yellow-700;
   }
   .modal {
     @apply absolute inset-x-0 inset-y-1/4 w-2/5 h-2/5 mx-auto p-5 bg-white rounded border;
@@ -36,7 +39,66 @@
   .form-group {
     @apply block my-4;
   }
+  .text-area {
+    @apply form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+  }
+  .file-input {
+    @apply block form-control
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+  }
   .alert {
     @apply rounded py-2 px-5 border;
   }
+}
+
+input[type='radio']:after {
+  width: 24px;
+  height: 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  position: relative;
+  background-color: #fff;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid rgb(134, 130, 130);
+}
+
+input[type='radio']:checked:after {
+  width: 24px;
+  height: 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  position: relative;
+  background-color: rgb(37 99 235);
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
 }

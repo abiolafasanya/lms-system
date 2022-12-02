@@ -5,15 +5,24 @@ import {
   GoFileDirectory,
   GoSettings,
   GoSignOut,
+  GoQuestion,
 } from 'react-icons/go';
-import { MdPostAdd, MdEvent, MdArticle } from 'react-icons/md';
+import {
+  MdPostAdd,
+  MdEvent,
+  MdArticle,
+  MdOutlineAssignment,
+  MdAssessment,
+  MdTaskAlt,
+} from 'react-icons/md';
 import { FaSignOutAlt } from 'react-icons/fa';
 
 export const sideBarMenu = [
   { name: 'Dashboard', icon: GoDashboard, link: '/dashboard' },
   { name: 'Courses', icon: GoFileDirectory, link: '/course' },
   { name: 'My Learning', icon: GoMilestone, link: '/my-learning' },
-  { name: 'Tasks', icon: GoProject, link: '/task' },
+  { name: 'Assessment', icon: MdAssessment, link: '/assessment' },
+  { name: 'Tasks', icon: MdTaskAlt, link: '/task' },
   { name: 'Posts', icon: MdArticle, link: '/post' },
   { name: 'Events', icon: MdEvent, link: '/event' },
 ];

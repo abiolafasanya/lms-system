@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import {
+  GetServerSideProps,
+  GetStaticPaths,
+  GetStaticProps,
+  NextPage,
+} from 'next';
 import { getSession, useSession } from 'next-auth/react';
 import { PrismaClient } from '@prisma/client';
 import Link from 'next/link';
@@ -26,15 +31,15 @@ const post: NextPage = ({ post }: any) => {
     'Are you about to delete a post select confirm to proceed an cancel to return';
 
   useEffect(() => {
-    let isMounted = true
-    const controller = new AbortController()
+    let isMounted = true;
+    const controller = new AbortController();
 
-    console.log ('Mounted')
+    console.log('Mounted');
     return () => {
       isMounted = false;
       controller.abort();
     };
-  } , [post])
+  }, [post]);
 
   function closeModal() {
     setOpenModal(false);
@@ -88,7 +93,12 @@ const post: NextPage = ({ post }: any) => {
               <div className="card-footer mt-2 border-t py-3">
                 <div className="flex justify-between">
                   <div className="block italic text-sm">
-                    <Avatar name={post.user.username || post.user.name}  size='25' round className="mr-2" />
+                    <Avatar
+                      name={post.user.username || post.user.name}
+                      size="25"
+                      round
+                      className="mr-2"
+                    />
                     <b className="text-gray-700">{post.user.username}</b> on{' '}
                     {`${new Date(post.createdAt).toLocaleString()}`}
                   </div>
@@ -127,20 +137,20 @@ const post: NextPage = ({ post }: any) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async (context) => {
-  const posts = await prisma.post.findMany();
-  const paths = posts.map((post) => {
-    return {
-      params: { id: post.id.toString() },
-    };
-  });
-  return {
-    paths: paths,
-    fallback: false,
-  };
-};
+// export const getStaticPaths: GetStaticPaths = async (context) => {
+//   const posts = await prisma.post.findMany();
+//   const paths = posts.map((post) => {
+//     return {
+//       params: { id: post.id.toString() },
+//     };
+//   });
+//   return {
+//     paths: paths,
+//     fallback: false,
+//   };
+// };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession();
   const id = context.params?.id as string;
   const post = await prisma.post.findFirst({
@@ -152,7 +162,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
           id: true,
           username: true,
           name: true,
-          image: true
+          image: true,
         },
       },
     },

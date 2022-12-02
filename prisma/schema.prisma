@@ -56,29 +56,31 @@ model Course {
 }
 
 model Tutor {
-  id      String   @id @default(cuid())
-  about   String
-  rating  Decimal? @default(0.0)
-  active  Boolean? @default(false)
-  userId  String
-  date    DateTime @default(now())
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  courses Course[]
-  socials Social[]
+  id       String     @id @default(cuid())
+  about    String
+  rating   Decimal?   @default(0.0)
+  active   Boolean?   @default(false)
+  userId   String
+  date     DateTime   @default(now())
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courses  Course[]
+  socials  Social[]
+  Question Question[]
 }
 
 model Student {
-  id          String   @id @default(cuid())
+  id          String       @id @default(cuid())
   courses     String[]
   about       String
   certificate String[]
-  active      Boolean? @default(false)
+  active      Boolean?     @default(false)
   courseId    String?
   userId      String
-  date        DateTime @default(now())
-  Course      Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date        DateTime     @default(now())
+  Course      Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   socials     Social[]
+  Assessment  Assessment[]
 }
 
 model Social {
@@ -120,6 +122,45 @@ model Comment {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Question {
+  id           String      @id @default(cuid())
+  question     String
+  options      Json[]
+  answer       String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  // addedBy      Tutor?      @relation(fields: [tutorId], references: [id])
+  // tutorId      String?
+  // Assessment   Assessment? @relation(fields: [assessmentId], references: [id])
+  // assessmentId String?
+  Tutor        Tutor?      @relation(fields: [tutorId], references: [id])
+  tutorId      String?
+  Assessment   Assessment? @relation(fields: [assessmentId], references: [id])
+  assessmentId String?
+}
+
+model Assessment {
+  id          String     @id @default(cuid())
+  title       String
+  // score      Decimal?   @default(0.0)
+  description String?
+  date        DateTime   @default(now())
+  questionId  String?
+  Question    Question[]
+  Student     Student?   @relation(fields: [studentId], references: [id])
+  studentId   String?
+  Grade       Grade[]
+}
+
+model Grade {
+  id           String      @id @default(cuid())
+  score        Int?
+  assessment   Assessment? @relation(fields: [assessmentId], references: [id])
+  assessmentId String?
+  user         User?       @relation(fields: [userId], references: [id])
+  userId       String?
+}
+
 model User {
   id            String    @id @default(cuid())
   email         String?   @unique
@@ -138,6 +179,7 @@ model User {
   sessions      Session[]
   Student       Student[]
   Tutor         Tutor[]
+  Grade         Grade[]
 }
 
 model VerificationToken {

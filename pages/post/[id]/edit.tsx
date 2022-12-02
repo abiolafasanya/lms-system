@@ -14,9 +14,14 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Alert from '../../../components/utility/Alert';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import {
+  GetServerSideProps,
+  GetStaticPaths,
+  GetStaticProps,
+  NextPage,
+} from 'next';
 import { PrismaClient } from '@prisma/client';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 // import htmlToDraft from 'html-to-draftjs';
 
 const prisma = new PrismaClient();
@@ -107,7 +112,7 @@ const edit: NextPage = ({ post }: any) => {
         setMessage(data.message);
         setTimeout(() => {
           setSuccess(false);
-          router.push('/post')
+          router.push('/post');
         }, 5000);
       }
     } catch (error) {
@@ -233,20 +238,20 @@ const edit: NextPage = ({ post }: any) => {
 
 export default edit;
 
-export const getStaticPaths: GetStaticPaths = async (context) => {
-  const posts = await prisma.post.findMany();
-  const paths = posts.map((post) => {
-    return {
-      params: { id: post.id.toString() },
-    };
-  });
-  return {
-    paths: paths,
-    fallback: false,
-  };
-};
+// export const getStaticPaths: GetStaticPaths = async (context) => {
+//   const posts = await prisma.post.findMany();
+//   const paths = posts.map((post) => {
+//     return {
+//       params: { id: post.id.toString() },
+//     };
+//   });
+//   return {
+//     paths: paths,
+//     fallback: false,
+//   };
+// };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id as string;
   const post = await prisma.post.findFirst({
     where: { id: id },

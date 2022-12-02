@@ -74,7 +74,7 @@ const Register = () => {
       setLoading(false);
       setSuccess(false);
       setType('error');
-      setMessage(error.message);
+      setMessage(error as string);
       setPassword('');
       setPassword2('');
       return;

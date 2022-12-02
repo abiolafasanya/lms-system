@@ -99,4 +99,5 @@ export default class PostController extends Controller {
       res.status(500).json({ message: error });
     }
   };
+
 }

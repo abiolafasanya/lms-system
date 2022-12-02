@@ -154,7 +154,7 @@ const Posts: NextPage = ({ datas }: any) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const datas = await prisma.post.findMany({
     include: { user: true },
     orderBy: {

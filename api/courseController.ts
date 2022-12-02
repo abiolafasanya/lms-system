@@ -7,7 +7,7 @@ export default class courseController extends Controller {
     try {
       const Course = this.prisma.course;
       const course = await Course.findMany({
-        include: { user: true },
+        include: { User: true },
       });
       return res
         .status(200)
@@ -49,12 +49,15 @@ export default class courseController extends Controller {
 
       const course = await Course.create({
         data: {
-          title: body.title as string,
-          content: body.content as string,
-          category: body.category as string[],
-          tags: body.tags as string[],
-          userId: user.id as string,
-          published: false as boolean,
+          name: body.name,
+          description: body.description,
+          category: body.category,
+          price: body.price,
+          discount: body.discount,
+          image: body.image,
+          requirements: body.requirements,
+          material: body.material,
+          videos: body.videos,
         },
       });
       if (!course) throw new Error('Bad request check your inputs');
@@ -64,7 +67,7 @@ export default class courseController extends Controller {
     } catch (error) {
       res.status(500).json({ message: error });
     } finally {
-      await this.prisma.disconnect();
+      await this.prisma.$disconnect();
     }
   };
 
