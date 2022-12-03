@@ -53,6 +53,7 @@ model Course {
   Tutor        Tutor?    @relation(fields: [tutorId], references: [id], onDelete: Cascade)
   User         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   student      Student[]
+  Task         Task[]
 }
 
 model Tutor {
@@ -62,10 +63,10 @@ model Tutor {
   active   Boolean?   @default(false)
   userId   String
   date     DateTime   @default(now())
-  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   courses  Course[]
-  socials  Social[]
   Question Question[]
+  socials  Social[]
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Student {
@@ -77,10 +78,10 @@ model Student {
   courseId    String?
   userId      String
   date        DateTime     @default(now())
+  Assessment  Assessment[]
+  socials     Social[]
   Course      Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
   user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  socials     Social[]
-  Assessment  Assessment[]
 }
 
 model Social {
@@ -107,8 +108,8 @@ model Post {
   tags      String[]
   image     String?
   published Boolean   @default(false)
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   Comment   Comment[]
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
@@ -124,41 +125,39 @@ model Comment {
 
 model Question {
   id           String      @id @default(cuid())
-  question     String
-  options      Json[]
   answer       String
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  // addedBy      Tutor?      @relation(fields: [tutorId], references: [id])
-  // tutorId      String?
-  // Assessment   Assessment? @relation(fields: [assessmentId], references: [id])
-  // assessmentId String?
-  Tutor        Tutor?      @relation(fields: [tutorId], references: [id])
   tutorId      String?
-  Assessment   Assessment? @relation(fields: [assessmentId], references: [id])
   assessmentId String?
+  question     String
+  options      Json[]
+  Assessment   Assessment? @relation(fields: [assessmentId], references: [id])
+  Tutor        Tutor?      @relation(fields: [tutorId], references: [id])
 }
 
 model Assessment {
   id          String     @id @default(cuid())
-  title       String
-  // score      Decimal?   @default(0.0)
-  description String?
+  studentId   String?
   date        DateTime   @default(now())
   questionId  String?
-  Question    Question[]
+  title       String
+  description String?
   Student     Student?   @relation(fields: [studentId], references: [id])
-  studentId   String?
   Grade       Grade[]
+  Question    Question[]
 }
 
 model Grade {
-  id           String      @id @default(cuid())
-  score        Int?
-  assessment   Assessment? @relation(fields: [assessmentId], references: [id])
-  assessmentId String?
-  user         User?       @relation(fields: [userId], references: [id])
-  userId       String?
+  id              String      @id @default(cuid())
+  taskScore       Int?
+  assessmentScore Int?
+  assessmentId    String?
+  userId          String?
+  taskId          String?
+  assessment      Assessment? @relation(fields: [assessmentId], references: [id])
+  tasks           Task?       @relation(fields: [taskId], references: [id])
+  user            User?       @relation(fields: [userId], references: [id])
 }
 
 model User {
@@ -175,11 +174,26 @@ model User {
   accounts      Account[]
   Comment       Comment[]
   Course        Course[]
+  Grade         Grade[]
   Post          Post[]
   sessions      Session[]
   Student       Student[]
   Tutor         Tutor[]
-  Grade         Grade[]
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  point       Int
+  deadline    DateTime
+  assignedTo  String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  courseId    String?
+  attachment  Json?
+  Grade       Grade[]
+  course      Course?  @relation(fields: [courseId], references: [id])
 }
 
 model VerificationToken {

@@ -43,7 +43,7 @@ const index = () => {
         <h2 className="text-2xl font-semibold py-4">Dashboard</h2>
         <section className="flex md:flex-row flex-col">
           <div className="card flex space-x-4 items-center p-5 rounded border">
-            <FaSchool className="text-[48px] text-gray-800" />
+            <FaSchool className="text-[48px] text-gray-800 dark:text-gray-300" />
             <div>
               <h5>Total courses</h5>
               <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto border-gray-800 border-2 w-[48px] border-dark">
@@ -52,7 +52,7 @@ const index = () => {
             </div>
           </div>
           <div className="card flex space-x-4 items-center p-5 rounded border">
-            <MdArticle className="text-[48px] text-gray-800" />
+            <MdArticle className="text-[48px] text-gray-800 dark:text-gray-300" />
             <div>
               <h5>Total courses</h5>
               <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto border-gray-800 border-2 w-[48px] border-dark">
@@ -61,7 +61,7 @@ const index = () => {
             </div>
           </div>
           <div className="card flex space-x-4 items-center p-5 rounded border">
-            <FaTasks className="text-[48px] text-gray-800" />
+            <FaTasks className="text-[48px] text-gray-800 dark:text-gray-300" />
             <div>
               <h5>Total Tasks</h5>
               <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto border-gray-800 border-2 w-[48px] border-dark">
@@ -70,7 +70,7 @@ const index = () => {
             </div>
           </div>
           <div className="card flex space-x-4 items-center p-5 rounded border">
-            <GoInfo className="text-[48px] text-gray-800" />
+            <GoInfo className="text-[48px] text-gray-800 dark:text-gray-300" />
             <div>
               <h5>Announcement</h5>
               <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto border-gray-800 border-2 w-[48px] border-dark">
@@ -81,7 +81,7 @@ const index = () => {
         </section>
       </Container>
       <Container className="grid grid-cols-1 md:grid-cols-4 gap-5 p-5">
-        <div className="shadow-md bg-white rounded p-5">
+        <div className="shadow-md dark:bg-inherit bg-white border rounded p-5">
           <h1 className="text-2xl">Title of info</h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo quas,
@@ -89,7 +89,7 @@ const index = () => {
             unde.
           </p>
         </div>
-        <div className="shadow-md bg-white rounded p-5">
+        <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
           <h1 className="text-2xl">Title of info</h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo quas,
@@ -97,7 +97,7 @@ const index = () => {
             unde.
           </p>
         </div>
-        <div className="shadow-md bg-white rounded p-5">
+        <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
           <h1 className="text-2xl">Title of info</h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo quas,
@@ -105,7 +105,7 @@ const index = () => {
             unde.
           </p>
         </div>
-        <div className="shadow-md bg-white rounded p-5">
+        <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
           <h1 className="text-2xl">Title of info</h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo quas,
@@ -113,7 +113,7 @@ const index = () => {
             unde.
           </p>
         </div>
-        <div className="shadow-md bg-white rounded p-5">
+        <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
           <h1 className="text-2xl">Title of info</h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo quas,
@@ -121,7 +121,7 @@ const index = () => {
             unde.
           </p>
         </div>
-        <div className="shadow-md bg-white rounded p-5">
+        <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
           <h1 className="text-2xl">Title of info</h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo quas,
@@ -129,7 +129,7 @@ const index = () => {
             unde.
           </p>
         </div>
-        <div className="shadow-md bg-white rounded p-5">
+        <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
           <h1 className="text-2xl">Title of info</h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo quas,

@@ -8,6 +8,7 @@ import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
+import Axios from 'api/axios';
 
 const animatedComponents = makeAnimated();
 
@@ -29,11 +30,12 @@ const create = () => {
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty()
   );
-  const [content, setContent] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [point, setPoint] = useState(0);
   const [deadline, setDeadline] = useState<any>();
   const [assignedTo, setAssignedTo] = useState<any>('');
+  const [attachment, setAttachment] = useState<any>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -45,6 +47,61 @@ const create = () => {
     };
   }, []);
 
+  async function create(event: React.SyntheticEvent | any) {
+    event.preventDefault();
+    const formData = new FormData();
+    // for (const file of attachment.files) {
+    // }      setCreateObjectURL(URL.createObjectURL(i));
+
+    formData.append('file', attachment);
+    formData.append('upload_preset', 'my-uploads');
+    let URLCloudinary =
+      'https://api.cloudinary.com/v1_1/fastbeetech/image/upload';
+
+    let upload;
+
+    if (attachment !== null || attachment !== undefined) {
+      upload = await fetch(URLCloudinary, {
+        method: 'POST',
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setAttachment(data);
+          const input = {
+            title,
+            description,
+            point,
+            attachment: data,
+            deadline,
+            assignedTo,
+          };
+          return input;
+        })
+        .catch((error) => error.message);
+    }
+    if (attachment === null) {
+      upload = {
+        title,
+        description,
+        point,
+        attachment: {},
+        deadline,
+        assignedTo,
+      };
+    }
+
+    console.log(upload);
+
+    const { data, status } = await Axios.post('/api/task/create', upload);
+    if (data.error) {
+      console.error(data.error);
+    }
+    if (status === 200 || status === 201) {
+      console.log(data);
+    }
+  }
+
   return (
     <Dashboard>
       <Container className={`min-h-screen`}>
@@ -52,87 +109,95 @@ const create = () => {
           <section>
             <h1 className="text-2xl">Create Task</h1>
             <div className="card">
-              <div className="form-group">
-                <label htmlFor="title" className="form-label">
-                  Task Title
-                </label>
-                <input type="text" id="title" className="form-control" />
-              </div>
-              <div className="form-group">
-                <label
-                  htmlFor="description"
-                  className="form-label"
-                  onChange={(e: any) => setTitle(e.target.value)}
-                >
-                  Description
-                </label>
-                <Editor
-                  editorState={editorState}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName border"
-                  editorClassName="editorClassName p-3"
-                  placeholder="Write something"
-                  onEditorStateChange={(newState) => {
-                    setEditorState(newState);
-                    setContent(
-                      draftToHtml(convertToRaw(newState.getCurrentContent()))
-                    );
-                  }}
-                />
-              </div>
-              <div className="flex md:justify-between md:space-x-8 items-center">
-                <div className="form-group w-full">
-                  <label htmlFor="point" className="form-label">
-                    Assign to
-                  </label>
-                  <CreatableSelect
-                    instanceId={useId()}
-                    components={animatedComponents}
-                    options={[{ value: 'everyone', label: 'EveryOne' }]}
-                    inputId="tags"
-                    isClearable
-                    isMulti
-                    onChange={(e) =>
-                      setAssignedTo(e.map((item: any) => item.value))
-                    }
-                  />
-                </div>
-                <div className="form-group w-full">
-                  <label htmlFor="attachment" className="form-label">
-                    Attachment
+              <form onSubmit={create}>
+                <div className="form-group">
+                  <label htmlFor="title" className="form-label">
+                    Task Title
                   </label>
                   <input
-                    type="file"
-                    id="attachement"
-                    className="file-input"
-                    onChange={(e: any) => setPoint(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="flex md:justify-between md:space-x-8 items-center">
-                <div className="form-group w-full">
-                  <label htmlFor="point" className="form-label">
-                    Point
-                  </label>
-                  <input
-                    type="number"
-                    id="point"
+                    type="text"
+                    id="title"
                     className="form-control"
-                    onChange={(e: any) => setPoint(e.target.value)}
+                    onChange={(e: any) => setTitle(e.target.value)}
                   />
                 </div>
-                <div className="form-group w-full">
-                  <label htmlFor="deadline" className="form-label">
-                    Deadline
+                <div className="form-group">
+                  <label htmlFor="description" className="form-label">
+                    Description
                   </label>
-                  <input
-                    type="datetime-local"
-                    id="deadline"
-                    className="form-control"
-                    onChange={(e: any) => setDeadline(e.target.value)}
+                  <Editor
+                    editorState={editorState}
+                    toolbarClassName="toolbarClassName"
+                    wrapperClassName="wrapperClassName border"
+                    editorClassName="editorClassName p-3"
+                    placeholder="Write something"
+                    onEditorStateChange={(newState) => {
+                      setEditorState(newState);
+                      setDescription(
+                        draftToHtml(convertToRaw(newState.getCurrentContent()))
+                      );
+                    }}
                   />
                 </div>
-              </div>
+                <div className="flex md:justify-between md:space-x-8 items-center">
+                  <div className="form-group w-full">
+                    <label htmlFor="point" className="form-label">
+                      Assign to
+                    </label>
+                    <CreatableSelect
+                      instanceId={useId()}
+                      components={animatedComponents}
+                      options={[{ value: 'everyone', label: 'EveryOne' }]}
+                      inputId="tags"
+                      isClearable
+                      isMulti
+                      onChange={(e) =>
+                        setAssignedTo(e.map((item: any) => item.value))
+                      }
+                    />
+                  </div>
+                  <div className="form-group w-full">
+                    <label htmlFor="attachment" className="form-label">
+                      Attachment
+                    </label>
+                    <input
+                      type="file"
+                      id="attachment"
+                      name="attachment"
+                      className="file-input"
+                      onChange={(e: any) => setAttachment(e.target.files[0])}
+                      multiple
+                    />
+                  </div>
+                </div>
+                <div className="flex md:justify-between md:space-x-8 items-center">
+                  <div className="form-group w-full">
+                    <label htmlFor="point" className="form-label">
+                      Point
+                    </label>
+                    <input
+                      type="number"
+                      id="point"
+                      className="form-control"
+                      onChange={(e: any) => setPoint(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group w-full">
+                    <label htmlFor="deadline" className="form-label">
+                      Deadline
+                    </label>
+                    <input
+                      type="datetime-local"
+                      id="deadline"
+                      className="form-control"
+                      onChange={(e: any) => setDeadline(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <button className="btn">Creat Task</button>
+                </div>
+              </form>
             </div>
           </section>
           <section></section>

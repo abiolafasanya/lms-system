@@ -4,7 +4,7 @@
 
 @layer components {
   .card {
-    @apply py-2 px-5 m-2 bg-white shadow-sm;
+    @apply py-2 px-5 m-2 bg-white shadow-sm dark:bg-gray-700 text-gray-200;
   }
   .btn {
     @apply inline-block px-4 py-2 leading-none text-white bg-blue-500 hover:bg-blue-600 rounded-lg;
@@ -34,43 +34,16 @@
     @apply mb-2 block font-semibold capitalize;
   }
   .form-control {
-    @apply rounded py-2 px-5  block w-full outline-none mt-2 focus:border-blue-500 border bg-blue-50;
+    @apply rounded py-2 px-5 block w-full outline-none mt-2 focus:border-blue-500 border;
   }
   .form-group {
     @apply block my-4;
   }
   .text-area {
-    @apply form-control
-    block
-    w-full
-    px-3
-    py-1.5
-    text-base
-    font-normal
-    text-gray-700
-    bg-white bg-clip-padding
-    border border-solid border-gray-300
-    rounded
-    transition
-    ease-in-out
-    m-0
-    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+    @apply block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
   }
   .file-input {
-    @apply block form-control
-    w-full
-    px-3
-    py-1.5
-    text-base
-    font-normal
-    text-gray-700
-    bg-white bg-clip-padding
-    border border-solid border-gray-300
-    rounded
-    transition
-    ease-in-out
-    m-0
-    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+    @apply block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
   }
   .alert {
     @apply rounded py-2 px-5 border;

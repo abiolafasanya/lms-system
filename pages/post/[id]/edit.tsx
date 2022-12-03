@@ -14,12 +14,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Alert from '../../../components/utility/Alert';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import {
-  GetServerSideProps,
-  GetStaticPaths,
-  GetStaticProps,
-  NextPage,
-} from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { PrismaClient } from '@prisma/client';
 import { useRouter } from 'next/router';
 // import htmlToDraft from 'html-to-draftjs';

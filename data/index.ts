@@ -27,6 +27,25 @@ export const sideBarMenu = [
   { name: 'Events', icon: MdEvent, link: '/event' },
 ];
 
+export const studentSideBar = [
+  { name: 'Dashboard', icon: GoDashboard, link: '/student' },
+  { name: 'Courses', icon: GoFileDirectory, link: '/course' },
+  { name: 'My Learning', icon: GoMilestone, link: '/my-learning' },
+  { name: 'Assessment', icon: MdAssessment, link: '/assessment' },
+  { name: 'Tasks', icon: MdTaskAlt, link: '/task' },
+  { name: 'Posts', icon: MdArticle, link: '/post' },
+  { name: 'Events', icon: MdEvent, link: '/event' },
+];
+
+export const tutorSidebar = [
+  { name: 'Dashboard', icon: GoDashboard, link: '/tutor' },
+  { name: 'Courses', icon: GoFileDirectory, link: '/tutor/course' },
+  { name: 'Assessment', icon: MdAssessment, link: '/tutor/assessment' },
+  { name: 'Tasks', icon: MdTaskAlt, link: '/tutor/task' },
+  { name: 'Posts', icon: MdArticle, link: '/post' },
+  { name: 'Events', icon: MdEvent, link: '/event' },
+];
+
 export const sideFooter = [
   { name: 'Account', icon: GoSettings, link: '/accounts' },
   { name: 'Logout', icon: FaSignOutAlt, link: '/api/auth/signout' },

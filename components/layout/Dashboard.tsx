@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../utility/Sidebar';
-import { FaBell, FaCaretDown } from 'react-icons/fa';
+import { FaBell, FaCaretDown, FaThemeco } from 'react-icons/fa';
 import { sideBarMenu, sideFooter } from '../../data/index';
-import { MdChat } from 'react-icons/md';
+import { MdChat, MdDarkMode, MdLightMode } from 'react-icons/md';
 import Avatar, { ConfigProvider } from 'react-avatar';
 import Link from 'next/link';
 import useAuth from 'hooks/useAuth';
@@ -10,7 +10,10 @@ import { useRouter } from 'next/router';
 import { PropTypes } from 'utility/types';
 import { useSession, getSession } from 'next-auth/react';
 import Head from 'next/head';
-// import propType from 'prop-types'
+import classNames from 'classnames';
+import dynamic from 'next/dynamic';
+import { useTheme } from 'next-themes';
+const Toggle = dynamic(() => import('@utility/Toggle'), { ssr: false });
 
 const Dashboard: React.FC<PropTypes> = (props) => {
   const [open, setOpen] = useState(false);
@@ -18,10 +21,34 @@ const Dashboard: React.FC<PropTypes> = (props) => {
   const router = useRouter();
   const { auth, setAuth } = useAuth();
   const { status, data: session } = useSession();
+  const { theme, setTheme } = useTheme();
+
+  const ToggleIconClass = classNames([
+    'rounded-full px-4 border-[3px] bg-white border-gray-500',
+    {
+      'border-orange-500': theme === 'dark' && true,
+      'border-black': theme === 'light' && true,
+    },
+  ]);
 
   function toggle() {
     setOpen(!open);
   }
+
+  function toggleHandler(e: React.SyntheticEvent) {
+    e.preventDefault();
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  }
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+    console.log(theme);
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [theme]);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -40,20 +67,24 @@ const Dashboard: React.FC<PropTypes> = (props) => {
         <meta name="description" content="Dashboard for TSCAPP" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex bg-[#eee]">
+      <div className="flex dark:bg-gray-800 dark:text-gray-100 bg-gray-300 text-black">
         <Sidebar
-          footer={sideFooter}
-          menu={sideBarMenu}
+          footer={props?.footer || sideFooter}
+          menu={props?.sidebar || sideBarMenu}
           className={`${
             open ? 'w-72' : 'w-20'
-          } duration-300 fixed bg-white  h-full min-h-screen`}
+          } duration-300 fixed bg-white h-full min-h-screen dark:bg-gray-900 dark:text-gray-50`}
           action={toggle}
         />
-        <main className={`${open ? 'ml-72' : 'ml-20'} duration-300 w-full`}>
+        <main
+          className={`${
+            open ? 'ml-72' : 'ml-20'
+          } duration-300 w-full dark:bg-gray-800 dark:text-gray-50`}
+        >
           <header className="flex w-full px-5">
-            <div className="w-50 ml-auto p-5 flex items-center space-x-5">
+            <div className="ml-auto p-5 flex items-center space-x-5">
               <MdChat />
-              <span className="relative rounded-full p-2 bg-white">
+              <span className="relative rounded-full p-2 bg-white dark:bg-gray-700">
                 {' '}
                 <FaBell />
                 <span className="absolute bg-red-500 text-red-50 text-[0.7rem] top-0 right-2 px-[0.05rem]">
@@ -67,22 +98,17 @@ const Dashboard: React.FC<PropTypes> = (props) => {
                 round
                 onClick={() => setCaret(!caret)}
                 className="cursor-pointer"
-                // textSizeRatio={2.0}
               />
               <h5 onClick={() => setCaret(!caret)}>
                 {session?.user?.name || 'Guest'}
               </h5>
-              {/* <span className="rounded-full px-3 py-2 border text-center bg-white">
-                AF
-              </span> */}
+
               <span className="mt-2 relative z-50">
                 <FaCaretDown
-                  // onMouseDown={() => setCaret(false)}
-                  // onMouseEnter={() => setCaret(true)}
                   onKeyDown={() => setCaret(false)}
-                  // onBlur={() => setCaret(false)}
                   onClick={() => setCaret(!caret)}
                 />
+
                 {caret && (
                   <div className="absolute border bg-white w-48 rounded shadow-sm sm:-right-4 sm:top-8 md:top-8 md:right-0">
                     <ul onMouseLeave={() => setCaret(false)}>
@@ -106,9 +132,12 @@ const Dashboard: React.FC<PropTypes> = (props) => {
                   </div>
                 )}
               </span>
+              <Toggle action={toggleHandler} className={ToggleIconClass} />
             </div>
           </header>
-          <section className="mx-auto">{props.children}</section>
+          <section className="mx-auto text-black dark:text-gray-100 ">
+            {props.children}
+          </section>
         </main>
       </div>
     </div>

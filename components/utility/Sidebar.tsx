@@ -40,7 +40,7 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
               <input
                 type="search"
                 placeholder="search course, category"
-                className="form-control"
+                className="form-control dark:bg-gray-800"
               />
               <MdSearch
                 className={`${
@@ -49,11 +49,11 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
               />
             </li>
           </ul>
-          <div className="border my-4"></div>
+          <div className="border dark:border-gray-300 my-4"></div>
           <ul className="p-5 flex flex-col space-y-2">
             {menu.map((menu, id) => (
               <Link href={menu.link} key={id}>
-                <li className="flex space-x-4 items-center hover:bg-gray-300 p-2 rounded">
+                <li className="flex dark:hover:text-gray-900 space-x-4 items-center hover:bg-gray-300 p-2 rounded">
                   <menu.icon
                     className={`${open ? 'text-[18px]' : 'text-[20px]'}`}
                   />
@@ -62,13 +62,13 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
               </Link>
             ))}
           </ul>
-          <div className="border my-2"></div>
+          <div className="border border-gray-300 my-2"></div>
         </main>
         <footer className="md:px-5 px-3 ">
           <ul className="flex flex-col space-y-1">
             {footer.map((footer: any, id: any) => (
               <Link href={footer.link} key={id}>
-                <li className="flex space-x-4 items-center hover:bg-gray-300 p-2 rounded">
+                <li className="flex dark:hover:text-gray-900 space-x-4 items-center hover:bg-gray-300 p-2 rounded">
                   <footer.icon
                     className={`${open ? 'text-[18px]' : 'text-[20px]'}`}
                   />

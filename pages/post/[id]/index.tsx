@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  GetServerSideProps,
-  GetStaticPaths,
-  GetStaticProps,
-  NextPage,
-} from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { getSession, useSession } from 'next-auth/react';
 import { PrismaClient } from '@prisma/client';
 import Link from 'next/link';
