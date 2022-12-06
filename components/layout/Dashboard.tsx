@@ -13,6 +13,8 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
 import { useTheme } from 'next-themes';
+import { motion } from 'framer-motion';
+import { motion1 } from 'data/motion';
 const Toggle = dynamic(() => import('@utility/Toggle'), { ssr: false });
 
 const Dashboard: React.FC<PropTypes> = (props) => {
@@ -110,7 +112,12 @@ const Dashboard: React.FC<PropTypes> = (props) => {
                 />
 
                 {caret && (
-                  <div className="absolute border bg-white w-48 rounded shadow-sm sm:-right-4 sm:top-8 md:top-8 md:right-0">
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={motion1}
+                    className="absolute border text-black bg-white w-48 rounded shadow-sm sm:-right-4 sm:top-8 md:top-8 md:right-0"
+                  >
                     <ul onMouseLeave={() => setCaret(false)}>
                       {
                         // props.header !== undefined &&
@@ -129,7 +136,7 @@ const Dashboard: React.FC<PropTypes> = (props) => {
                         ))
                       }
                     </ul>
-                  </div>
+                  </motion.div>
                 )}
               </span>
               <Toggle action={toggleHandler} className={ToggleIconClass} />

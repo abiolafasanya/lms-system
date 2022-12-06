@@ -1,5 +1,5 @@
 import React from 'react';
-import { Iprops } from './../../utility/interfaces';
+import { Iprops } from 'utility/interfaces';
 
 // interface Iprops extends React.PropsWithChildren {
 //   className: any;
@@ -7,7 +7,7 @@ import { Iprops } from './../../utility/interfaces';
 
 const Container: React.FC<Iprops> = (props: any) => {
   return (
-    <div className={props.className + ' mycontainer'}>{props.children}</div>
+    <main className={props.className + ' mycontainer'}>{props.children}</main>
   );
 };
 

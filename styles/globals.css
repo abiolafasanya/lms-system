@@ -4,7 +4,7 @@
 
 @layer components {
   .card {
-    @apply py-2 px-5 m-2 bg-white shadow-sm dark:bg-gray-700 text-gray-200;
+    @apply py-2 px-5 m-2 bg-white shadow-sm text-black dark:text-white dark:bg-gray-900;
   }
   .btn {
     @apply inline-block px-4 py-2 leading-none text-white bg-blue-500 hover:bg-blue-600 rounded-lg;
@@ -34,16 +34,17 @@
     @apply mb-2 block font-semibold capitalize;
   }
   .form-control {
-    @apply rounded py-2 px-5 block w-full outline-none mt-2 focus:border-blue-500 border;
+    @apply rounded py-2 px-5 block w-full text-black dark:bg-gray-900 dark:border-gray-600 dark:text-white outline-none mt-2 dark:focus:border-white focus:border-blue-500 border;
   }
   .form-group {
     @apply block my-4;
   }
   .text-area {
-    @apply block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+    @apply block w-full px-3 py-1.5 text-base font-normal text-black dark:border-gray-600 dark:text-white dark:bg-gray-900 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
   }
   .file-input {
-    @apply block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+    /* @apply block w-full px-3 py-1.5 text-base font-normal dark:bg-gray-900 dark:border-gray-600 dark:focus:border-white text-gray-700 bg-white bg-clip-padding border border-solid dark:placeholder-gray-400 border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none; */
+    @apply block w-full text-base font-normal dark:file:bg-gray-600 file:bg-gray-300 file:border-none file:py-1.5 dark:text-white text-gray-900 border border-gray-300 rounded cursor-pointer focus:outline-none dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400;
   }
   .alert {
     @apply rounded py-2 px-5 border;

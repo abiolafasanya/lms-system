@@ -24,12 +24,19 @@ type Props = { data: Task[] };
 const Tasks: NextPage<Props> = ({ data }) => {
   const [graded, setGraded] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [deadline, setDeadline] = useState<any>(NaN);
 
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
     console.log(tasks);
     setTasks(data);
+    let today = new Date();
+    today.setDate(Date.now() + 5);
+    console.log(today); //Sun Feb 20 2022
+    setDeadline(
+      new Date(Date.now() + 1000 * 24 * 5 * 60 * 60).toLocaleString()
+    );
     return () => {
       isMounted = false;
       controller.abort();
@@ -43,7 +50,7 @@ const Tasks: NextPage<Props> = ({ data }) => {
 
   const checkClass = (graded: boolean = false) =>
     classNames(
-      'flex justify-between items-center py-5 px-7 bg-white/50 border overflow-clip',
+      'flex justify-between my-2 items-center py-5 px-7 bg-white/50 border overflow-clip',
       {
         'border-l-4 border-l-emerald-500 bg-emerald-50': graded,
       }
@@ -76,23 +83,24 @@ const Tasks: NextPage<Props> = ({ data }) => {
               <p className="text-base mb-4">
                 Below are the tasks you have Submitted
               </p>
-              {tasks.map((task) => (
-                <div
-                  key={task.id}
-                  draggable
-                  className={checkClass(task?.graded)}
-                >
-                  <div className="flex space-x-4 items-center text-gray-700">
-                    <MdDragIndicator className="text-xl" />
-                    <MdOutlineAssignmentTurnedIn />
-                    <span className="font-bold">{task.title}</span>
-                    {task?.graded && (
-                      <MdDoneOutline className="text-emerald-500" />
-                    )}
+              {tasks.length > 0 &&
+                tasks.map((task) => (
+                  <div
+                    key={task.id}
+                    draggable
+                    className={checkClass(task?.graded)}
+                  >
+                    <div className="flex space-x-4 items-center text-gray-700">
+                      <MdDragIndicator className="text-xl" />
+                      <MdOutlineAssignmentTurnedIn />
+                      <span className="font-bold">{task.title}</span>
+                      {task?.graded && (
+                        <MdDoneOutline className="text-emerald-500" />
+                      )}
+                    </div>
+                    <div>Point: 25/30</div>
                   </div>
-                  <div>Point: 25/30</div>
-                </div>
-              ))}
+                ))}
             </div>
           </section>
           <section className="md:w-1/2">
@@ -109,18 +117,13 @@ const Tasks: NextPage<Props> = ({ data }) => {
                   packages you use in the readme file
                 </p>
                 <div className="flex justify-between border-t-2">
-                  <p className=" flex space-x-3 items-center">
+                  <div className=" flex space-x-3 items-center">
                     <span className="font-bold">
-                      Deadline:{' '}
-                      {new Date(
-                        Date.now() + 1000 * 24 * 5 * 60 * 60
-                      ).toLocaleString()}
+                      Deadline:{deadline !== NaN && deadline}
                     </span>
-                  </p>
-                  <span>
-                    {new Date(Date.now() + 1000 * 24 * 5 * 60 * 60).getHours()}{' '}
-                    Days left
-                  </span>
+                  </div>
+                  {/* <div>{new Date().setDate().getHours()} Days left</div> */}
+                  {/* <div>{new Date(Date.now() + 5).getHours()} Days left</div> */}
                 </div>
               </div>
             </div>

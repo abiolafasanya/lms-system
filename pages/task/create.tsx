@@ -9,6 +9,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
 import Axios from 'api/axios';
+import Link from 'next/link';
 
 const animatedComponents = makeAnimated();
 
@@ -108,7 +109,12 @@ const create = () => {
         <main className="w-full">
           <section>
             <h1 className="text-2xl">Create Task</h1>
-            <div className="card">
+            <div className="text-gray-500 mb-4 flex justify-between items-center">
+              <span>
+                <Link href="/task">Task</Link> &larr; Create Task
+              </span>
+            </div>
+            <div className="card text-dark ">
               <form onSubmit={create}>
                 <div className="form-group">
                   <label htmlFor="title" className="form-label">
@@ -129,7 +135,7 @@ const create = () => {
                     editorState={editorState}
                     toolbarClassName="toolbarClassName"
                     wrapperClassName="wrapperClassName border"
-                    editorClassName="editorClassName p-3"
+                    editorClassName="editorClassName p-3 text-black dark:text-white"
                     placeholder="Write something"
                     onEditorStateChange={(newState) => {
                       setEditorState(newState);
@@ -150,6 +156,7 @@ const create = () => {
                       options={[{ value: 'everyone', label: 'EveryOne' }]}
                       inputId="tags"
                       isClearable
+                      className="dark:text-black"
                       isMulti
                       onChange={(e) =>
                         setAssignedTo(e.map((item: any) => item.value))
