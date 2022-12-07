@@ -6,6 +6,7 @@ import ProgressBar from '@utility/ProgressBar';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { assessment as questions } from 'data/assessment';
 import { BsStopwatch } from 'react-icons/bs';
+import ShowResult from '@utility/ShowResult';
 
 const index = () => {
   const [] = useState();
@@ -15,35 +16,48 @@ const index = () => {
   ]);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
-  // const [timerInterval, setTimerInterval] = useState<any>();
+  const [isFullmode, setIsFullmode] = useState(false);
   let interval: any;
-  const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const [timer, setTimer] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
-  function startTimer() {
-    const countDownTimer = Date.now() + 30000;
+  function startTimer(endtime: any) {
+    console.log(endtime);
+    const countDownTimer = Date.now() + 60000 * endtime; //3600000;
     interval = setInterval(() => {
       const nowTime = new Date() as unknown;
       const duration = countDownTimer - (nowTime as number);
-      let minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((duration % (1000 * 60)) / 1000);
+      let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+      let minutes = Math.floor((duration / 1000 / 60) % 60);
+      let seconds = Math.floor((duration / 1000) % 60);
 
-      if (duration < 0) {
+      if (duration <= 0) {
         clearInterval(interval);
-        setTime({ hours: 0, minutes: 0, seconds: 0 });
+        setTimer({ hours: 0, minutes: 0, seconds: 0 });
+        let newScore = 0;
+        for (let i = 0; i < questions.length; i++) {
+          questions[i].answerOptions.map(
+            ({ answer, isCorrect }: any) =>
+              isCorrect &&
+              answer === selectedOptions[i]?.answerByUser &&
+              (newScore += 1)
+          );
+        }
+        setScore(newScore);
         setShowScore(true);
         return;
       } else {
-        setTime({ hours: 0, minutes, seconds });
+        setTimer({ hours, minutes, seconds });
       }
     }, 1000);
   }
+
   function endTimer() {}
 
   const handle = useFullScreenHandle();
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
-    startTimer();
+    startTimer(0.5);
     return () => {
       isMounted = false;
       controller.abort();
@@ -144,7 +158,10 @@ const index = () => {
             <div className="border rounded flex flex-col justify-center items-center py-2 bg-gray-100 w-[20%]">
               <BsStopwatch className="text-[48px] text-center" />
               <span className="font-bold text-xl text-center">
-                {time.hours}:{time.minutes}:{time.seconds}
+                {timer.hours > 9 ? timer.hours : '0' + timer.hours}:
+                {timer.minutes > 9 ? timer.minutes : '0' + timer.minutes}:
+                {timer.seconds > 9 ? timer.seconds : '0' + timer.seconds}
+                {/* {timer.minutes?}:{timer.seconds} */}
               </span>
             </div>
             <div className="border rounded px-5 py-2 bg-gray-100 w-[50%]">
@@ -179,15 +196,14 @@ const index = () => {
             >
               FullScreen Mode
             </button>
+
             <button className="btn rounded-none bg-gray-500 hover:bg-gray-600">
               Finish Exam
             </button>
           </div>
           <Container className="bg-white w-full p-5">
             {showScore ? (
-              <h1 className="text-3xl h-screen font-semibold text-center text-black">
-                You scored {score} out of {questions.length}
-              </h1>
+              <ShowResult score={score} questions={questions} />
             ) : (
               <>
                 <h2 className="text-xl font-semibold">Instruction</h2>
@@ -264,3 +280,15 @@ const index = () => {
 };
 
 export default index;
+
+function remainingTime(endtime: any) {
+  const now = new Date() as unknown;
+  const total = endtime - (now as any);
+  let hours, minutes, seconds, day;
+  seconds = Math.floor((total / 1000) % 60);
+  minutes = Math.floor((total / 1000 / 60) % 60);
+  hours = Math.floor(((total / 1000) * 60 * 60) % 24);
+  day = Math.floor((total / 1000) * 60 * 60 * 24);
+  console.log({ hours, minutes, seconds, day, total });
+  return { hours, minutes, seconds, day, total };
+}
