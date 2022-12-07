@@ -41,7 +41,7 @@ const ShowResult = ({ score, questions }: any) => {
         <div>
           <button
             className="btn text-lg items-center px-7 py-3 flex space-x-3"
-            onClick={() => router.push('/exam')}
+            onClick={() => router.reload()}
           >
             {' '}
             <MdRefresh className="text-[24px]" /> Restart
