@@ -134,3 +134,39 @@ const Table = ({ header, questions, id }: any) => {
 };
 
 export default Table;
+
+export const CustomTable = ({ header, children }: any) => {
+  return (
+    <div className="flex flex-col">
+      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+          <div className="overflow-hidden">
+            <table className="min-w-full text-center">
+              <thead className="border-b bg-gray-800">
+                <tr>
+                  {header &&
+                    header.map((title: any, index: any) => (
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-white px-6 py-4"
+                        key={index}
+                      >
+                        {title}
+                      </th>
+                    ))}
+                  {/* <th
+                    scope="col"
+                    className="text-sm font-medium text-white px-6 py-4"
+                  >
+                    Action
+                  </th> */}
+                </tr>
+              </thead>
+              <tbody>{children}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

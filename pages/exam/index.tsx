@@ -9,7 +9,7 @@ import { BsStopwatch } from 'react-icons/bs';
 import ShowResult from '@utility/ShowResult';
 
 const index = () => {
-  const [] = useState();
+  const [currentTime, setCurrentTime] = useState<any>(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState([
     { answerByUser: '' },
@@ -47,17 +47,18 @@ const index = () => {
         return;
       } else {
         setTimer({ hours, minutes, seconds });
+        setCurrentTime(Math.floor((countDownTimer - Date.now()) / 1000));
+        // console.log(Math.floor((countDownTimer - Date.now()) / 1000));
       }
     }, 1000);
   }
-
-  function endTimer() {}
 
   const handle = useFullScreenHandle();
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
     startTimer(0.5);
+
     return () => {
       isMounted = false;
       controller.abort();
@@ -87,6 +88,7 @@ const index = () => {
   const handleSubmitButton = (e: React.SyntheticEvent) => {
     e.preventDefault();
     let newScore = 0;
+
     for (let i = 0; i < questions.length; i++) {
       questions[i].answerOptions.map(
         ({ answer, isCorrect }: any) =>
@@ -96,7 +98,9 @@ const index = () => {
       );
     }
     setScore(newScore);
-    setShowScore(true);
+    setTimeout(() => {
+      setShowScore(true);
+    }, 2000);
   };
 
   return (
@@ -169,7 +173,7 @@ const index = () => {
                 <h3 className="font-semibold flex-shrink-0">Time Progress:</h3>
                 <ProgressBar
                   align="left"
-                  progress="70"
+                  progress={(currentQuestion / questions.length) * 100}
                   bgcolor="rgb(59 130 246)"
                   color="rgb(239 246 255)"
                   height="25px"
@@ -180,7 +184,7 @@ const index = () => {
                 <h3 className="font-semibold flex-shrink-0">Exam Progress:</h3>
                 <ProgressBar
                   align="left"
-                  progress="25"
+                  progress={currentTime}
                   bgcolor="rgb(59 130 246)"
                   color="rgb(239 246 255)"
                   height="25px"

@@ -34,10 +34,7 @@ const ShowResult = ({ score, questions }: any) => {
           <div className="font-bold capitalize">Total Correct</div>
           <div>{score}</div>
         </div>
-        {/* <div className="flex justify-between items-center my-2 p-5 bg-gray-300">
-          <div className="font-bold capitalize">Score</div>
-          <div>{score}</div>
-        </div> */}
+
         <div>
           <button
             className="btn text-lg items-center px-7 py-3 flex space-x-3"
