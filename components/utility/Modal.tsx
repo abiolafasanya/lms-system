@@ -9,20 +9,24 @@ const Modal: React.FC<PropTypes> = (props: any) => {
           {props.title}
         </header>
         <main className="p-3 my-3">{props.children}</main>
-        <footer className="p-2 border-t">
-          {props.footer}
-          <div className="px-5 flex items-center justify-between">
-            <button className="btn" onClick={props.action}>
-              Confrim
-            </button>
-            <button
-              className="btn bg-red-500 hover:bg-red-600"
-              onClick={props.close}
-            >
-              Cancel
-            </button>
-          </div>
-        </footer>
+        {!props.hideFooter && (
+          <footer className="p-2 border-t">
+            {props.footer}
+            <div className="px-5 flex items-center justify-between">
+              {!props.hideConfirm && (
+                <button className="btn" onClick={props.action}>
+                  Confirm
+                </button>
+              )}
+              <button
+                className="btn bg-red-500 hover:bg-red-600"
+                onClick={props.close}
+              >
+                Cancel
+              </button>
+            </div>
+          </footer>
+        )}
       </div>
     </>
   );

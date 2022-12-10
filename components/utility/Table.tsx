@@ -68,7 +68,7 @@ const Table = ({ header, questions, id }: any) => {
         <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
           <div className="overflow-hidden">
             <table className="min-w-full text-center">
-              <thead className="border-b bg-gray-800">
+              <thead className="border-b bg-gray-800 dark:bg-gray-900">
                 <tr>
                   {header &&
                     header.map((title: any, index: any) => (
@@ -142,7 +142,7 @@ export const CustomTable = ({ header, children }: any) => {
         <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
           <div className="overflow-hidden">
             <table className="min-w-full text-center">
-              <thead className="border-b bg-gray-800">
+              <thead className="border-b bg-gray-800 dark:bg-gray-900">
                 <tr>
                   {header &&
                     header.map((title: any, index: any) => (

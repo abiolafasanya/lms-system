@@ -161,16 +161,16 @@ model Grade {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String?   @unique
+  id            String       @id @default(cuid())
+  email         String?      @unique
   password      String?
   emailVerified DateTime?
   image         String?
-  username      String?   @unique
+  username      String?      @unique
   avatar        String?
   name          String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   accounts      Account[]
   Comment       Comment[]
   Course        Course[]
@@ -179,21 +179,38 @@ model User {
   sessions      Session[]
   Student       Student[]
   Tutor         Tutor[]
+  Submission    Submission[]
 }
 
 model Task {
-  id          String   @id @default(cuid())
+  id          String       @id @default(cuid())
   title       String
   description String
   point       Int
   deadline    DateTime
   assignedTo  String[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   courseId    String?
   attachment  Json?
   Grade       Grade[]
-  course      Course?  @relation(fields: [courseId], references: [id])
+  course      Course?      @relation(fields: [courseId], references: [id])
+  Submission  Submission[]
+}
+
+model Submission {
+  id          String    @id @default(cuid())
+  user        User?     @relation(fields: [userId], references: [id])
+  task        Task      @relation(fields: [taskId], references: [id])
+  taskId      String
+  score       Int?
+  graded      Boolean   @default(false)
+  feedback    String?
+  regraded    Boolean   @default(false)
+  userId      String?
+  category    String    @default("general")
+  submittedAt DateTime  @default(now())
+  gradedAt    DateTime?
 }
 
 model VerificationToken {

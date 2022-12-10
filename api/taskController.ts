@@ -94,3 +94,36 @@ export default class taskcontroller extends Controller {
     }
   };
 }
+
+export class Submission extends taskcontroller {
+  public static submission = async (
+    req: NextApiRequest,
+    res: NextApiResponse
+  ) => {
+    try {
+      let { taskId, userId, score, feedback, gradedAt } = req.body;
+      const input = {
+        taskId,
+        userId,
+        score: parseInt(score),
+        feedback,
+        gradedAt: new Date(Date.now()),
+      };
+
+      const Submission = this.prisma.submission;
+      console.log(input);
+      const submission = await Submission.update({
+        where: { id: req.query.id as string },
+        data: input,
+      })
+        .then((data) => data)
+        .catch((err) => {
+          console.log(err);
+          throw new Error(err as string);
+        });
+      return res.status(200).json({ status: true, submission });
+    } catch (error) {
+      res.status(400).json({ success: false, error: error });
+    }
+  };
+}

@@ -91,7 +91,7 @@ const Tasks: NextPage<Props> = ({ data }) => {
               name="colors"
               // onChange={(e) => setCategory(e.map((item) => item.value))}
               options={selectOptions}
-              className="basic-multi-select w-[350px]"
+              className="basic-multi-select md:w-[350px] dark:text-black"
               classNamePrefix="select"
             />
           </div>
@@ -105,138 +105,35 @@ const Tasks: NextPage<Props> = ({ data }) => {
         </section>
         <section>
           <CustomTable header={header}>
-            <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                1
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Authentication
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Create an Authentication with express
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {new Date('12/10/2022').toLocaleDateString()}
-              </td>
-              <td className="items-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                <Link
-                  href="/task/title/"
-                  className="flex items-center space-x-2"
-                >
-                  <MdPreview /> visit
-                </Link>
-              </td>
-            </tr>
-            <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                1
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Authentication
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Create an Authentication with express
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {new Date('12/10/2022').toLocaleDateString()}
-              </td>
-              <td className="items-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                <Link
-                  href="/task/title/"
-                  className="flex items-center space-x-2"
-                >
-                  <MdPreview /> visit
-                </Link>
-              </td>
-            </tr>
-            <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                1
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Authentication
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Create an Authentication with express
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {new Date('12/10/2022').toLocaleDateString()}
-              </td>
-              <td className="items-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                <Link
-                  href="/task/title/"
-                  className="flex items-center space-x-2"
-                >
-                  <MdPreview /> visit
-                </Link>
-              </td>
-            </tr>
-            <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                1
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Authentication
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Create an Authentication with express
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {new Date('12/10/2022').toLocaleDateString()}
-              </td>
-              <td className="items-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                <Link
-                  href="/task/title/"
-                  className="flex items-center space-x-2"
-                >
-                  <MdPreview /> visit
-                </Link>
-              </td>
-            </tr>
-            <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                1
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Authentication
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Create an Authentication with express
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {new Date('12/10/2022').toLocaleDateString()}
-              </td>
-              <td className="items-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                <Link
-                  href="/task/title/"
-                  className="flex items-center space-x-2"
-                >
-                  <MdPreview /> visit
-                </Link>
-              </td>
-            </tr>
-            <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                1
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Authentication
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Create an Authentication with express
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {new Date('12/10/2022').toLocaleDateString()}
-              </td>
-              <td className="items-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                <Link
-                  href="/task/title/"
-                  className="flex items-center space-x-2"
-                >
-                  <MdPreview /> visit
-                </Link>
-              </td>
-            </tr>
+            {tasks.length > 0 &&
+              tasks.map((task, index) => (
+                <>
+                  <tr className="table-row">
+                    <td className="table-data">{index + 1}</td>
+                    <td className="table-data">{task.title}</td>
+
+                    <td
+                      dangerouslySetInnerHTML={{ __html: task.description }}
+                      className="table-data"
+                    />
+                    <td className="table-data">
+                      {
+                        new Date(
+                          task?.deadline
+                        ).toLocaleString() as unknown as string
+                      }
+                    </td>
+                    <td className="items-center table-data">
+                      <Link
+                        href={`/tutor/task/${task.id}/submission`}
+                        className="flex items-center space-x-2"
+                      >
+                        <MdPreview /> visit
+                      </Link>
+                    </td>
+                  </tr>
+                </>
+              ))}
           </CustomTable>
         </section>
       </Container>
@@ -248,7 +145,9 @@ export default Tasks;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const prisma = new PrismaClient();
-  const tasks = await prisma.task.findMany();
+  const tasks = await prisma.task.findMany().finally(async () => {
+    prisma.$disconnect();
+  });
   return {
     props: {
       data: JSON.parse(JSON.stringify(tasks)),
