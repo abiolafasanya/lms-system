@@ -84,7 +84,7 @@ const Tasks: NextPage<Props> = ({ data }) => {
                 Below are the tasks you have Submitted
               </p>
               {tasks.length > 0 &&
-                tasks.map((task) => (
+                tasks.map((task: any) => (
                   <div
                     key={task.id}
                     draggable
