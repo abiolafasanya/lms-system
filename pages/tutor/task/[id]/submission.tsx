@@ -223,6 +223,10 @@ const submission: NextPage = ({ data }: Props | any) => {
                       submission?.user?.email ||
                       submission?.user?.name}
                   </div>
+                  <div className=" text-emerald-900">
+                    {new Date(task?.deadline as Date).toLocaleString()}
+                  </div>
+                  <div className="text-emerald-900">{submission?.score}</div>
                   <div className="flex space-x-4">
                     <button
                       className="btn bg-green-500 hover:bg-green-600 text-green-900"
