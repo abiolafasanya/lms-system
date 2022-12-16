@@ -7,11 +7,11 @@ import {
   FaInfoCircle,
 } from 'react-icons/fa';
 import { GoInfo } from 'react-icons/go';
-import Dashboard from '../../components/layout/Dashboard';
-import Container from '../../components/utility/Container';
-import { sideBarMenu, sideFooter, headMenu } from './../../data/index';
+import Dashboard from 'components/layout/Dashboard';
+import Container from 'components/utility/Container';
+import { sideBarMenu, sideFooter, headMenu } from 'data/index';
 import { MdArticle } from 'react-icons/md';
-import Alert from '../../components/utility/Alert';
+import Alert from 'components/utility/Alert';
 import { motion } from 'framer-motion';
 import { motion1 } from 'data/motion';
 

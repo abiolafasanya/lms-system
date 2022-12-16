@@ -47,14 +47,15 @@ const Register = () => {
         setLoading(false);
         setSuccess(false);
         setType('error');
-        setMessage(data.error);
+        // setMessage(data.error as string);
+        setMessage('Registration failed');
         setPassword('');
         setPassword2('');
-        console.log(data);
+        console.log(data.error.messag);
         return;
       }
 
-      if (status === 200) {
+      if (status === 200 || status === 201) {
         setError(false);
         setSuccess(true);
         setType('success');
@@ -74,9 +75,10 @@ const Register = () => {
       setLoading(false);
       setSuccess(false);
       setType('error');
-      setMessage(error as string);
+      setMessage('internal error');
       setPassword('');
       setPassword2('');
+      console.log(error);
       return;
     }
   };

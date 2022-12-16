@@ -1,3 +1,3 @@
-import {AuthController} from 'api/authController'
+import { AuthController } from 'api/authController';
 
 export default AuthController.signup;

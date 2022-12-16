@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Submission" ADD COLUMN     "gradedAt" TIMESTAMP(3),
-ADD COLUMN     "submittedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

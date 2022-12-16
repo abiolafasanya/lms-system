@@ -5,7 +5,7 @@ export class AuthController extends Controller {
   static signup = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       let { username, email, password } = req.body;
-      
+
       const User = this.prisma.user;
       const bcrypt = this.bcrypt;
       const ifExist = await User.findFirst({ where: { email: email } });
@@ -16,24 +16,27 @@ export class AuthController extends Controller {
       const newUser = { username, email, password };
       const user = await User.create({
         data: newUser,
-      });
-
-      console.log('user data: ', user);
-      if (!user) return res.status(400).json({ message: 'User not created' });
-      return res.status(201).json({
-        status: 'success',
-        data: user,
-      });
+      })
+        .then((user) => user)
+        .catch(
+          (error) => {
+            throw new Error(error.message);
+          }
+          // res.status(400).json({ message: 'User not created', error })
+        );
+      // return user;
+      if (user) {
+        console.log(user);
+        return res.status(201).json({
+          status: 'success',
+          user,
+        });
+      }
     } catch (error) {
-      return res.status(500).json({
-        status: 'error',
-        error: error,
-      });
-    } finally {
-      await this.prisma.$disconnect();
+      console.log(error);
     }
   };
-  
+
   static signin = async (credentials: { email: any; password: any }) => {
     let { email, password } = credentials;
     const User = this.prisma.user;
@@ -49,6 +52,7 @@ export class AuthController extends Controller {
         id: user.id,
         name: user.username,
         email: user.email,
+        role: user.role,
       };
     } catch (error) {
       throw new Error(error as string | undefined);

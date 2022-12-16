@@ -25,7 +25,7 @@ import { GetServerSideProps, GetStaticProps, NextPage } from 'next';
 
 const Toggle = dynamic(() => import('@utility/Toggle'), { ssr: false });
 
-const Dashboard: NextPage<PropTypes> = (props) => {
+const TutorDashboard: NextPage<PropTypes> = (props) => {
   const [open, setOpen] = useState(false);
   const [caret, setCaret] = useState(false);
   const router = useRouter();
@@ -431,4 +431,4 @@ const Dashboard: NextPage<PropTypes> = (props) => {
   );
 };
 
-export default Dashboard;
+export default TutorDashboard;

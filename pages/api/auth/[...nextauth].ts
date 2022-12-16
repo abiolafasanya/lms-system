@@ -39,18 +39,13 @@ const options: NextAuthOptions = {
               user.password as string
             );
             if (!isMatch) throw new Error('Incorrect password');
-            return {
-              id: user.id,
-              name: user.username,
-              email: user.email,
-            };
+            user.name = user.username;
+            return user;
           })
           .catch((error) => {
             throw new Error(error);
           })
-          .finally(() => {
-            prisma.$disconnect();
-          });
+          .finally(async () => await prisma.$disconnect());
         return user;
       },
     }),
@@ -93,7 +88,7 @@ const options: NextAuthOptions = {
     strategy: 'jwt',
 
     // Seconds - How long until an idle session expires and is no longer valid.
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 1 * 24 * 60 * 60, // 30 days
 
     // Seconds - Throttle how frequently to write to database to extend a session.
     // Use it to limit write operations. Set to 0 to always update the database.
@@ -104,7 +99,7 @@ const options: NextAuthOptions = {
     // A secret to use for key generation - you should set this explicitly
     // Defaults to NextAuth.js secret.
     secret: process.env.SECRET,
-    maxAge: 60 * 60 * 24 * 30, // 30 days
+    maxAge: 60 * 60 * 24 * 1, // 30 days
     // Set to true to use encryption (default: false)
     // encryption: true,
 
@@ -121,6 +116,13 @@ const options: NextAuthOptions = {
       return baseUrl;
     },
     async session({ session, token, user }) {
+      const db = await prisma.user.findFirst({
+        where: { email: session.user.email },
+      });
+      const role = db?.role;
+      session.user.role = role;
+      session.user.id = db?.id;
+      await prisma.$disconnect();
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
