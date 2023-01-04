@@ -73,7 +73,10 @@ const options: NextAuthOptions = {
   ],
 
   pages: {
-    signIn: '/auth/login',
+     signIn: '/signin',  // Displays signin buttons
+    signOut: '/auth/signout', // Displays form with sign out button
+    error: '/auth/error', // Error code passed in query string as ?error=
+    verifyRequest: '/auth/verify-request', // Used for check email page
   },
 
   secret: process.env.SECRET,
