@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Dashboard from '@layout/Dashboard';
-import { sideBarMenu, sideFooter } from './../../data/index';
-import Container from './../../components/utility/Container';
+import { sideBarMenu, sideFooter } from 'data/index';
+import Container from 'components/utility/Container';
 import Axios from 'api/axios';
 import { GetStaticProps } from 'next';
 import { PrismaClient } from '@prisma/client';

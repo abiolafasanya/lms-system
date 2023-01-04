@@ -3,7 +3,7 @@ import Dashboard from '@layout/Dashboard';
 import { sideBarMenu, sideFooter } from './../../data/index';
 import Container from './../../components/utility/Container';
 import Axios from 'api/axios';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import { PrismaClient } from '@prisma/client';
 import Link from 'next/link';
 
@@ -192,7 +192,7 @@ function newFunction(
   return input;
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const assessments = await prisma.assessment
     .findMany()
     .finally(async () => await prisma.$disconnect());

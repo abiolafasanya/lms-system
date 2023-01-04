@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Dashboard from '@layout/Dashboard';
-import { sideBarMenu, sideFooter } from './../../data/index';
+import { sideBarMenu, sideFooter } from 'data/index';
 import { GetServerSideProps, GetStaticProps, NextPage } from 'next';
 import { PrismaClient } from '@prisma/client';
 import Container from '@utility/Container';
@@ -11,11 +11,7 @@ import { AlertMsg } from '@utility/Alert';
 import Modal from '@utility/Modal';
 import { useRouter } from 'next/router';
 
-type Props = {
-  assessments: [];
-};
 const prisma = new PrismaClient();
-
 const Assessment = (props: any) => {
   const router = useRouter();
   const [assessments, setAssessment] = useState<any[]>([]);
@@ -31,8 +27,6 @@ const Assessment = (props: any) => {
     const controller = new AbortController();
 
     setAssessment(props.assessments);
-
-    // console.log(assessments);
     return () => {
       isMounted = false;
       controller.abort();
