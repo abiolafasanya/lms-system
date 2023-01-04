@@ -6,7 +6,6 @@ import Modal from '@utility/Modal';
 import Axios from 'api/axios';
 import classNames from 'classnames';
 import { GetServerSideProps, NextPage } from 'next';
-import task from 'pages/api/task';
 import React, { useState, useEffect } from 'react';
 import {
   MdDoneOutline,

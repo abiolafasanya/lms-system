@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import Dashboard from '../components/layout/Dashboard';
-import Container from '../components/utility/Container';
-import { sideBarMenu, sideFooter, courseMenuItems } from '../data/index';
-import Link from 'next/link';
+import Dashboard from '@layout/Dashboard';
+import Container from '@utility/Container';
+import { sideBarMenu, sideFooter } from 'data/index';
 import { GetStaticProps, NextPage } from 'next';
-import Axios from '../api/axios';
 
 const account: NextPage = () => {
   const [fullname, setFullname] = useState<string>('');

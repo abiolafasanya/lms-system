@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Dashboard from '@layout/Dashboard';
-import { sideBarMenu, sideFooter } from 'data/index';
 import Container from '@utility/Container';
 import Axios from 'api/axios';
 import { GetServerSideProps } from 'next';
@@ -9,6 +8,7 @@ import Link from 'next/link';
 import { AlertMsg } from '@utility/Alert';
 import Table from '@utility/Table';
 import { useRouter } from 'next/router';
+import {sideBarMenu, sideFooter} from 'data/index'
 
 type Props = { data: string };
 

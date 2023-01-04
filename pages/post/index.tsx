@@ -1,9 +1,9 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import Dashboard from '../../components/layout/Dashboard';
-import Container from '../../components/utility/Container';
-import { sideBarMenu, sideFooter } from '../../data/index';
+import Dashboard from '@layout/Dashboard';
+import Container from '@utility/Container';
+import { sideBarMenu, sideFooter } from 'data/index';
 import Link from 'next/link';
-import { GetServerSideProps, GetStaticProps, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { PrismaClient } from '@prisma/client';
 import { IBlog } from 'utility/interfaces';
 import { useRouter } from 'next/router';

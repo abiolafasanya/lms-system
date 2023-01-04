@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Dashboard from '@layout/Dashboard';
 import Container from '@utility/Container';
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { PrismaClient } from '@prisma/client';
 import Link from 'next/link';
 

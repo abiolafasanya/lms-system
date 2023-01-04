@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Dashboard from '../../components/layout/Dashboard';
-import Container from '../../components/utility/Container';
-import { sideBarMenu, sideFooter, courseMenuItems } from './../../data/index';
+import Dashboard from '@layout/Dashboard';
+import Container from '@utility/Container';
+import { sideBarMenu, sideFooter, courseMenuItems } from 'data/index';
 import Link from 'next/link';
 import { GetStaticProps, NextPage } from 'next';
-import Axios from './../../api/axios';
+import Axios from 'api/axios';
 import { FaBars } from 'react-icons/fa';
 
 export const getStaticProps: GetStaticProps = async (context) => {
