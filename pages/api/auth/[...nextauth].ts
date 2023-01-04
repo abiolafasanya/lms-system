@@ -73,13 +73,13 @@ const options: NextAuthOptions = {
   ],
 
   pages: {
-    signIn: '/auth/login', // Displays signin buttons
+    signIn: '/auth/signin', // Displays signin buttons
     // signOut: '/auth/signout', // Displays form with sign out button
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page
   },
 
-  secret: process.env.SECRET,
+  secret: process.env.NEXTAUTH_SECRET ,
   session: {
     // Choose how you want to save the user session.
     // The default is `"jwt"`, an encrypted JWT (JWE) stored in the session cookie.
@@ -101,7 +101,7 @@ const options: NextAuthOptions = {
   jwt: {
     // A secret to use for key generation - you should set this explicitly
     // Defaults to NextAuth.js secret.
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET ,
     maxAge: 60 * 60 * 24 * 1, // 30 days
     // Set to true to use encryption (default: false)
     // encryption: true,
