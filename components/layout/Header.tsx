@@ -44,7 +44,7 @@ const Header: React.FC<PropTypes> = (props) => {
               <Link href="/about">About</Link>
             </li>
             <li>
-              <Link href="/contact">Contact</Link>
+              <Link href="/dashboard">Dashboard</Link>
             </li>
           </ul>
         )}
@@ -60,12 +60,17 @@ const Header: React.FC<PropTypes> = (props) => {
             </>
           ) : (
             <>
-              <button
+              {/* <button
                 className="btn bg-gray-600 hover:bg-gray-700"
                 onClick={() => signIn()}
               >
                 Login
-              </button>
+              </button> */}
+              <Link href="/auth/login">
+                <button className="btn bg-gray-600 hover:bg-gray-700">
+                  Login
+                </button>
+              </Link>
               <Link href="/auth/register">
                 <button className="btn bg-blue-600 hover:bg-blue-700 text-white">
                   Register
