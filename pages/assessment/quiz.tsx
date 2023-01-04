@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Dashboard from '@layout/Dashboard';
-import { sideBarMenu, sideFooter } from '../../data/index';
+import { sideBarMenu, sideFooter } from 'data/index';
 import { GetServerSideProps, GetStaticProps, NextPage } from 'next';
-import styles from 'styles/Assessment.module.css';
+// import styles from 'styles/Assessment.module.css';
 // import { assessment as questions } from 'data/assessment';
 import { PrismaClient, Question } from '@prisma/client';
-import question from 'pages/api/assessment/question';
 
 type quest = {
   question: string;

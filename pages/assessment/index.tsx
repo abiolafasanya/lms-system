@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Dashboard from '@layout/Dashboard';
-import { sideBarMenu, sideFooter } from './../../data/index';
+import { sideBarMenu, sideFooter } from 'data/index';
 import { GetServerSideProps, GetStaticProps, NextPage } from 'next';
 import { PrismaClient } from '@prisma/client';
 import Container from '@utility/Container';
