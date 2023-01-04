@@ -60,7 +60,9 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
         setMessage('');
       }, 5000);
       console.log(data);
-    } else {
+    }
+    console.log(data)
+     if(data?.ok === true && data?.status === 200) {
       setSuccess(true);
       setMessage('Logged in successfully');
       setIsAuth(false);
