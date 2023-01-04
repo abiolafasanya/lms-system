@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const Axios = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: process.env.NEXTAUTH_URL,
 });
 
 // if (typeof window !== 'undefined') {
