@@ -3,7 +3,7 @@ import { PrismaClient, Submission, Task, User } from '@prisma/client';
 import { AlertMsg } from '@utility/Alert';
 import Container from '@utility/Container';
 import Modal from '@utility/Modal';
-import Axios from 'api/axios';
+import Axios from 'helper/axios';
 import classNames from 'classnames';
 import { GetServerSideProps, NextPage } from 'next';
 import React, { useState, useEffect } from 'react';

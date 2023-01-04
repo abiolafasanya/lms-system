@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client';
 import Container from '@utility/Container';
 import { FaEdit, FaEye, FaTrashAlt } from 'react-icons/fa';
 import Link from 'next/link';
-import Axios from 'api/axios';
+import Axios from 'helper/axios';
 import { AlertMsg } from '@utility/Alert';
 import Modal from '@utility/Modal';
 import { useRouter } from 'next/router';

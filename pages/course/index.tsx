@@ -4,7 +4,7 @@ import Container from '@utility/Container';
 import { sideBarMenu, sideFooter, courseMenuItems } from 'data/index';
 import Link from 'next/link';
 import { GetStaticProps, NextPage } from 'next';
-import Axios from 'api/axios';
+import Axios from 'helper/axios';
 import { FaBars } from 'react-icons/fa';
 
 export const getStaticProps: GetStaticProps = async (context) => {

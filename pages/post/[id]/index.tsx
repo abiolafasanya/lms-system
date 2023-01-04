@@ -8,7 +8,7 @@ import { sideBarMenu, sideFooter } from 'data/index';
 import Container from '@utility/Container';
 import { FaTrash, FaEdit, FaEye } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import Axios from 'api/axios';
+import Axios from 'helper/axios';
 import { AlertMsg as Alert } from '@utility/Alert';
 import Modal from '@utility/Modal';
 import Avatar from 'react-avatar';

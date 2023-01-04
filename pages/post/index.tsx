@@ -13,7 +13,7 @@ import { useSession } from 'next-auth/react';
 import Avatar from 'react-avatar';
 import Modal from '@utility/Modal';
 import { AlertMsg } from '@utility/Alert';
-import Axios from 'api/axios';
+import Axios from 'helper/axios';
 
 const prisma = new PrismaClient();
 const Posts: NextPage = ({ datas }: any) => {

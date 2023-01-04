@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { AlertMsg as Alert } from '@utility/Alert';
 import { useRouter } from 'next/router';
-import Axios from 'api/axios';
+import Axios from 'helper/axios';
 import Link from 'next/link';
 
 const Register = () => {

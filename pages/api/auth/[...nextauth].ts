@@ -4,7 +4,7 @@ import EmailProvider from 'next-auth/providers/email';
 import GithubProvider from 'next-auth/providers/github';
 import CredentialProvider from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { AuthController } from 'api/authController';
+import { AuthController } from 'helper/authController';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -19,7 +19,7 @@ const options: NextAuthOptions = {
         email: {
           label: 'Email',
           type: 'email',
-          placeholder: 'learner@gmail.com',
+          placeholder: 'name@gmail.com',
         },
         password: { label: 'Password', type: 'password' },
       },
@@ -78,8 +78,7 @@ const options: NextAuthOptions = {
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page
   },
-
-  secret: process.env.NEXTAUTH_SECRET ,
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     // Choose how you want to save the user session.
     // The default is `"jwt"`, an encrypted JWT (JWE) stored in the session cookie.
@@ -101,7 +100,7 @@ const options: NextAuthOptions = {
   jwt: {
     // A secret to use for key generation - you should set this explicitly
     // Defaults to NextAuth.js secret.
-    secret: process.env.NEXTAUTH_SECRET ,
+    secret: process.env.NEXTAUTH_SECRET,
     maxAge: 60 * 60 * 24 * 1, // 30 days
     // Set to true to use encryption (default: false)
     // encryption: true,

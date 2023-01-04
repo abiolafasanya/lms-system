@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Dashboard from '@layout/Dashboard';
 import Container from '@utility/Container';
-import Axios from 'api/axios';
+import Axios from 'helper/axios';
 import { GetServerSideProps } from 'next';
 import { PrismaClient } from '@prisma/client';
 import Link from 'next/link';
 import { AlertMsg } from '@utility/Alert';
 import Table from '@utility/Table';
 import { useRouter } from 'next/router';
-import {sideBarMenu, sideFooter} from 'data/index'
+import { sideBarMenu, sideFooter } from 'data/index';
 
 type Props = { data: string };
 

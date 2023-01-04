@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Dashboard from '@layout/Dashboard';
 import { sideBarMenu, sideFooter } from 'data/index';
 import Container from '@utility/Container';
-import Axios from 'api/axios';
+import Axios from 'helper/axios';
 import { GetServerSideProps, NextPage } from 'next';
 import { Assessment, PrismaClient, Question } from '@prisma/client';
 import Link from 'next/link';

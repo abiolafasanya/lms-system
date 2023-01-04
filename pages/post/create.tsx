@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import Dashboard from '@layout/Dashboard';
 import Container from '@utility/Container';
 import { sideBarMenu, sideFooter } from 'data/index';
-import Axios from 'api/axios';
+import Axios from 'helper/axios';
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import CreatableSelect from 'react-select/creatable';

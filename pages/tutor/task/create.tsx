@@ -8,7 +8,7 @@ import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
-import Axios from 'api/axios';
+import Axios from 'helper/axios';
 import Link from 'next/link';
 
 const animatedComponents = makeAnimated();

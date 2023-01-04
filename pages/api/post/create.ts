@@ -1,3 +1,3 @@
-import PostController from "api/postController";
+import PostController from 'helper/postController';
 
 export default PostController.create;

@@ -1,3 +1,3 @@
-import assessmentController from 'api/assessmentController';
+import assessmentController from 'helper/assessmentController';
 
 export default assessmentController.question;

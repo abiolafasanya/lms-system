@@ -1,3 +1,3 @@
-import postController from 'api/postController'
+import postController from 'helper/postController';
 
 export default postController.destroy;

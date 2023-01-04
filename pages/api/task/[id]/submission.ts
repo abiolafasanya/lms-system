@@ -1,3 +1,3 @@
-import { Submission } from 'api/taskController';
+import { Submission } from 'helper/taskController';
 
 export default Submission.submission;
