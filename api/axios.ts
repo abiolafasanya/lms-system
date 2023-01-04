@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const Axios = axios.create({
-  baseURL: process.env.NEXTAUTH_URL,
+  baseURL: process.env.NEXTAUTH_URL || 'https://lms-next-typescript.vercel.app',
 });
 
 // if (typeof window !== 'undefined') {
