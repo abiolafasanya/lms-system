@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import Sidebar from '../utility/Sidebar';
 import { FaBell, FaCaretDown, FaThemeco } from 'react-icons/fa';
 import {
@@ -22,6 +22,7 @@ import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 import { motion1 } from 'data/motion';
 import { GetServerSideProps, GetStaticProps, NextPage } from 'next';
+import NoSSR from 'components/NoSSR';
 
 const Toggle = dynamic(() => import('@utility/Toggle'), { ssr: false });
 
@@ -50,7 +51,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
     e.preventDefault();
     setTheme(theme === 'dark' ? 'light' : 'dark');
   }
-  useEffect(() => {
+  useLayoutEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
     console.log(theme);
@@ -61,7 +62,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
     };
   }, [theme]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/auth/login');
     }
@@ -73,7 +74,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
   }, [status]);
 
   return (
-    <>
+    <NoSSR>
       {session && session?.user.role === 'user' && (
         <div className='font-montserrat'>
           <Head>
@@ -427,7 +428,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
           You are not authorized to access this page
         </div>
       )}
-    </>
+    </NoSSR>
   );
 };
 

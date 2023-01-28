@@ -148,9 +148,9 @@ const Register = () => {
             </div>
             <div className="form-group">
               <div className="flex flex-wrap items-center justify-between">
-                <button className="btn sm:text-2xl md:text-">Submit</button>
+                <button className="btn font-semibold">Submit</button>
                 <Link href="/auth/login">
-                  <span className="text-blue-500 sm:text-2xl">Login</span>
+                  <span className="text-blue-500 font-semibold">Login</span>
                 </Link>
               </div>
             </div>

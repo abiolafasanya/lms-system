@@ -42,17 +42,29 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
   async function credentialsLogin(e: React.SyntheticEvent) {
     e.preventDefault();
 
-    let req = signIn('credentials', {
+    const target = e.target as typeof e.target & {
+      email: { value: string };
+      password: { value: string };
+    };
+
+    const email = target.email.value as string;
+    const password = target.password.value as string;
+
+    if (email === '' || password === '') {
+      setError(true);
+      setMessage('Please fill all fields');
+      return;
+    }
+    let req = await signIn('credentials', {
       email,
       password,
       redirect: false,
       callbackUrl: `/dashboard?callbackUrl=${asPath}`,
     });
 
-    let data = await req;
+    let data = req;
     if (data?.error) {
       setError(true);
-      setSuccess(false);
       setIsAuth(false);
       setMessage(data.error);
       setTimeout(() => {
@@ -60,9 +72,10 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
         setMessage('');
       }, 5000);
       console.log(data);
+      return;
     }
     console.log(data);
-    if (data?.ok === true && data?.status === 200) {
+    if (data !== null) {
       setSuccess(true);
       setMessage('Logged in successfully');
       setIsAuth(false);
@@ -95,9 +108,9 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
   const OAuthSignin = (provider: any) => () => signIn(provider);
 
   return (
-    <div className="">
+    <div className="font-montserrat">
       <div className="card max-w-md mx-auto p-5 md:my-8">
-        <h1 className="text-2xl text-center mb-4">Login</h1>
+        <h1 className="text-xl font-bold text-center mb-4">Login</h1>
         {/* Alert Messages */}
         {error && <Alert type="alert-error" message={message} />}
         {success && <Alert type="alert-success" message={message} />}
@@ -135,7 +148,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                 />
               </div>
               <div className="form-group">
-                <div className="flex text-2xl flex-wrap justify-between items-center">
+                <div className="flex font-semibold flex-wrap justify-between items-center">
                   <button className="btn">Submit</button>
                   <Link href="/auth/register">
                     <span className="text-blue-500">Signup</span>
@@ -144,8 +157,8 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
               </div>
             </form>
 
-            <form onSubmit={OAuthMailHandler}>
-              <h2 className="sm:text-2xl md:text-lg text-center">
+            <form onSubmit={OAuthMailHandler} className="mt-12">
+              <h2 className="font-semibold text-xl md:text-lg text-center">
                 SignIn with Email
               </h2>
               <div className="form-group">
@@ -161,13 +174,12 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                 />
               </div>
               <div className="form-group">
-                <button className="flex w-full btn  justify-center sm:text-2xl md:text-normal bg-gray-500 hover:bg-gray-600">
+                <button className="flex w-full btn  justify-center font-semibold py-3 md:text-normal bg-gray-500 hover:bg-gray-600">
                   SignIn with Email
                 </button>
               </div>
             </form>
-            <div className="">
-              {/* <h2 className="text-center mb-4">Sign in with Socials</h2> */}
+            <div className="mt-6">
               <div className="flex justify-center space-x-8 items-center">
                 {socialProvider.map((social, index) => (
                   <div key={index}>
@@ -176,7 +188,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                       onClick={OAuthSignin(social.provider)}
                     >
                       {
-                        <div className="flex flex-wrap p-2 text-2xl md:text-normal space-x-2 items-center">
+                        <div className="flex flex-wrap p-2 md:text-normal space-x-2 items-center">
                           <span>
                             <social.icon className={social.style} />
                           </span>
