@@ -193,36 +193,6 @@ function newFunction(
   return input;
 }
 
-// export const getStaticPaths: GetStaticPaths = async (context) => {
-//   const assessments = await prisma.assessment.findMany();
-//   const paths = assessments.map((assessment) => {
-//     return {
-//       params: { id: assessment.id.toString() },
-//     };
-//   });
-//   return {
-//     paths: paths,
-//     fallback: false,
-//   };
-// };
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const id = context.params?.id as string;
-//   const assessment = await prisma.assessment.findFirst({
-//     where: { id: id },
-//     include: {
-//       Question: true,
-//     },
-//   });
-
-//   return {
-//     props: {
-//       a: JSON.parse(JSON.stringify(assessment)),
-//       q: JSON.parse(JSON.stringify(assessment?.Question)),
-//     },
-//   };
-// };
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id as string;
   const assessment = await prisma.assessment.findFirst({

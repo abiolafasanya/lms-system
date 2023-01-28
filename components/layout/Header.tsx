@@ -33,18 +33,12 @@ const Header: React.FC<PropTypes> = (props) => {
         <meta name="description" content={headData.content} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <nav className="flex justify-between items-center py-3 px-8 lg:max-w-6xl w-full sm:px-5 lg:mx-auto border-b">
+      <nav className="font-montserrat flex justify-between items-center py-3 sm:px-1 md:px-8 lg:max-w-6xl w-full lg:mx-auto border-b">
         <div className="font-bold text-2xl">TSCAPP</div>
         {auth && (
-          <ul className="flex space-x-8">
+          <ul className="flex sm:space-x-3 md:space-x-8">
             <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/about">About</Link>
-            </li>
-            <li>
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/dashboard" className='text-blue-500 dark:text-gray-100 font-semibold'>Dashboard</Link>
             </li>
           </ul>
         )}
@@ -66,11 +60,6 @@ const Header: React.FC<PropTypes> = (props) => {
               >
                 Login
               </button>
-              {/* <Link href="/auth/login">
-                <button className="btn bg-gray-600 hover:bg-gray-700">
-                  Login
-                </button>
-              </Link> */}
               <Link href="/auth/register">
                 <button className="btn bg-blue-600 hover:bg-blue-700 text-white">
                   Register
