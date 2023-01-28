@@ -3,9 +3,9 @@ import Header from './Header';
 import Footer from './Footer';
 import { Iprops } from './../../utility/interfaces';
 
-const Index:React.FC<Iprops> = (props) => {
+const Index: React.FC<Iprops> = (props) => {
   return (
-    <div>
+    <div className="font-montserrat">
       <Header />
       <main>{props.children}</main>
       <Footer />

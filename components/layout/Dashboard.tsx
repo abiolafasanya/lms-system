@@ -75,7 +75,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
   return (
     <>
       {session && session?.user.role === 'user' && (
-        <div>
+        <div className='font-montserrat'>
           <Head>
             <title>Dashboard</title>
             <meta name="description" content="Dashboard for TSCAPP" />
@@ -162,7 +162,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
         </div>
       )}
       {session && session?.user.role === 'student' && (
-        <div>
+        <div className='font-montserrat'>
           <Head>
             <title>Dashboard</title>
             <meta name="description" content="Dashboard for TSCAPP" />
@@ -249,7 +249,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
         </div>
       )}
       {session && session?.user.role === 'tutor' && (
-        <div>
+        <div className='font-montserrat'>
           <Head>
             <title>Dashboard</title>
             <meta name="description" content="Dashboard for TSCAPP" />
@@ -336,7 +336,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
         </div>
       )}
       {session && session?.user.role === 'admin' && (
-        <div>
+        <div className='font-montserrat'>
           <Head>
             <title>Dashboard</title>
             <meta name="description" content="Dashboard for TSCAPP" />

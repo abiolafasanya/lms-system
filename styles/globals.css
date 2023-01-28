@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Bellefair&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,10 +9,10 @@
     @apply py-2 px-5 m-2 bg-white shadow-sm text-black dark:text-white dark:bg-gray-900;
   }
   .btn {
-    @apply inline-block px-4 py-2 leading-none text-white bg-blue-500 hover:bg-blue-600 rounded-lg;
+    @apply inline-block px-5 py-3 leading-none text-white bg-blue-500 hover:bg-blue-600 rounded-lg;
   }
   .mycontainer {
-    @apply max-w-6xl mx-auto my-3;
+    @apply max-w-6xl mx-auto my-3 min-h-screen;
   }
   .alert-success {
     @apply bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700;
@@ -31,10 +33,10 @@
     @apply my-2 block;
   }
   .form-label {
-    @apply mb-2 block font-semibold capitalize;
+    @apply mb-2 sm:text-[1.5rem] md:text-xl block font-semibold capitalize;
   }
   .form-control {
-    @apply rounded py-2 px-5 block w-full text-black dark:bg-gray-900 dark:border-gray-600 dark:text-white outline-none mt-2 dark:focus:border-white focus:border-blue-500 border;
+    @apply rounded py-3 px-5 sm:text-[1.5rem] md:text-xl block w-full text-black dark:bg-gray-900 dark:border-gray-600 dark:text-white outline-none mt-2 dark:focus:border-white focus:border-blue-500 border;
   }
   .form-group {
     @apply block my-4;

@@ -7,7 +7,7 @@ import { Iprops } from 'utility/interfaces';
 
 const Container: React.FC<Iprops> = (props: any) => {
   return (
-    <main className={props.className + ' mycontainer'}>{props.children}</main>
+    <main className={'mycontainer ' + props.className }>{props.children}</main>
   );
 };
 

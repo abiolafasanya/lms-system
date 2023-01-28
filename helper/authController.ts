@@ -5,6 +5,7 @@ export class AuthController extends Controller {
   static signup = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       let { username, email, password } = req.body;
+      console.log(req.body)
 
       const User = this.prisma.user;
       const bcrypt = this.bcrypt;

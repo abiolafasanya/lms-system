@@ -61,8 +61,8 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
       }, 5000);
       console.log(data);
     }
-    console.log(data)
-     if(data?.ok === true && data?.status === 200) {
+    console.log(data);
+    if (data?.ok === true && data?.status === 200) {
       setSuccess(true);
       setMessage('Logged in successfully');
       setIsAuth(false);
@@ -95,7 +95,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
   const OAuthSignin = (provider: any) => () => signIn(provider);
 
   return (
-    <div className="container">
+    <div className="">
       <div className="card max-w-md mx-auto p-5 md:my-8">
         <h1 className="text-2xl text-center mb-4">Login</h1>
         {/* Alert Messages */}
@@ -135,10 +135,9 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                 />
               </div>
               <div className="form-group">
-                <div className="flex justify-between items-center">
+                <div className="flex text-2xl flex-wrap justify-between items-center">
                   <button className="btn">Submit</button>
                   <Link href="/auth/register">
-                    Not Registered?{' '}
                     <span className="text-blue-500">Signup</span>
                   </Link>
                 </div>
@@ -146,7 +145,9 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
             </form>
 
             <form onSubmit={OAuthMailHandler}>
-              <h2 className="text-lg text-center">SignIn with Email</h2>
+              <h2 className="sm:text-2xl md:text-lg text-center">
+                SignIn with Email
+              </h2>
               <div className="form-group">
                 <label htmlFor="OEmail" className="form-label">
                   Email
@@ -160,22 +161,22 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                 />
               </div>
               <div className="form-group">
-                <button className="btn bg-gray-500 hover:bg-gray-600">
+                <button className="flex w-full btn  justify-center sm:text-2xl md:text-normal bg-gray-500 hover:bg-gray-600">
                   SignIn with Email
                 </button>
               </div>
             </form>
             <div className="">
-              <h2 className="text-center mb-4">Sign in with Socials</h2>
+              {/* <h2 className="text-center mb-4">Sign in with Socials</h2> */}
               <div className="flex justify-center space-x-8 items-center">
                 {socialProvider.map((social, index) => (
                   <div key={index}>
                     <button
-                      className="rounded-full px-5 py-2 border"
+                      className="rounded-full px-2 border"
                       onClick={OAuthSignin(social.provider)}
                     >
                       {
-                        <div className="flex space-x-2 items-center">
+                        <div className="flex flex-wrap p-2 text-2xl md:text-normal space-x-2 items-center">
                           <span>
                             <social.icon className={social.style} />
                           </span>

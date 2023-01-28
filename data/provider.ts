@@ -17,11 +17,11 @@ const socialProvider: providerDocument[] = [
     style: 'text-xl text-gray-500',
     icon: BsGithub,
   },
-  {
-    provider: 'facebook',
-    style: 'text-xl text-blue-500',
-    icon: BsFacebook,
-  },
+  // {
+  //   provider: 'facebook',
+  //   style: 'text-xl text-blue-500',
+  //   icon: BsFacebook,
+  // },
 ];
 
 export default socialProvider;

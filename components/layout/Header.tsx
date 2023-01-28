@@ -33,7 +33,7 @@ const Header: React.FC<PropTypes> = (props) => {
         <meta name="description" content={headData.content} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <nav className="flex justify-between items-center py-3 px-8 md:px-24 border-b">
+      <nav className="flex justify-between items-center py-3 px-8 lg:max-w-6xl w-full sm:px-5 lg:mx-auto border-b">
         <div className="font-bold text-2xl">TSCAPP</div>
         {auth && (
           <ul className="flex space-x-8">
