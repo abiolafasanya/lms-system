@@ -19,18 +19,18 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
   return (
     <div className={props.className}>
       <section className="relative">
-        <header className="md:p-5 p-3">
-          <h1 className={`font-semibold ${open ? 'text-2xl' : 'text-lg p-2'}`}>
+        <header className="md:p-5">
+          <h1 className={`font-semibold ${open ? 'sm:text-4xl sm:py-5 sm:px-5 md:text-2xl' : 'text-lg p-2'}`}>
             {open ? 'TSCAPP' : 'TA'}
           </h1>
           <button
-            className="absolute right-[-15px] cursor-pointer"
+            className="absolute sm:-right-3 sm:top-4 md:right-[-15px] cursor-pointer"
             onClick={() => toggleIcon(props.action)}
           >
             {open ? (
-              <FaArrowAltCircleLeft className="text-[24px] duration-500 transition-all" />
+              <FaArrowAltCircleLeft className="sm:text-4xl md:text-[24px] duration-500 transition-all" />
             ) : (
-              <FaArrowCircleRight className="text-[24px] duration-500 transition-all" />
+              <FaArrowCircleRight className="sm:text-3xl md:text-[24px] duration-500 transition-all" />
             )}
           </button>
         </header>
@@ -39,13 +39,13 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
             <li className="relative">
               <input
                 type="search"
-                placeholder="search course, category"
-                className="form-control dark:bg-gray-800"
+                placeholder="Search"
+                className="placeholder:sm:text-2xl placeholder:md:text-lg form-control dark:bg-gray-800"
               />
               <MdSearch
                 className={`${
-                  open ? 'right-5' : 'right-2'
-                } absolute  text-[22px] text-gray-500  top-5`}
+                  open ? 'sm:right-3 md:right-5' : 'right-2'
+                } absolute  sm:text-4xl md:text-2xl text-gray-500  sm:top-4 md:top-5`}
               />
             </li>
           </ul>
@@ -55,24 +55,24 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
               <Link href={menu.link} key={id}>
                 <li className="flex dark:hover:text-gray-900 space-x-4 items-center hover:bg-gray-300 p-2 rounded">
                   <menu.icon
-                    className={`${open ? 'text-[18px]' : 'text-[20px]'}`}
+                    className={`${open ? 'sm:text-5xl md:text-xl' : 'sm:text-3xl md:text-xl'}`}
                   />
-                  {open && <span>{menu.name}</span>}
+                  {open && <span className='sm:text-2xl md:text-sm font-semibold'>{menu.name}</span>}
                 </li>
               </Link>
             ))}
           </ul>
           <div className="border border-gray-300 my-2"></div>
         </main>
-        <footer className="md:px-5 px-3 ">
-          <ul className="flex flex-col space-y-1">
+        <footer className="px-5">
+          <ul className="flex flex-col sm:space-y-2 sm:mt-3 md:mt-px md:space-y-1">
             {footer.map((footer: any, id: any) => (
               <Link href={footer.link} key={id}>
                 <li className="flex dark:hover:text-gray-900 space-x-4 items-center hover:bg-gray-300 p-2 rounded">
                   <footer.icon
-                    className={`${open ? 'text-[18px]' : 'text-[20px]'}`}
+                    className={`${open ? 'sm:text-5xl md:text-xl' : 'sm:text-3xl md:text-xl'}`}
                   />
-                  {open && <span>{footer.name}</span>}
+                  {open && <span className='sm:text-2xl md:text-sm font-semibold' >{footer.name}</span>}
                 </li>
               </Link>
             ))}

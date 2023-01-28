@@ -12,7 +12,7 @@
     @apply inline-block px-5 py-3 leading-none text-white bg-blue-500 hover:bg-blue-600 rounded-lg;
   }
   .mycontainer {
-    @apply max-w-6xl mx-auto my-3 min-h-screen;
+    @apply  sm:w-full md:max-w-6xl mx-auto my-3 min-h-screen;
   }
   .alert-success {
     @apply bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700;
@@ -30,13 +30,13 @@
     @apply absolute inset-x-0 inset-y-1/4 w-2/5 h-fit mx-auto p-5 bg-white rounded border;
   }
   .form-group {
-    @apply my-2 block;
+    @apply block p-3;
   }
   .form-label {
-    @apply mb-2 sm:text-[1rem] block font-semibold capitalize;
+    @apply mb-2 sm:text-[1rem] block font-semibold capitalize dark:text-black;
   }
   .form-control {
-    @apply rounded py-3 px-5 sm:text-[1rem] block w-full text-black dark:bg-gray-900 dark:border-gray-600 dark:text-white outline-none mt-2 dark:focus:border-white focus:border-blue-500 border;
+    @apply rounded py-3 px-5 sm:text-[1rem] block w-full text-black dark:bg-gray-200 dark:border-gray-600 dark:text-black outline-none mt-2 dark:focus:border-white focus:border-blue-500 border bg-white text-black;
   }
   .form-group {
     @apply block my-4;
@@ -56,6 +56,9 @@
   }
   .table-data {
     @apply px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900;
+  }
+  .dropdown-menu {
+    @apply absolute border text-black bg-white sm:w-56 md:w-48 rounded shadow-sm sm:-right-4 sm:top-8 md:top-8 md:right-0;
   }
 }
 

@@ -1,27 +1,27 @@
 import React, { useState, useLayoutEffect } from 'react';
-import Sidebar from '../utility/Sidebar';
-import { FaBell, FaCaretDown, FaThemeco } from 'react-icons/fa';
+import Sidebar from '@utility/Sidebar';
+import { FaBell, FaCaretDown } from 'react-icons/fa';
 import {
   sideBarMenu,
   sideFooter,
   headMenu,
   tutorSidebar,
   studentSideBar,
-} from '../../data/index';
-import { MdChat, MdDarkMode, MdLightMode } from 'react-icons/md';
-import Avatar, { ConfigProvider } from 'react-avatar';
+} from 'data/index';
+import { MdChat } from 'react-icons/md';
+import Avatar from 'react-avatar';
 import Link from 'next/link';
 import useAuth from 'hooks/useAuth';
 import { useRouter } from 'next/router';
 import { PropTypes } from 'utility/types';
-import { useSession, getSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 import { motion1 } from 'data/motion';
-import { GetServerSideProps, GetStaticProps, NextPage } from 'next';
+import { NextPage } from 'next';
 import NoSSR from 'components/NoSSR';
 
 const Toggle = dynamic(() => import('@utility/Toggle'), { ssr: false });
@@ -76,13 +76,13 @@ const Dashboard: NextPage<PropTypes> = (props) => {
   return (
     <NoSSR>
       {session && session?.user.role === 'user' && (
-        <div className='font-montserrat'>
+        <div className='font-montserrat px-0 bg-gray-100'>
           <Head>
             <title>Dashboard</title>
             <meta name="description" content="Dashboard for TSCAPP" />
             <link rel="icon" href="/favicon.ico" />
           </Head>
-          <div className="flex dark:bg-gray-800 dark:text-gray-100 bg-gray-300 text-black">
+          <div className="flex dark:bg-gray-800 px-0 dark:text-gray-100 bg-gray-100 text-black">
             <Sidebar
               footer={props?.footer || sideFooter}
               menu={props?.sidebar || sideBarMenu}
@@ -94,9 +94,9 @@ const Dashboard: NextPage<PropTypes> = (props) => {
             <main
               className={`${
                 open ? 'ml-72' : 'ml-20'
-              } duration-300 w-full dark:bg-gray-800 dark:text-gray-50`}
+              } duration-300 w-full bg-gray-100 dark:bg-gray-800 dark:text-gray-50`}
             >
-              <header className="flex w-full px-5">
+              <header className="flex w-full md:px-5">
                 <div className="ml-auto p-5 flex items-center space-x-5">
                   <MdChat />
                   <span className="relative rounded-full p-2 bg-white dark:bg-gray-700">
@@ -126,20 +126,19 @@ const Dashboard: NextPage<PropTypes> = (props) => {
 
                     {caret && (
                       <motion.div
-                        initial="hidden"
-                        animate="visible"
-                        variants={motion1}
-                        className="absolute border text-black bg-white w-48 rounded shadow-sm sm:-right-4 sm:top-8 md:top-8 md:right-0"
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        // variants={motion1}
+                        className="dropdown-menu"
                       >
-                        <ul onMouseLeave={() => setCaret(false)}>
+                        <ul>
                           {
-                            // props.header !== undefined &&
                             dropdown?.map((header: any, id: any) => (
                               <>
-                                <Link href={header.link} className="text-sm">
+                                <Link href={header.link} className="sm:text-md md:text-sm">
                                   <li
                                     key={id}
-                                    className="px-5 py-2 hover:bg-gray-100"
+                                    className="px-5 py-4 hover:bg-gray-100"
                                   >
                                     {header.name}
                                   </li>
@@ -155,7 +154,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
                   <Toggle action={toggleHandler} className={ToggleIconClass} />
                 </div>
               </header>
-              <section className="mx-auto text-black dark:text-gray-100 ">
+              <section className="md:mx-auto text-black dark:text-gray-100 ">
                 {props.children}
               </section>
             </main>

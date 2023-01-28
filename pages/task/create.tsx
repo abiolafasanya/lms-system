@@ -145,7 +145,7 @@ const create = () => {
                     }}
                   />
                 </div>
-                <div className="flex md:justify-between md:space-x-8 items-center">
+                <div className="flex md:justify-between flex-wrap md:space-x-8 items-center">
                   <div className="form-group w-full">
                     <label htmlFor="point" className="form-label">
                       Assign to

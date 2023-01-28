@@ -24,7 +24,7 @@ export const sideBarMenu = [
   { name: 'Assessment', icon: MdAssessment, link: '/assessment' },
   { name: 'Tasks', icon: MdTaskAlt, link: '/task' },
   { name: 'Posts', icon: MdArticle, link: '/post' },
-  { name: 'Events', icon: MdEvent, link: '/event' },
+  // { name: 'Events', icon: MdEvent, link: '/event' },
 ];
 
 export const studentSideBar = [

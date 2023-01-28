@@ -58,7 +58,7 @@ const Tasks: NextPage<Props> = ({ data }) => {
 
   return (
     <Dashboard>
-      <Container className="h-screen">
+      <Container className="sm:min-h-screen">
         <section className="flex md:flex-row flex-col justify-between items-center">
           <div className="form-group">
             <input
