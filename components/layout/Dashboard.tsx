@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '@utility/Sidebar';
 import { FaBell, FaCaretDown } from 'react-icons/fa';
 import {
@@ -51,7 +51,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
     e.preventDefault();
     setTheme(theme === 'dark' ? 'light' : 'dark');
   }
-  useLayoutEffect(() => {
+  useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
     console.log(theme);
@@ -62,21 +62,21 @@ const Dashboard: NextPage<PropTypes> = (props) => {
     };
   }, [theme]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/auth/login');
     }
     setDropDown(props.header || headMenu);
     setTimeout(() => {
-      console.log(status, session, auth);
+      // console.log(status, session, auth);
       setAuth({ status, session, isAuth: true });
-    }, 500);
+    }, 50);
   }, [status]);
 
   return (
     <NoSSR>
       {session && session?.user.role === 'user' && (
-        <div className='font-montserrat px-0 bg-gray-100'>
+        <div className="font-montserrat px-0 bg-gray-100">
           <Head>
             <title>Dashboard</title>
             <meta name="description" content="Dashboard for TSCAPP" />
@@ -87,7 +87,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
               footer={props?.footer || sideFooter}
               menu={props?.sidebar || sideBarMenu}
               className={`${
-                open ? 'w-72' : 'w-20'
+                open ? 'w-72 ease-out' : 'w-20 ease-in'
               } duration-300 fixed bg-white h-full min-h-screen dark:bg-gray-900 dark:text-gray-50`}
               action={toggle}
             />
@@ -126,27 +126,28 @@ const Dashboard: NextPage<PropTypes> = (props) => {
 
                     {caret && (
                       <motion.div
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
                         // variants={motion1}
                         className="dropdown-menu"
                       >
                         <ul>
-                          {
-                            dropdown?.map((header: any, id: any) => (
-                              <>
-                                <Link href={header.link} className="sm:text-md md:text-sm">
-                                  <li
-                                    key={id}
-                                    className="px-5 py-4 hover:bg-gray-100"
-                                  >
-                                    {header.name}
-                                  </li>
-                                </Link>
-                                <hr />
-                              </>
-                            ))
-                          }
+                          {dropdown?.map((header: any, id: any) => (
+                            <>
+                              <Link
+                                href={header.link}
+                                className="sm:text-md md:text-sm"
+                              >
+                                <li
+                                  key={id}
+                                  className="px-5 py-4 hover:bg-gray-100"
+                                >
+                                  {header.name}
+                                </li>
+                              </Link>
+                              <hr />
+                            </>
+                          ))}
                         </ul>
                       </motion.div>
                     )}
@@ -162,7 +163,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
         </div>
       )}
       {session && session?.user.role === 'student' && (
-        <div className='font-montserrat'>
+        <div className="font-montserrat">
           <Head>
             <title>Dashboard</title>
             <meta name="description" content="Dashboard for TSCAPP" />
@@ -249,7 +250,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
         </div>
       )}
       {session && session?.user.role === 'tutor' && (
-        <div className='font-montserrat'>
+        <div className="font-montserrat">
           <Head>
             <title>Dashboard</title>
             <meta name="description" content="Dashboard for TSCAPP" />
@@ -336,7 +337,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
         </div>
       )}
       {session && session?.user.role === 'admin' && (
-        <div className='font-montserrat'>
+        <div className="font-montserrat">
           <Head>
             <title>Dashboard</title>
             <meta name="description" content="Dashboard for TSCAPP" />

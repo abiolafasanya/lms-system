@@ -66,6 +66,8 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
     if (data?.error) {
       setError(true);
       setIsAuth(false);
+      target.email.value= '';
+      target.password.value='';
       setMessage(data.error);
       setTimeout(() => {
         setError(false);
@@ -76,6 +78,8 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
     }
     console.log(data);
     if (data !== null) {
+      target.email.value= '';
+      target.password.value='';
       setSuccess(true);
       setMessage('Logged in successfully');
       setIsAuth(false);

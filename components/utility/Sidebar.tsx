@@ -8,6 +8,7 @@ import {
 
 import Link from 'next/link';
 import { MdSearch } from 'react-icons/md';
+import { motion } from 'framer-motion';
 
 const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
   const [open, setOpen] = useState(false);
@@ -20,7 +21,11 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
     <div className={props.className}>
       <section className="relative">
         <header className="md:p-5">
-          <h1 className={`font-semibold ${open ? 'sm:text-4xl sm:py-5 sm:px-5 md:text-2xl' : 'text-lg p-2'}`}>
+          <h1
+            className={`font-semibold ${
+              open ? 'sm:text-4xl sm:py-5 sm:px-5 md:text-2xl' : 'text-lg p-2'
+            }`}
+          >
             {open ? 'TSCAPP' : 'TA'}
           </h1>
           <button
@@ -55,9 +60,15 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
               <Link href={menu.link} key={id}>
                 <li className="flex dark:hover:text-gray-900 space-x-4 items-center hover:bg-gray-300 p-2 rounded">
                   <menu.icon
-                    className={`${open ? 'sm:text-5xl md:text-xl' : 'sm:text-3xl md:text-xl'}`}
+                    className={`${
+                      open ? 'sm:text-5xl md:text-xl' : 'sm:text-3xl md:text-xl'
+                    }`}
                   />
-                  {open && <span className='sm:text-2xl md:text-sm font-semibold'>{menu.name}</span>}
+                  {open && (
+                    <span className="sm:text-2xl md:text-sm font-semibold">
+                      {menu.name}
+                    </span>
+                  )}
                 </li>
               </Link>
             ))}
@@ -65,18 +76,28 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
           <div className="border border-gray-300 my-2"></div>
         </main>
         <footer className="px-5">
-          <ul className="flex flex-col sm:space-y-2 sm:mt-3 md:mt-px md:space-y-1">
+          <motion.ul
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col sm:space-y-2 sm:mt-3 md:mt-px md:space-y-1"
+          >
             {footer.map((footer: any, id: any) => (
               <Link href={footer.link} key={id}>
-                <li className="flex dark:hover:text-gray-900 space-x-4 items-center hover:bg-gray-300 p-2 rounded">
+                <motion.li className="flex dark:hover:text-gray-900 space-x-4 items-center hover:bg-gray-300 p-2 rounded">
                   <footer.icon
-                    className={`${open ? 'sm:text-5xl md:text-xl' : 'sm:text-3xl md:text-xl'}`}
+                    className={`${  
+                      open ? 'sm:text-5xl md:text-xl' : 'sm:text-3xl md:text-xl'
+                    }`}
                   />
-                  {open && <span className='sm:text-2xl md:text-sm font-semibold' >{footer.name}</span>}
-                </li>
+                  {open && (
+                    <span className="sm:text-2xl md:text-sm font-semibold">
+                      {footer.name}
+                    </span>
+                  )}
+                </motion.li>
               </Link>
             ))}
-          </ul>
+          </motion.ul>
         </footer>
       </section>
     </div>

@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
-import {randomUUID} from 'crypto';
+import { randomUUID } from 'crypto';
 import multer from 'multer';
 
 cloudinary.config({
@@ -9,22 +9,21 @@ cloudinary.config({
 });
 
 export default class Cloudinary {
-
   static multer = multer({
     storage: multer.diskStorage({
-        destination: '../public',
-        filename: (req, file, cb) => cb(null, file.fieldname + "-" + randomUUID()),
+      destination: '../public',
+      filename: (req, file, cb) =>
+        cb(null, file.fieldname + '-' + randomUUID()),
     }),
-    limits: {fileSize: 5 * 1024 * 1024},
+    limits: { fileSize: 50 * 1024 * 1024 },
     fileFilter(req, file, cb) {
       if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true)
-    } else {
-      cb(null, false)
-    }
+        cb(null, true);
+      } else {
+        cb(null, false);
+      }
     },
-
-})
+  });
 
   static uploader = async (file: any, folder: any) => {
     try {

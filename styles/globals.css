@@ -33,10 +33,10 @@
     @apply block p-3;
   }
   .form-label {
-    @apply mb-2 sm:text-[1rem] block font-semibold capitalize dark:text-black;
+    @apply mb-2 sm:text-[1rem] block font-semibold capitalize dark:text-gray-100;
   }
   .form-control {
-    @apply rounded py-3 px-5 sm:text-[1rem] block w-full text-black dark:bg-gray-200 dark:border-gray-600 dark:text-black outline-none mt-2 dark:focus:border-white focus:border-blue-500 border bg-white text-black;
+    @apply rounded py-3 px-5 sm:text-[1rem] block w-full text-black dark:bg-gray-200 dark:border-gray-600 dark:text-black outline-none mt-2 dark:focus:border-white focus:border-blue-500 border bg-white;
   }
   .form-group {
     @apply block my-4;

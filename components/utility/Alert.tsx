@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { FaInfoCircle } from 'react-icons/fa';
-import { Iprops } from './../../utility/interfaces';
+import { Iprops } from 'utility/interfaces';
 
 const Alert: React.FC<Iprops> = (props) => {
   const [close, setClose] = useState<boolean>(false);
