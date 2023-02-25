@@ -45,7 +45,7 @@ const roles = ({users}: Iprops) => {
           </div>
           <menu className='card'>
             {
-               users.map((user, index) => (
+               users.map((user: any, index) => (
                 <div key={user.id}>
                 { index < maxUser && (
                   <>
