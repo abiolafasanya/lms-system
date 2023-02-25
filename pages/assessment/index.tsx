@@ -30,7 +30,7 @@ const Assessment = (props: Iprops) => {
 
   return (
     <Dashboard menu={sideBarMenu} footer={sideFooter}>
-      <Container className={`min-h-screen px-5 mx-auto`}>
+      <Container className={`min-h-screen px-0 md:max-w-6xl mx-auto`}>
         {success && <AlertMsg message={message} type="alert-success" />}
         {error && <AlertMsg message={message} type="alert-error" />}
         <h1 className="text-2xl ml-2">Assessment</h1>

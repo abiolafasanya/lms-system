@@ -90,18 +90,18 @@ const options: NextAuthOptions = {
     strategy: 'jwt',
 
     // Seconds - How long until an idle session expires and is no longer valid.
-    maxAge: 1 * 24 * 60 * 60, // 30 days
+    maxAge: 1 * 1 * 60 * 60, // 30 days
 
     // Seconds - Throttle how frequently to write to database to extend a session.
     // Use it to limit write operations. Set to 0 to always update the database.
     // Note: This option is ignored if using JSON Web Tokens
-    updateAge: 24 * 60 * 60, // 24 hours
+    updateAge: 1 * 60 * 60, // 24 hours
   },
   jwt: {
     // A secret to use for key generation - you should set this explicitly
     // Defaults to NextAuth.js secret.
     secret: process.env.NEXTAUTH_SECRET,
-    maxAge: 60 * 60 * 24 * 1, // 30 days
+    maxAge: 60 * 60 * 1 * 1, // 30 days
     // Set to true to use encryption (default: false)
     // encryption: true,
 

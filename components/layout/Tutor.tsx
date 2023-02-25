@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '@utility/Sidebar';
 import { FaBell, FaCaretDown } from 'react-icons/fa';
-import {
-  sideBarMenu,
-  sideFooter,
-  headMenu,
-  tutorSidebar,
-  studentSideBar,
-} from 'data/index';
+import { sideFooter, headMenu, tutorSidebar } from 'data/index';
 import { MdChat } from 'react-icons/md';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
@@ -66,18 +60,26 @@ const Tutor: NextPage<PropTypes> = (props) => {
     if (status === 'unauthenticated') {
       router.push('/auth/login');
     }
+    if (session?.user.role === 'admin') {
+      router.push('/dashboard');
+    }
     if (session?.user.role === 'user') {
       router.push('/dashboard');
     }
     setDropDown(props.header || headMenu);
     setTimeout(() => {
-      // console.log(status, session, auth);
       setAuth({ status, session, isAuth: true });
     }, 50);
   }, [status]);
 
   return (
     <NoSSR>
+      {!session ||
+        (session?.user.role !== 'tutor' && (
+          <div className="alert-info mx-auto mt-8 max-w-3xl">
+            You are not authorized to access this page
+          </div>
+        ))}
       {session && session?.user.role === 'tutor' && (
         <div className="font-montserrat px-0 bg-gray-100">
           <Head>
@@ -136,9 +138,9 @@ const Tutor: NextPage<PropTypes> = (props) => {
                       >
                         <ul>
                           {dropdown?.map((header: any, id: any) => (
-                           <li key={id} className="hover:bg-gray-100 p-2">
-                           <Link href={header.link}>{header.name}</Link>
-                           </li>
+                            <li key={id} className="hover:bg-gray-100 p-2">
+                              <Link href={header.link}>{header.name}</Link>
+                            </li>
                           ))}
                         </ul>
                       </motion.div>

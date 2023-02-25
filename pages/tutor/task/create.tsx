@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useId } from 'react';
+import React, { useState, useRef, useId } from 'react';
 import Tutor from '@layout/Tutor';
 import Container from '@utility/Container';
 import dynamic from 'next/dynamic';
@@ -10,6 +10,7 @@ import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
 import Axios from 'helper/axios';
 import Link from 'next/link';
+import Select from 'react-select/dist/declarations/src/Select';
 
 const animatedComponents = makeAnimated();
 
@@ -31,6 +32,13 @@ const create = () => {
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty()
   );
+  const descriptionRef = useRef<HTMLInputElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const pointRef = useRef<HTMLInputElement>(null);
+  const assignedToRef = useRef<Select>(null);
+  const deadlineRef = useRef<HTMLInputElement>(null);
+  const attachmentRef = useRef<HTMLInputElement>(null);
+
   const [description, setDescription] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [point, setPoint] = useState(0);
@@ -38,69 +46,11 @@ const create = () => {
   const [assignedTo, setAssignedTo] = useState<any>('');
   const [attachment, setAttachment] = useState<any>(null);
 
-  useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
+  async function formHandler(e: React.SyntheticEvent) {
+    e.preventDefault();
 
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
-  }, []);
-
-  async function create(event: React.SyntheticEvent | any) {
-    event.preventDefault();
-    const formData = new FormData();
-    // for (const file of attachment.files) {
-    // }      setCreateObjectURL(URL.createObjectURL(i));
-
-    formData.append('file', attachment);
-    formData.append('upload_preset', 'my-uploads');
-    let URLCloudinary =
-      'https://api.cloudinary.com/v1_1/fastbeetech/image/upload';
-
-    let upload;
-
-    if (attachment !== null || attachment !== undefined) {
-      upload = await fetch(URLCloudinary, {
-        method: 'POST',
-        body: formData,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setAttachment(data);
-          const input = {
-            title,
-            description,
-            point,
-            attachment: data,
-            deadline,
-            assignedTo,
-          };
-          return input;
-        })
-        .catch((error) => error.message);
-    }
-    if (attachment === null) {
-      upload = {
-        title,
-        description,
-        point,
-        attachment: {},
-        deadline,
-        assignedTo,
-      };
-    }
-
-    console.log(upload);
-
-    const { data, status } = await Axios.post('/api/task/create', upload);
-    if (data.error) {
-      console.error(data.error);
-    }
-    if (status === 200 || status === 201) {
-      console.log(data);
-    }
+    const target = e.target;
+    console.log(target);
   }
 
   return (
@@ -111,11 +61,11 @@ const create = () => {
             <h1 className="text-2xl">Create Task</h1>
             <div className="text-gray-500 mb-4 flex justify-between items-center">
               <span>
-                <Link href="/task">Task</Link> &larr; Create Task
+                <Link href="/tutor/task">Task</Link> &larr; Create Task
               </span>
             </div>
             <div className="card text-dark ">
-              <form onSubmit={create}>
+              <form onSubmit={formHandler}>
                 <div className="form-group">
                   <label htmlFor="title" className="form-label">
                     Task Title
@@ -123,8 +73,9 @@ const create = () => {
                   <input
                     type="text"
                     id="title"
+                    ref={titleRef}
                     className="form-control"
-                    onChange={(e: any) => setTitle(e.target.value)}
+                    // onChange={(e: any) => setTitle(e.target.value)}
                   />
                 </div>
                 <div className="form-group">
@@ -147,20 +98,21 @@ const create = () => {
                 </div>
                 <div className="flex md:justify-between md:space-x-8 items-center">
                   <div className="form-group w-full">
-                    <label htmlFor="point" className="form-label">
+                    <label htmlFor="assignedto" className="form-label">
                       Assign to
                     </label>
                     <CreatableSelect
                       instanceId={useId()}
                       components={animatedComponents}
                       options={[{ value: 'everyone', label: 'EveryOne' }]}
-                      inputId="tags"
+                      inputId="assignedto"
                       isClearable
                       className="dark:text-black"
                       isMulti
-                      onChange={(e) =>
-                        setAssignedTo(e.map((item: any) => item.value))
-                      }
+                      ref={assignedToRef}
+                      // onChange={(e) =>
+                      //   setAssignedTo(e.map((item: any) => item.value))
+                      // }
                     />
                   </div>
                   <div className="form-group w-full">
@@ -215,3 +167,58 @@ const create = () => {
 };
 
 export default create;
+
+// async function create(event: React.SyntheticEvent | any) {
+//   event.preventDefault();
+//   const formData = new FormData();
+//   // for (const file of attachment.files) {
+//   // }      setCreateObjectURL(URL.createObjectURL(i));
+
+//   formData.append('file', attachment);
+//   formData.append('upload_preset', 'my-uploads');
+//   let URLCloudinary =
+//     'https://api.cloudinary.com/v1_1/fastbeetech/image/upload';
+
+//   let upload;
+
+//   if (attachment !== null || attachment !== undefined) {
+//     upload = await fetch(URLCloudinary, {
+//       method: 'POST',
+//       body: formData,
+//     })
+//       .then((res) => res.json())
+//       .then((data) => {
+//         setAttachment(data);
+//         const input = {
+//           title,
+//           description,
+//           point,
+//           attachment: data,
+//           deadline,
+//           assignedTo,
+//         };
+//         return input;
+//       })
+//       .catch((error) => error.message);
+//   }
+//   if (attachment === null) {
+//     upload = {
+//       title,
+//       description,
+//       point,
+//       attachment: {},
+//       deadline,
+//       assignedTo,
+//     };
+//   }
+
+//   console.log(upload);
+
+//   const { data, status } = await Axios.post('/api/task/create', upload);
+//   if (data.error) {
+//     console.error(data.error);
+//   }
+//   if (status === 200 || status === 201) {
+//     console.log(data);
+//   }
+// }

@@ -51,7 +51,7 @@ const index = () => {
               </p>
             </Alert>
           )}
-          <Container className="px-5 py-1">
+          <Container className="sm:px-2 md:px-0 md:max-w-6xl">
             <h2 className="text-2xl font-semibold py-4">Tutor</h2>
             <section className="flex md:flex-row flex-col">
               <div className="card flex space-x-4 items-center p-5 rounded border">

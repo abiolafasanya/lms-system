@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import Dashboard from '@layout/Dashboard';
+import Admin from '@layout/Admin';
 import Container from '@utility/Container';
 import { sideBarMenu, sideFooter } from 'data/index';
 import Link from 'next/link';
@@ -57,7 +57,7 @@ const Posts: NextPage = ({ datas }: any) => {
         setTimeout(() => {
           setSuccess(false);
           setMessage('');
-          router.push('/post');
+          router.push('/admin/post');
         }, 3000);
       }
     } catch (error) {
@@ -75,7 +75,7 @@ const Posts: NextPage = ({ datas }: any) => {
   }
 
   return (
-    <Dashboard menu={sideBarMenu} footer={sideFooter}>
+    <Admin menu={sideBarMenu} footer={sideFooter}>
       <Container className={'sm:px-2 md:px-0 md:max-w-6xl mx-auto min-h-screen'}>
         {openModal && (
           <Modal action={confirmDelete} title="Delete Post" close={closeModal}>
@@ -88,7 +88,7 @@ const Posts: NextPage = ({ datas }: any) => {
           )}
           {error && <AlertMsg message={message} type="alert-error py-2 mb-4" />}
           <div className="flex w-full">
-            <Link href="/post/create" className="ml-auto btn">
+            <Link href="/admin/post/create" className="ml-auto btn">
               Add new post
             </Link>
           </div>
@@ -120,7 +120,7 @@ const Posts: NextPage = ({ datas }: any) => {
                       </div>
                       <div className="flex items-center space-x-2">
                         <Link
-                          href={`/post/${post.id}`}
+                          href={`/admin/post/${post.id}`}
                           className="text-blue-500 hover:text-gray-600"
                         >
                           <FaEye />
@@ -129,7 +129,7 @@ const Posts: NextPage = ({ datas }: any) => {
                           (post?.user?.username || post.user.name) && (
                           <>
                             <Link
-                              href={`/post/${post.id}/edit`}
+                              href={`/admin/post/${post.id}/edit`}
                               className="text-blue-500 hover:text-blue-600"
                             >
                               <FaEdit />
@@ -150,7 +150,7 @@ const Posts: NextPage = ({ datas }: any) => {
           </div>
         </section>
       </Container>
-    </Dashboard>
+    </Admin>
   );
 };
 

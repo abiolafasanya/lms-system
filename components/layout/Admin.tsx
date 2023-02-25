@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '@utility/Sidebar';
 import { FaBell, FaCaretDown } from 'react-icons/fa';
-import {
-  sideBarMenu,
-  sideFooter,
-  headMenu,
-  tutorSidebar,
-  studentSideBar,
-} from 'data/index';
+import { adminSideBar, sideFooter, headMenu } from 'data/index';
 import { MdChat } from 'react-icons/md';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
@@ -23,6 +17,7 @@ import { motion } from 'framer-motion';
 import { motion1 } from 'data/motion';
 import { NextPage } from 'next';
 import NoSSR from 'components/NoSSR';
+import Container from '@utility/Container';
 
 const Toggle = dynamic(() => import('@utility/Toggle'), { ssr: false });
 
@@ -52,12 +47,10 @@ const Admin: NextPage<PropTypes> = (props) => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   }
   useEffect(() => {
-    let isMounted = true;
     const controller = new AbortController();
     console.log(theme);
 
     return () => {
-      isMounted = false;
       controller.abort();
     };
   }, [theme]);
@@ -66,15 +59,24 @@ const Admin: NextPage<PropTypes> = (props) => {
     if (status === 'unauthenticated') {
       router.push('/auth/login');
     }
+    if (session?.user.role === 'tutor') {
+      router.push('/tutor');
+    }
+    if (session?.user.role === 'user') {
+      router.push('/dashboard');
+    }
     setDropDown(props.header || headMenu);
-    setTimeout(() => {
-      // console.log(status, session, auth);
-      setAuth({ status, session, isAuth: true });
-    }, 50);
+    setAuth({ status, session, isAuth: true });
   }, [status]);
 
   return (
     <NoSSR>
+      {!session ||
+        (session?.user.role !== 'admin' && (
+          <div className="alert-info mx-auto mt-8 max-w-3xl">
+            You are not authorized to access this page
+          </div>
+        ))}
       {session && session?.user.role === 'admin' && (
         <div className="font-montserrat px-0 bg-gray-100">
           <Head>
@@ -84,8 +86,8 @@ const Admin: NextPage<PropTypes> = (props) => {
           </Head>
           <div className="flex dark:bg-gray-800 px-0 dark:text-gray-100 bg-gray-100 text-black">
             <Sidebar
+              menu={props?.sidebar || adminSideBar}
               footer={props?.footer || sideFooter}
-              menu={props?.sidebar || sideBarMenu}
               className={`${
                 open ? 'w-72 ease-out' : 'w-20 ease-in'
               } duration-300 fixed bg-white h-full min-h-screen dark:bg-gray-900 dark:text-gray-50`}
@@ -156,15 +158,10 @@ const Admin: NextPage<PropTypes> = (props) => {
                 </div>
               </header>
               <section className="md:mx-auto text-black dark:text-gray-100 ">
-                {props.children}
+                <Container>{props.children}</Container>
               </section>
             </main>
           </div>
-        </div>
-      )}{' '}
-      {!session && (
-        <div className="alert-info mx-auto mt-8 max-w-3xl">
-          You are not authorized to access this page
         </div>
       )}
     </NoSSR>

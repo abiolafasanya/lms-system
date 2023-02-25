@@ -12,7 +12,7 @@
     @apply inline-block px-5 py-3 leading-none text-white bg-blue-500 hover:bg-blue-600 rounded-lg;
   }
   .mycontainer {
-    @apply  sm:w-full md:max-w-6xl mx-auto my-3 min-h-screen;
+    @apply  sm:w-full md:px-5 mx-auto my-3 min-h-screen;
   }
   .alert-success {
     @apply bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700;

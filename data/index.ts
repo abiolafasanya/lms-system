@@ -1,40 +1,39 @@
 import {
   GoDashboard,
   GoMilestone,
-  GoProject,
   GoFileDirectory,
   GoSettings,
-  GoSignOut,
-  GoQuestion,
+  GoTasklist,
 } from 'react-icons/go';
+
 import {
-  MdPostAdd,
+  MdPerson,
   MdEvent,
   MdArticle,
-  MdOutlineAssignment,
   MdAssessment,
   MdTaskAlt,
+  MdBadge,
+  MdDepartureBoard,
 } from 'react-icons/md';
-import { FaSignOutAlt } from 'react-icons/fa';
+
+import { FaSignOutAlt, FaTasks } from 'react-icons/fa';
 
 export const sideBarMenu = [
   { name: 'Dashboard', icon: GoDashboard, link: '/dashboard' },
   { name: 'Courses', icon: GoFileDirectory, link: '/course' },
-  { name: 'My Learning', icon: GoMilestone, link: '/my-learning' },
+  { name: 'My Learning', icon: GoMilestone, link: '#my-learning' },
   { name: 'Assessment', icon: MdAssessment, link: '/assessment' },
-  { name: 'Tasks', icon: MdTaskAlt, link: '/task' },
+  { name: 'Tasks', icon: FaTasks, link: '/task' },
   { name: 'Posts', icon: MdArticle, link: '/post' },
   // { name: 'Events', icon: MdEvent, link: '/event' },
 ];
 
-export const studentSideBar = [
-  { name: 'Dashboard', icon: GoDashboard, link: '/student' },
-  { name: 'Courses', icon: GoFileDirectory, link: '/course' },
-  { name: 'My Learning', icon: GoMilestone, link: '/my-learning' },
-  { name: 'Assessment', icon: MdAssessment, link: '/assessment' },
-  { name: 'Tasks', icon: MdTaskAlt, link: '/task' },
-  { name: 'Posts', icon: MdArticle, link: '/post' },
-  { name: 'Events', icon: MdEvent, link: '/event' },
+export const adminSideBar = [
+  { name: 'Dashboard', icon: GoDashboard, link: '/admin' },
+  { name: 'Users', icon: MdPerson, link: '/admin/users' },
+  { name: 'Roles', icon: MdBadge, link: '/admin/roles' },
+  { name: 'Posts', icon: MdArticle, link: '/admin/post' },
+  { name: 'Courses', icon: GoFileDirectory, link: '#course' },
 ];
 
 export const tutorSidebar = [
@@ -42,19 +41,19 @@ export const tutorSidebar = [
   { name: 'Courses', icon: GoFileDirectory, link: '/tutor/course' },
   { name: 'Assessment', icon: MdAssessment, link: '/tutor/assessment' },
   { name: 'Tasks', icon: MdTaskAlt, link: '/tutor/task' },
-  { name: 'Posts', icon: MdArticle, link: '/post' },
-  { name: 'Events', icon: MdEvent, link: '/event' },
+  { name: 'Posts', icon: MdArticle, link: '/tutor/post' },
+  { name: 'Events', icon: MdEvent, link: '#event' },
 ];
 
 export const sideFooter = [
-  { name: 'Account', icon: GoSettings, link: '/accounts' },
+  { name: 'Account', icon: GoSettings, link: '#accounts' },
   { name: 'Logout', icon: FaSignOutAlt, link: '/api/auth/signout' },
 ];
 
 export const headMenu = [
-  { name: 'My Profile & Settings', link: '/accounts/settings', icon: '' },
-  { name: 'Account Settings', link: '/accounts/settings', icon: '' },
-  { name: 'Help', link: '/accounts/settings', icon: '' },
+  { name: 'My Profile & Settings', link: '#accounts/settings', icon: '' },
+  { name: 'Account Settings', link: '#accounts/settings', icon: '' },
+  { name: 'Help', link: '#accounts/settings', icon: '' },
   { name: 'SignOut', link: '/api/auth/signout', icon: '' },
 ];
 

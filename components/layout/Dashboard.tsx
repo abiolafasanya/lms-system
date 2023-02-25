@@ -60,23 +60,25 @@ const Dashboard: NextPage<PropTypes> = (props) => {
     if (status === 'unauthenticated') {
       router.push('/auth/login');
     }
+    if (session?.user.role === 'admin') {
+      router.push('/admin');
+    }
     if (session?.user.role === 'tutor') {
       router.push('/tutor');
     }
     setDropDown(props.header || headMenu);
-    setTimeout(() => {
-      // console.log(status, session, auth);
-      setAuth({ status, session, isAuth: true });
-    }, 50);
+    setAuth({ status, session, isAuth: true });
+    
   }, [status]);
 
   return (
     <NoSSR>
-      {!session && (
-        <div className="alert-info mx-auto mt-8 max-w-3xl">
-          You are not authorized to access this page
-        </div>
-      )}
+      {!session ||
+        (session?.user.role !== 'user' && (
+          <div className="alert-info mx-auto mt-8 max-w-3xl">
+            You are not authorized to access this page
+          </div>
+      ))}
       {session && session?.user.role === 'user' && (
         <div className="font-montserrat px-0 bg-gray-100">
           <Head>
