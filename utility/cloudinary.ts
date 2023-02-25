@@ -11,7 +11,7 @@ cloudinary.config({
 export default class Cloudinary {
   static multer = multer({
     storage: multer.diskStorage({
-      destination: '../public',
+      destination: './public/uploads',
       filename: (req, file, cb) =>
         cb(null, file.fieldname + '-' + randomUUID()),
     }),

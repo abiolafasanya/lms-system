@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '@utility/Sidebar';
 import { FaBell, FaCaretDown } from 'react-icons/fa';
-import { sideBarMenu, sideFooter, headMenu } from 'data/index';
+import {
+  sideBarMenu,
+  sideFooter,
+  headMenu,
+  tutorSidebar,
+  studentSideBar,
+} from 'data/index';
 import { MdChat } from 'react-icons/md';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
@@ -20,7 +26,7 @@ import NoSSR from 'components/NoSSR';
 
 const Toggle = dynamic(() => import('@utility/Toggle'), { ssr: false });
 
-const Dashboard: NextPage<PropTypes> = (props) => {
+const User: NextPage<PropTypes> = (props) => {
   const [open, setOpen] = useState(false);
   const [caret, setCaret] = useState(false);
   const router = useRouter();
@@ -60,9 +66,6 @@ const Dashboard: NextPage<PropTypes> = (props) => {
     if (status === 'unauthenticated') {
       router.push('/auth/login');
     }
-    if (session?.user.role === 'tutor') {
-      router.push('/tutor');
-    }
     setDropDown(props.header || headMenu);
     setTimeout(() => {
       // console.log(status, session, auth);
@@ -72,11 +75,6 @@ const Dashboard: NextPage<PropTypes> = (props) => {
 
   return (
     <NoSSR>
-      {!session && (
-        <div className="alert-info mx-auto mt-8 max-w-3xl">
-          You are not authorized to access this page
-        </div>
-      )}
       {session && session?.user.role === 'user' && (
         <div className="font-montserrat px-0 bg-gray-100">
           <Head>
@@ -130,13 +128,25 @@ const Dashboard: NextPage<PropTypes> = (props) => {
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
+                        // variants={motion1}
                         className="dropdown-menu"
                       >
-                         <ul>
+                        <ul>
                           {dropdown?.map((header: any, id: any) => (
-                           <li key={id} className="hover:bg-gray-100 p-2">
-                           <Link href={header.link}>{header.name}</Link>
-                           </li>
+                            <li key={id}>
+                              <Link
+                                href={header.link}
+                                className="sm:text-md md:text-sm"
+                              >
+                                <a
+                                  key={id}
+                                  className="px-5 py-4 hover:bg-gray-100"
+                                >
+                                  {header.name}
+                                </a>
+                              </Link>
+                              <hr />
+                            </li>
                           ))}
                         </ul>
                       </motion.div>
@@ -151,9 +161,14 @@ const Dashboard: NextPage<PropTypes> = (props) => {
             </main>
           </div>
         </div>
+      )}{' '}
+      {!session && (
+        <div className="alert-info mx-auto mt-8 max-w-3xl">
+          You are not authorized to access this page
+        </div>
       )}
     </NoSSR>
   );
 };
 
-export default Dashboard;
+export default User;

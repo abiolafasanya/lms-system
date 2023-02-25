@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useId } from 'react';
-import Dashboard from '@layout/Dashboard';
+import Tutor from '@layout/Tutor';
 import Container from '@utility/Container';
 import dynamic from 'next/dynamic';
 import { EditorProps } from 'react-draft-wysiwyg';
@@ -104,7 +104,7 @@ const create = () => {
   }
 
   return (
-    <Dashboard>
+    <Tutor>
       <Container className={`min-h-screen`}>
         <main className="w-full">
           <section>
@@ -210,7 +210,7 @@ const create = () => {
           <section></section>
         </main>
       </Container>
-    </Dashboard>
+    </Tutor>
   );
 };
 

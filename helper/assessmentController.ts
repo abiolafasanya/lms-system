@@ -1,5 +1,7 @@
+import { Grade } from '@prisma/client';
 import { error } from 'console';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { userInfo } from 'os';
 import { errType } from 'utility/types';
 import Controller from './controller';
 
@@ -173,6 +175,39 @@ export default class assessmentController extends Controller {
         .json({ success: true, message: 'Assessment deleted' });
     } catch (error) {
       res.status(500).json({ message: error });
+    }
+  };
+
+  public static grade = async (req: NextApiRequest, res: NextApiResponse) => {
+    interface gradeData {
+      userId: string;
+      assessmentScore: number;
+      assessmentId: string;
+    }
+    try {
+      const body = req.body as gradeData;
+      const Grade = this.prisma.grade;
+      const findId = await this.prisma.grade.findFirst({
+        where: { userId: body.userId },
+      });
+      const foundAssessment = findId?.assessmentId as string;
+      let id: string;
+      if (findId) {
+        id = findId.id;
+      } else id = ''
+
+      const grade = await Grade.upsert({
+        create: body,
+        update: body,
+        where: { id: id },
+      });
+
+      console.log(grade);
+      if (!grade) throw new Error('Error occured while recording!');
+      return res.status(200).json({ success: true, message: 'Grade recorded' });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ message: error });
     }
   };
 }

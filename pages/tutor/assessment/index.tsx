@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Dashboard from '@layout/Dashboard';
+import Tutor from '@layout/Tutor';
 import { sideBarMenu, sideFooter } from 'data/index';
 import { GetServerSideProps } from 'next';
 import { PrismaClient } from '@prisma/client';
@@ -23,16 +23,13 @@ const Assessment = (props: any) => {
   const [id, setId] = useState<string>('');
 
   useEffect(() => {
-    let isMounted = true;
     const controller = new AbortController();
 
     setAssessment(props.assessments);
     return () => {
-      isMounted = false;
       controller.abort();
     };
   }, []);
-  // }, [assessments, success, error]);
 
   async function createAssessment(e: any) {
     e.preventDefault();
@@ -147,7 +144,7 @@ const Assessment = (props: any) => {
   }
 
   return (
-    <Dashboard menu={sideBarMenu} footer={sideFooter}>
+    <Tutor menu={sideBarMenu} footer={sideFooter}>
       <Container className={`min-h-screen px-5 mx-auto`}>
         {isModal && (
           <Modal
@@ -169,13 +166,13 @@ const Assessment = (props: any) => {
                     <p className="text-base">{item.description}</p>
                     <div className="flex space-x-2">
                       <Link
-                        href={`/assessment/${item.id}`}
+                        href={`/tutor/assessment/${item.id}`}
                         className="flex items-center space-x-2 text-gray-500 hover:text-gray-700"
                       >
                         <FaEye />
                       </Link>
                       <Link
-                        href={`/assessment/${item.id}/edit`}
+                        href={`/tutor/assessment/${item.id}/edit`}
                         className="flex items-center space-x-2 text-blue-500 hover:text-blue-700"
                       >
                         <FaEdit />
@@ -234,7 +231,7 @@ const Assessment = (props: any) => {
           </div>
         </section>
       </Container>
-    </Dashboard>
+    </Tutor>
   );
 };
 

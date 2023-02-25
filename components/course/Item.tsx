@@ -1,12 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
 import { formatCurrency } from 'utility/formatter';
+import { Decimal } from '@prisma/client/runtime';
 
 interface courseProps {
   title: string;
   image: string;
-  authour?: string;
-  price?: number;
+  author?: string;
+  price?: number | Decimal;
   link?: string;
   rating?: number;
 }
@@ -22,7 +23,7 @@ const Item = (props: courseProps) => {
         alt={props.title}
       />
       <div className='p-3 flex flex-col flex-wrap'>
-          <h3 className="font-semibold capitalize">{props.authour}</h3>
+          <h3 className="font-semibold capitalize">{props.title}</h3>
           <div>Rating {0.9 * 100}%</div>
           <div>{formatCurrency(props?.price as number)}</div>
       </div>

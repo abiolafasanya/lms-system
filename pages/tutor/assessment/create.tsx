@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Dashboard from '@layout/Dashboard';
+import Tutor from '@layout/Tutor';
 import { sideBarMenu, sideFooter } from 'data/index';
 import Container from 'components/utility/Container';
 import Axios from 'helper/axios';
@@ -62,7 +62,7 @@ const create = (props: any) => {
     // console.log(input);
   }
   return (
-    <Dashboard menu={sideBarMenu} footer={sideFooter}>
+    <Tutor menu={sideBarMenu} footer={sideFooter}>
       <Container className="mt-14 min-h-screen">
         <h2 className="text-2xl">Assessment</h2>
         <div className="text-gray-500">
@@ -162,7 +162,7 @@ const create = (props: any) => {
           </section>
         </div>
       </Container>
-    </Dashboard>
+    </Tutor>
   );
 };
 

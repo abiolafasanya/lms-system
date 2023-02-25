@@ -1,4 +1,4 @@
-import Dashboard from '@layout/Dashboard';
+import Tutor from '@layout/Tutor';
 import { PrismaClient, Submission, Task, User } from '@prisma/client';
 import { AlertMsg } from '@utility/Alert';
 import Container from '@utility/Container';
@@ -122,7 +122,7 @@ const submission: NextPage = ({ data }: Props | any) => {
 
   return (
     <div>
-      <Dashboard>
+      <Tutor>
         <Container className={`h-screen dark:text-black`}>
           {isFeedbackModal && (
             <Modal
@@ -247,7 +247,7 @@ const submission: NextPage = ({ data }: Props | any) => {
             <div className="alert-info">You have no submissions</div>
           )}
         </Container>
-      </Dashboard>
+      </Tutor>
     </div>
   );
 };

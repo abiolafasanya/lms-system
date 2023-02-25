@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Dashboard from '@layout/Dashboard';
+import Tutor from '@layout/Tutor';
 import { sideBarMenu, sideFooter } from 'data/index';
 import { GetServerSideProps, NextPage } from 'next';
 import styles from 'styles/Assessment.module.css';
@@ -71,7 +71,7 @@ const Assessment: NextPage<Props> = ({ questions }) => {
   };
 
   return (
-    <Dashboard menu={sideBarMenu} footer={sideFooter}>
+    <Tutor menu={sideBarMenu} footer={sideFooter}>
       <section className="mt-14 px-5 lg:w-3/4 mx-auto">
         {showScore ? (
           <h1 className="text-3xl h-screen font-semibold text-center text-black">
@@ -145,7 +145,7 @@ const Assessment: NextPage<Props> = ({ questions }) => {
           </>
         )}
       </section>
-    </Dashboard>
+    </Tutor>
   );
 };
 

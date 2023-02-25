@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Dashboard from '@layout/Dashboard';
+import Tutor from '@layout/Tutor';
 import { sideBarMenu, sideFooter } from 'data/index';
 import Container from '@utility/Container';
 import Axios from 'helper/axios';
@@ -50,12 +50,12 @@ const create = ({ a, q }: any) => {
   }
 
   return (
-    <Dashboard menu={sideBarMenu} footer={sideFooter}>
+    <Tutor menu={sideBarMenu} footer={sideFooter}>
       <Container className="mt-14 min-h-screen">
         <h2 className="text-2xl">Assessment</h2>
         <div className="text-gray-500">
           <span>
-            <Link href="/assessment">Assessment</Link> &larr; {assessment.id}
+            <Link href="/tutor/assessment">Assessment</Link> &larr; {assessment.id}
           </span>
         </div>
         {success && <AlertMsg message={message} type="alert-success" />}
@@ -121,7 +121,7 @@ const create = ({ a, q }: any) => {
           </section>
         </div>
       </Container>
-    </Dashboard>
+    </Tutor>
   );
 
   function questionStatus(status: number, data: any) {

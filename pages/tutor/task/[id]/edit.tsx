@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Dashboard from '@layout/Dashboard';
+import Tutor from '@layout/Tutor';
 import Container from '@utility/Container';
 
 const edit = () => {
   return (
-    <Dashboard>
+    <Tutor>
       <Container></Container>
-    </Dashboard>
+    </Tutor>
   );
 };
 

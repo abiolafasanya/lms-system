@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useId } from 'react';
-import Dashboard from '@layout/Dashboard';
+import Tutor from '@layout/Tutor';
 import Container from '@utility/Container';
 import classNames from 'classnames';
 import {
@@ -66,7 +66,7 @@ const Tasks: NextPage<Props> = ({ data }) => {
     );
 
   return (
-    <Dashboard>
+    <Tutor>
       <Container className="h-screen">
         <div className="flex space-x-6 my-4">
           <Link href="/tutor/task/create" className="btn flex space-x-2">
@@ -137,7 +137,7 @@ const Tasks: NextPage<Props> = ({ data }) => {
           </CustomTable>
         </section>
       </Container>
-    </Dashboard>
+    </Tutor>
   );
 };
 

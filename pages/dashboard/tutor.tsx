@@ -91,7 +91,8 @@ const index = () => {
                 </div>
               </div>
             </section>
-          
+          </Container>
+          <Container>
             <motion.section
               initial="hidden"
               animate="visible"

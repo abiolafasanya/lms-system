@@ -1,30 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import Dashboard from '@layout/Dashboard';
+import Tutor from '@layout/Tutor';
 import Container from '@utility/Container';
+import ShowResult from '@utility/ShowResult';
 import { GetServerSideProps } from 'next';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Assessment, Question } from '@prisma/client';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+
+interface Iprops  {
+  assessment: typeAssessment
+}
+
+interface typeAssessment extends Assessment  {
+  Question: Question[]
+}
 
 const prisma = new PrismaClient();
-const Asessment = (props: any) => {
-  const [questions, setQuestion] = useState<any[]>([]);
+const Asessment = ({assessment}: Iprops) => {
+  const { data: session } = useSession();
+  const [questions, setQuestion] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState([
     { answerByUser: '' },
   ]);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+  const [userInfo, setUserInfo] = useState(() => session?.user);
 
   useEffect(() => {
-    let isMounted = true;
     const controller = new AbortController();
-    setQuestion(props.assessment.Question);
-    console.log(questions);
+    let quest = assessment.Question;
+    setQuestion(() => quest);
+    let su = session?.user;
+    setUserInfo(() => su as typeof su);
     return () => {
-      isMounted = false;
       controller.abort();
     };
-  }, [questions]);
+  }, [session]);
+
   const handlePrevious = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const prevQues = currentQuestion - 1;
@@ -44,6 +57,7 @@ const Asessment = (props: any) => {
     setSelectedOptions([...selectedOptions]);
   };
 
+
   const handleSubmitButton = (e: React.SyntheticEvent) => {
     e.preventDefault();
     let newScore = 0;
@@ -60,29 +74,30 @@ const Asessment = (props: any) => {
   };
 
   return (
-    <Dashboard>
+    <Tutor>
       <Container className={`min-h-screen`}>
         <h2 className="text-2xl">Assessment</h2>
         <div className="text-gray-500">
           <span>
-            <Link href="/assessment">Assessment</Link> &larr;{' '}
-            {props.assessment.id}
+            <Link href="/tutor/assessment">Assessment</Link> &larr;{' '}
+            {assessment.id}
           </span>
         </div>
         <section className="mt-14 px-5 lg:w-3/4 mx-auto">
           {showScore ? (
-            <h1 className="text-3xl h-screen font-semibold text-center text-black">
-              You scored {score} out of {questions.length}
-            </h1>
+            <ShowResult
+              score={score}
+              questions={questions}
+              user={userInfo}
+              assessment={assessment}
+            />
           ) : (
             <>
               <div className="max-w-6xl bg-white rounded mx-auto mt-12 px-5 py-3 shadow-md">
                 <h1 className="text-2xl text-gray-700 text-center font-semibold">
-                  {props.assessment.title}
+                  {assessment.title}
                 </h1>
-                <p className="text-base">{props.assessment.description}</p>
-                {/* <div>Time: 30:10 Mins Remaining</div> */}
-
+                <p className="text-base">{assessment.description}</p>
                 <div className="flex flex-col items-start w-full">
                   <h4 className="mt-10 text-xl text-black/60">
                     Question {currentQuestion + 1} of {questions.length}
@@ -152,7 +167,7 @@ const Asessment = (props: any) => {
           )}
         </section>
       </Container>
-    </Dashboard>
+    </Tutor>
   );
 };
 
