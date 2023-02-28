@@ -16,3 +16,10 @@ const CURRENCY_FORMATTER = new Intl.NumberFormat(LOCALE.NG, {
 export function formatCurrency(number: number) {
     return CURRENCY_FORMATTER.format(number)
 }
+
+export function formatDate(date: Date) {
+  const f = new Intl.DateTimeFormat(LOCALE.NG, {
+    dateStyle: 'full',
+  });
+  return f.format(date);
+}

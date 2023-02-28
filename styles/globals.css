@@ -58,7 +58,7 @@
     @apply px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900;
   }
   .dropdown-menu {
-    @apply absolute border text-black bg-white sm:w-56 md:w-48 rounded shadow-sm sm:-right-4 sm:top-8 md:top-8 md:right-0;
+    @apply absolute border text-black bg-white sm:w-56 rounded shadow-sm sm:-right-4 sm:top-8 md:top-8 md:right-0;
   }
   .course-link {
     @apply cursor-pointer hover:bg-gray-200 p-2 dark:hover:bg-gray-500 

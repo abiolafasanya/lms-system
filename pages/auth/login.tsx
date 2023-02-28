@@ -39,7 +39,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
   const [isAuth, setIsAuth] = useState(false);
 
   // Credentials Login
-  async function credentialsLogin(e: React.SyntheticEvent) {
+  async function credentialsLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const target = e.target as typeof e.target & {
@@ -66,8 +66,8 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
     if (data?.error) {
       setError(true);
       setIsAuth(false);
-      target.email.value= '';
-      target.password.value='';
+      target.email.value = '';
+      target.password.value = '';
       setMessage(data.error);
       setTimeout(() => {
         setError(false);
@@ -78,8 +78,8 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
     }
     console.log(data);
     if (data !== null) {
-      target.email.value= '';
-      target.password.value='';
+      target.email.value = '';
+      target.password.value = '';
       setSuccess(true);
       setMessage('Logged in successfully');
       setIsAuth(false);
@@ -99,13 +99,14 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
   }
 
   // Email without password login
-  const OAuthMailHandler = async (e: React.SyntheticEvent) => {
+  const OAuthMailHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let result;
-    console.log(OAuthEmail);
-    setTimeout(async () => {
-      result = await signIn('email', { email: OAuthEmail });
-    }, 3000);
+    const target = e.target as HTMLInputElement;
+    console.log(target);
+    // console.log(OAuthEmail);
+    // setTimeout(async () => {
+    //   await signIn('email', { email: OAuthEmail });
+    // }, 3000);
   };
 
   // Social OAuth Handler

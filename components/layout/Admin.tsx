@@ -28,7 +28,7 @@ const Admin: NextPage<PropTypes> = (props) => {
   const { auth, setAuth } = useAuth();
   const { status, data: session } = useSession();
   const { theme, setTheme } = useTheme();
-  const [dropdown, setDropDown] = useState<any[]>([]);
+  const [dropdown, setDropDown] = useState<typeof headMenu>([]);
 
   const ToggleIconClass = classNames([
     'rounded-full px-4 border-[3px] bg-white border-gray-500',
@@ -65,7 +65,7 @@ const Admin: NextPage<PropTypes> = (props) => {
     if (session?.user.role === 'user') {
       router.push('/dashboard');
     }
-    setDropDown(props.header || headMenu);
+    setDropDown(props.header || (headMenu as typeof headMenu));
     setAuth({ status, session, isAuth: true });
   }, [status]);
 
@@ -133,24 +133,17 @@ const Admin: NextPage<PropTypes> = (props) => {
                         // variants={motion1}
                         className="dropdown-menu"
                       >
-                        <ul>
-                          {dropdown?.map((header: any, id: any) => (
-                            <li key={id}>
-                              <Link
-                                href={header.link}
-                                className="sm:text-md md:text-sm"
-                              >
-                                <a
-                                  key={id}
-                                  className="px-5 py-4 hover:bg-gray-100"
-                                >
-                                  {header.name}
-                                </a>
-                              </Link>
-                              <hr />
-                            </li>
+                        <menu className="flex flex-col">
+                          {dropdown?.map((header, index) => (
+                            <Link
+                              key={index}
+                              href={header.link}
+                              className="sm:text-md md:text-sm px-5 py-4 hover:bg-gray-100"
+                            >
+                              {header.name}
+                            </Link>
                           ))}
-                        </ul>
+                        </menu>
                       </motion.div>
                     )}
                   </span>

@@ -1,0 +1,34 @@
+.container {
+  overflow-x: scroll;
+  width: 100%;
+  padding: 0 .5rem;
+}
+
+.table {
+  border-collapse: collapse;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  table-layout: auto;
+  width: 100%;
+}
+.table tr {
+  width: 100%;
+}
+
+.table thead th, .table tbody td {
+  padding: 10px;
+  transition: ease-in-out;
+  white-space: nowrap;
+}
+
+.table tbody {
+  background-color: #ddd;
+}
+
+.table tbody tr:nth-of-type(even) {
+  background-color: #f3f2f1;
+}
+.table tbody tr:hover {
+  background-color: #c7c7c7;
+}
