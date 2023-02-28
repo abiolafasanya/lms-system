@@ -45,7 +45,7 @@ export const tutorSidebar = [
 ];
 
 export const sideFooter = [
-  { name: 'Account', icon: GoSettings, link: '/accounts' },
+  { name: 'Account', icon: GoSettings, link: '/account' },
   { name: 'Logout', icon: FaSignOutAlt, link: '/api/auth/signout' },
 ];
 
