@@ -3,13 +3,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String @db.ObjectId
   type              String
   provider          String
   providerAccountId String
@@ -26,28 +26,28 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
-  userId       String
+  userId       String @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Course {
-  id           String    @id @default(cuid())
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   description  String
   material     String[]
   videos       String[]
   requirements String[]
   category     String?
-  price        Decimal?  @default(0.0)
-  discount     Decimal?
+  price        Float?  @default(0.0)
+  discount     Float?
   stars        Int?      @default(0)
   purchase     Int?      @default(0)
   image        String?
-  tutorId      String?
-  userId       String?
+  tutorId      String? @db.ObjectId
+  userId       String? @db.ObjectId
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   Tutor        Tutor?    @relation(fields: [tutorId], references: [id], onDelete: Cascade)
@@ -57,11 +57,11 @@ model Course {
 }
 
 model Tutor {
-  id       String     @id @default(cuid())
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
   about    String
-  rating   Decimal?   @default(0.0)
+  rating    Float   @default(0.0)
   active   Boolean?   @default(false)
-  userId   String
+  userId   String @db.ObjectId
   date     DateTime   @default(now())
   courses  Course[]
   Question Question[]
@@ -70,13 +70,13 @@ model Tutor {
 }
 
 model Student {
-  id          String       @id @default(cuid())
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
   courses     String[]
   about       String
   certificate String[]
   active      Boolean?     @default(false)
-  courseId    String?
-  userId      String
+  courseId    String? @db.ObjectId
+  userId      String @db.ObjectId
   date        DateTime     @default(now())
   Assessment  Assessment[]
   socials     Social[]
@@ -85,11 +85,11 @@ model Student {
 }
 
 model Social {
-  id        String   @id @default(cuid())
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
   username  String?
   link      String?
-  tutorId   String?
-  studentId String?
+  tutorId   String? @db.ObjectId
+  studentId String? @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Student   Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
@@ -97,8 +97,8 @@ model Social {
 }
 
 model Post {
-  id        String    @id @default(cuid())
-  userId    String
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @db.ObjectId
   title     String    @unique
   content   String?
   createdAt DateTime  @default(now())
@@ -113,9 +113,9 @@ model Post {
 }
 
 model Comment {
-  id        String   @id @default(cuid())
-  userId    String
-  postId    String
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @db.ObjectId
+  postId    String @db.ObjectId
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -124,12 +124,12 @@ model Comment {
 }
 
 model Question {
-  id           String      @id @default(cuid())
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
   answer       String
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  tutorId      String?
-  assessmentId String?
+  tutorId      String? @db.ObjectId
+  assessmentId String? @db.ObjectId
   question     String
   options      Json[]
   Assessment   Assessment? @relation(fields: [assessmentId], references: [id])
@@ -137,8 +137,8 @@ model Question {
 }
 
 model Assessment {
-  id          String     @id @default(cuid())
-  studentId   String?
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  studentId   String? @db.ObjectId
   date        DateTime   @default(now())
   questionId  String?
   title       String
@@ -149,19 +149,19 @@ model Assessment {
 }
 
 model Grade {
-  id              String      @id @default(cuid())
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
   taskScore       Int?
   assessmentScore Int?
-  assessmentId    String?
-  taskId          String?
+  assessmentId    String? @db.ObjectId
+  taskId          String? @db.ObjectId
   assessment      Assessment? @relation(fields: [assessmentId], references: [id])
   tasks           Task?       @relation(fields: [taskId], references: [id])
   user            User        @relation(fields: [userId], references: [id])
-  userId          String
+  userId          String @db.ObjectId
 }
 
 model User {
-  id            String       @id @default(cuid())
+id                String @id @default(auto()) @map("_id") @db.ObjectId
   email         String?      @unique
   password      String?
   emailVerified DateTime?
@@ -184,7 +184,7 @@ model User {
 }
 
 model Task {
-  id          String       @id @default(cuid())
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
   point       Int
@@ -192,7 +192,7 @@ model Task {
   assignedTo  String[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  courseId    String?
+  courseId    String? @db.ObjectId
   attachment  Json?
   Grade       Grade[]
   course      Course?      @relation(fields: [courseId], references: [id])
@@ -200,21 +200,22 @@ model Task {
 }
 
 model Submission {
-  id          String    @id @default(cuid())
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
   user        User?     @relation(fields: [userId], references: [id])
   task        Task      @relation(fields: [taskId], references: [id])
-  taskId      String
+  taskId      String @db.ObjectId
   score       Int?
   graded      Boolean   @default(false)
   feedback    String?
   regraded    Boolean   @default(false)
-  userId      String?
+  userId      String? @db.ObjectId
   category    String    @default("general")
   submittedAt DateTime  @default(now())
   gradedAt    DateTime?
 }
 
 model VerificationToken {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
   token      String   @unique
   expires    DateTime
