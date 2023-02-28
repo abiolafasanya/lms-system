@@ -66,7 +66,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
     if (session?.user.role === 'tutor') {
       router.push('/tutor');
     }
-    setDropDown(props.header || headMenu);
+    setDropDown(headMenu);
     setAuth({ status, session, isAuth: true });
     
   }, [status]);
@@ -78,7 +78,7 @@ const Dashboard: NextPage<PropTypes> = (props) => {
           <div className="alert-info mx-auto mt-8 max-w-3xl">
             You are not authorized to access this page
           </div>
-      ))}
+        ))}
       {session && session?.user.role === 'user' && (
         <div className="font-montserrat px-0 bg-gray-100">
           <Head>
@@ -88,16 +88,16 @@ const Dashboard: NextPage<PropTypes> = (props) => {
           </Head>
           <div className="flex dark:bg-gray-800 px-0 dark:text-gray-100 bg-gray-100 text-black">
             <Sidebar
-              footer={props?.footer || sideFooter}
-              menu={props?.sidebar || sideBarMenu}
+              footer={sideFooter}
+              menu={sideBarMenu}
               className={`${
-                open ? 'w-72 ease-out' : 'w-20 ease-in'
+                open ? 'sm:w-20 md:w-72 ease-out' : 'w-20 ease-in'
               } duration-300 fixed bg-white h-full min-h-screen dark:bg-gray-900 dark:text-gray-50`}
               action={toggle}
             />
             <main
               className={`${
-                open ? 'ml-72' : 'ml-20'
+                open ? 'md:ml-72 sm:ml-20' : 'ml-20'
               } duration-300 w-full bg-gray-100 dark:bg-gray-800 dark:text-gray-50`}
             >
               <header className="flex w-full md:px-5">
@@ -134,11 +134,13 @@ const Dashboard: NextPage<PropTypes> = (props) => {
                         animate={{ opacity: 1 }}
                         className="dropdown-menu"
                       >
-                         <ul>
+                        <ul>
+                          <li className='p-2'>{session?.user?.name || 'unknown'}</li>
+                          <li className="border-b mb-2"></li>
                           {dropdown?.map((header: any, id: any) => (
-                           <li key={id} className="hover:bg-gray-100 p-2">
-                           <Link href={header.link}>{header.name}</Link>
-                           </li>
+                            <li key={id} className="hover:bg-gray-100 p-2">
+                              <Link href={header.link}>{header.name}</Link>
+                            </li>
                           ))}
                         </ul>
                       </motion.div>

@@ -33,9 +33,9 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
             onClick={() => toggleIcon(props.action)}
           >
             {open ? (
-              <FaArrowAltCircleLeft className="sm:text-4xl md:text-[24px] duration-500 transition-all" />
+              <FaArrowAltCircleLeft className="sm:hidden md:flex md:text-[24px] duration-500 transition-all" />
             ) : (
-              <FaArrowCircleRight className="sm:text-3xl md:text-[24px] duration-500 transition-all" />
+              <FaArrowCircleRight className="sm:hidden md:flex md:text-[24px] duration-500 transition-all" />
             )}
           </button>
         </header>
@@ -85,7 +85,7 @@ const Sidebar: React.FC<Iprops & SideMenu> = (props) => {
               <Link href={footer.link} key={id}>
                 <motion.li className="flex dark:hover:text-gray-900 space-x-4 items-center hover:bg-gray-300 p-2 rounded">
                   <footer.icon
-                    className={`${  
+                    className={`${
                       open ? 'sm:text-5xl md:text-xl' : 'sm:text-3xl md:text-xl'
                     }`}
                   />

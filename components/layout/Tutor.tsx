@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '@utility/Sidebar';
 import { FaBell, FaCaretDown } from 'react-icons/fa';
-import { sideFooter, headMenu, tutorSidebar } from 'data/index';
+import { sideFooter, headMenuT, tutorSidebar } from 'data/index';
 import { MdChat } from 'react-icons/md';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
@@ -66,7 +66,7 @@ const Tutor: NextPage<PropTypes> = (props) => {
     if (session?.user.role === 'user') {
       router.push('/dashboard');
     }
-    setDropDown(props.header || headMenu);
+    setDropDown(headMenuT);
     setTimeout(() => {
       setAuth({ status, session, isAuth: true });
     }, 50);
@@ -89,8 +89,8 @@ const Tutor: NextPage<PropTypes> = (props) => {
           </Head>
           <div className="flex dark:bg-gray-800 px-0 dark:text-gray-100 bg-gray-100 text-black">
             <Sidebar
-              footer={props?.footer || sideFooter}
-              menu={props?.sidebar || tutorSidebar}
+              footer={sideFooter}
+              menu={tutorSidebar}
               className={`${
                 open ? 'w-72 ease-out' : 'w-20 ease-in'
               } duration-300 fixed bg-white h-full min-h-screen dark:bg-gray-900 dark:text-gray-50`}

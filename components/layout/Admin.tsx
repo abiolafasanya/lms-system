@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '@utility/Sidebar';
 import { FaBell, FaCaretDown } from 'react-icons/fa';
-import { adminSideBar, sideFooter, headMenu } from 'data/index';
+import { adminSideBar, sideFooter, headMenuA } from 'data/index';
 import { MdChat } from 'react-icons/md';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
@@ -28,7 +28,7 @@ const Admin: NextPage<PropTypes> = (props) => {
   const { auth, setAuth } = useAuth();
   const { status, data: session } = useSession();
   const { theme, setTheme } = useTheme();
-  const [dropdown, setDropDown] = useState<typeof headMenu>([]);
+  const [dropdown, setDropDown] = useState<typeof headMenuA>([]);
 
   const ToggleIconClass = classNames([
     'rounded-full px-4 border-[3px] bg-white border-gray-500',
@@ -65,7 +65,7 @@ const Admin: NextPage<PropTypes> = (props) => {
     if (session?.user.role === 'user') {
       router.push('/dashboard');
     }
-    setDropDown(props.header || (headMenu as typeof headMenu));
+    setDropDown((headMenuA as typeof headMenuA));
     setAuth({ status, session, isAuth: true });
   }, [status]);
 
@@ -86,8 +86,8 @@ const Admin: NextPage<PropTypes> = (props) => {
           </Head>
           <div className="flex dark:bg-gray-800 px-0 dark:text-gray-100 bg-gray-100 text-black">
             <Sidebar
-              menu={props?.sidebar || adminSideBar}
-              footer={props?.footer || sideFooter}
+              menu={adminSideBar}
+              footer={sideFooter}
               className={`${
                 open ? 'w-72 ease-out' : 'w-20 ease-in'
               } duration-300 fixed bg-white h-full min-h-screen dark:bg-gray-900 dark:text-gray-50`}

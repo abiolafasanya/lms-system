@@ -13,7 +13,6 @@ import {
   MdAssessment,
   MdTaskAlt,
   MdBadge,
-  MdDepartureBoard,
 } from 'react-icons/md';
 
 import { FaSignOutAlt, FaTasks } from 'react-icons/fa';
@@ -46,13 +45,24 @@ export const tutorSidebar = [
 ];
 
 export const sideFooter = [
-  { name: 'Account', icon: GoSettings, link: '#accounts' },
+  { name: 'Account', icon: GoSettings, link: '/accounts' },
   { name: 'Logout', icon: FaSignOutAlt, link: '/api/auth/signout' },
 ];
 
 export const headMenu = [
-  { name: 'My Profile & Settings', link: '#accounts/settings', icon: '' },
-  { name: 'Account Settings', link: '#accounts/settings', icon: '' },
+  { name: 'My Account', link: '/account', icon: '' },
+  { name: 'Help', link: '#accounts/settings', icon: '' },
+  { name: 'SignOut', link: '/api/auth/signout', icon: '' },
+];
+
+export const headMenuA = [
+  { name: 'My Account', link: '/account', icon: '' },
+  { name: 'Help', link: '#accounts/settings', icon: '' },
+  { name: 'SignOut', link: '/api/auth/signout', icon: '' },
+];
+
+export const headMenuT = [
+  { name: 'My Account', link: '/account', icon: '' },
   { name: 'Help', link: '#accounts/settings', icon: '' },
   { name: 'SignOut', link: '/api/auth/signout', icon: '' },
 ];

@@ -50,10 +50,10 @@ const index = () => {
               </p>
             </Alert>
           )}
-          <Container className="mx-auto max-w-6xl">
-            <h2 className="text-2xl font-semibold py-4">Dashboard</h2>
+          <Container className="sm:px-5 md:px-0 md:mx-auto md:max-w-6xl">
+            <h2 className="text-2xl font-semibold py-4">Dashboard &larr; Student</h2>
             <section className="flex md:flex-row flex-col w-full">
-              <div className="w-1/4 card flex space-x-4 items-center p-5 rounded border">
+              <div className="md:w-1/4 card flex sm:flex-col md:flex-row md:space-x-4 items-center p-5 rounded border">
                 <FaSchool className="text-[48px] text-black dark:text-gray-300" />
                 <div className="text-black dark:text-gray-300">
                   <h5>Courses</h5>
@@ -62,7 +62,7 @@ const index = () => {
                   </h2>
                 </div>
               </div>
-              <div className="w-1/4 card flex space-x-4 items-center p-5 rounded border">
+              <div className="md:w-1/4 card flex sm:flex-col md:flex-row md:space-x-4 items-center p-5 rounded border">
                 <MdArticle className="text-[48px] text-black dark:text-gray-300" />
                 <div className="text-black dark:text-gray-300">
                   <h5>Posts</h5>
@@ -71,7 +71,7 @@ const index = () => {
                   </h2>
                 </div>
               </div>
-              <div className="w-1/4 card flex space-x-4 items-center p-5 rounded border">
+              <div className="md:w-1/4 card flex sm:flex-col md:flex-row md:space-x-4 items-center p-5 rounded border">
                 <FaTasks className="text-[48px] text-black dark:text-gray-300" />
                 <div className="text-black dark:text-gray-300">
                   <h5>Tasks</h5>
@@ -80,7 +80,7 @@ const index = () => {
                   </h2>
                 </div>
               </div>
-              <div className="w-1/4 card flex space-x-4 items-center p-5 rounded border">
+              <div className="md:w-1/4 card flex sm:flex-col md:flex-row md:space-x-4 items-center p-5 rounded border">
                 <GoInfo className="text-[48px] text-black dark:text-gray-300" />
                 <div className="text-black dark:text-gray-300">
                   <h5>Announcement</h5>
