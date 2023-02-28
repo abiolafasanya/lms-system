@@ -23,7 +23,7 @@ export default async function handler(
 ) {
   console.log(req.method);
   if (req.method === 'GET') {
-    console.log(req.query);
+    // console.log(req.query);
     const prisma = new PrismaClient();
     const user = await prisma.user.findUnique({
       where: req.query,
@@ -34,7 +34,7 @@ export default async function handler(
   }
 
   if (req.method === 'PATCH') {
-    console.log(req.query);
+    // console.log(req.query);
     const body: bodyDoc = req.body;
     const prisma = new PrismaClient();
     const user = await prisma.user.update({
@@ -47,7 +47,7 @@ export default async function handler(
   }
 
   if (req.method === 'PUT') {
-    console.log(req.query);
+    // console.log(req.query);
     const body: bodyDoc = req.body;
     const prisma = new PrismaClient();
     const user = await prisma.user.update({
