@@ -69,13 +69,13 @@ const account: NextPage<{ data: User }> = ({ data }) => {
 
   return (
     <Dashboard menu={sideBarMenu} footer={sideFooter}>
-      <Container className={'md:max-w-6xl  mx-auto w-full p-5 min-h-screen'}>
+      <Container className={'md:max-w-6xl mx-auto w-full p-5 min-h-screen'}>
         <h2 className="text-2xl">Account</h2>
 
         <section>
           <div className="card">
-            <div className="flex space-x-8">
-              <div className="w-1/4">
+            <div className="w-full flex sm:flex-col md:flex-row md:space-x-8">
+              <div className="sm:w-full mx-auto md:w-1/4">
                 <Image
                   src="/avatar.png"
                   alt="profile"
@@ -83,8 +83,8 @@ const account: NextPage<{ data: User }> = ({ data }) => {
                   height={256}
                 />
               </div>
-              <div className="w-3/4 mt-8">
-                <div className="flex justify-between items-center">
+              <div className="sm:w-full md:w-3/4 mt-8">
+                <div className="flex sm:flex-col md:flex-row justify-between items-center">
                   <div className="flex flex-col">
                     <div className="flex space-x-2 items-center">
                       <h2 className="text-2xl">Abiola Fasanya</h2>
@@ -101,7 +101,7 @@ const account: NextPage<{ data: User }> = ({ data }) => {
 
                 <div className="mt-14">
                   <h3 className="text-xl mb-4">Personal Information</h3>
-                  <div className="flex justify-between">
+                  <div className="flex sm:flex-col md:flex-row justify-between">
                     <div className="">
                       <h5 className="text-md font-semibold">Name</h5>
                       <h3 className="text-base">{user?.name}</h3>
@@ -121,8 +121,8 @@ const account: NextPage<{ data: User }> = ({ data }) => {
           {error && <AlertMsg type="alert-error" message={message} />}
           {success && <AlertMsg type="alert-success" message={message} />}
           <form onSubmit={updateAccount} className="">
-            <div className="flex justify-between">
-              <div className="form-group w-1/2">
+            <div className="flex sm:flex-col md:flex-row justify-between">
+              <div className="form-group sm:w-full md:w-1/2">
                 <label htmlFor="fullname">Full Name</label>
                 <input
                   type="text"
@@ -131,7 +131,7 @@ const account: NextPage<{ data: User }> = ({ data }) => {
                   defaultValue={user?.name as string}
                 />
               </div>
-              <div className="form-group w-1/2">
+              <div className="form-group sm:w-full md:w-1/2">
                 <label htmlFor="username">Username</label>
                 <input
                   type="text"
@@ -141,8 +141,8 @@ const account: NextPage<{ data: User }> = ({ data }) => {
                 />
               </div>
             </div>
-            <div className="flex justify-between">
-              <div className="form-group w-1/2">
+            <div className="flex sm:flex-col md:flex-row justify-between">
+              <div className="form-group sm:w-full md:w-1/2">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
@@ -152,7 +152,7 @@ const account: NextPage<{ data: User }> = ({ data }) => {
                   defaultValue={user?.email as string}
                 />
               </div>
-              <div className="form-group w-1/2">
+              <div className="form-group sm:w-full md:w-1/2">
                 <label htmlFor="email">Image</label>
                 <input
                   type="file"
