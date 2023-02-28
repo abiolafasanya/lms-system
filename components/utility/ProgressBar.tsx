@@ -1,5 +1,9 @@
 import React from 'react';
 
+interface progressDoc {
+ 
+}
+
 const ProgressBar = ({
   bgcolor,
   progress,

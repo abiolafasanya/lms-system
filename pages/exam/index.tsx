@@ -8,8 +8,9 @@ import { assessment as questions } from 'data/assessment';
 import { BsStopwatch } from 'react-icons/bs';
 import ShowResult from '@utility/ShowResult';
 
+
 const index = () => {
-  const [currentTime, setCurrentTime] = useState<any>(0);
+  const [currentTime, setCurrentTime] = useState<number>(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState([
     { answerByUser: '' },
@@ -57,7 +58,7 @@ const index = () => {
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
-    startTimer(0.5);
+    startTimer(3);
 
     return () => {
       isMounted = false;
@@ -173,7 +174,8 @@ const index = () => {
                 <h3 className="font-semibold flex-shrink-0">Time Progress:</h3>
                 <ProgressBar
                   align="left"
-                  progress={(currentQuestion / questions.length) * 100}
+                  // progress={(currentQuestion / questions.length) * 100}
+                  progress={Math.floor(currentTime / 900 * 100)}
                   bgcolor="rgb(59 130 246)"
                   color="rgb(239 246 255)"
                   height="25px"
@@ -184,7 +186,7 @@ const index = () => {
                 <h3 className="font-semibold flex-shrink-0">Exam Progress:</h3>
                 <ProgressBar
                   align="left"
-                  progress={currentTime}
+                  progress={(currentQuestion / questions.length) * 100}
                   bgcolor="rgb(59 130 246)"
                   color="rgb(239 246 255)"
                   height="25px"
