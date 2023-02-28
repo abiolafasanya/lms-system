@@ -12,6 +12,7 @@ import {
 import Link from 'next/link';
 import { GetServerSideProps, NextPage } from 'next';
 import { PrismaClient, Task } from '@prisma/client';
+import { formatDate } from 'utility/formatter';
 
 // const tasks = [
 //   { name: 'Html Task', graded: true },
@@ -24,7 +25,7 @@ type Props = { data: Task[] };
 const Tasks: NextPage<Props> = ({ data }) => {
   const [graded, setGraded] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [deadline, setDeadline] = useState<any>(NaN);
+  const [deadline, setDeadline] = useState<unknown>();
 
   useEffect(() => {
     let isMounted = true;
@@ -33,10 +34,9 @@ const Tasks: NextPage<Props> = ({ data }) => {
     setTasks(data);
     let today = new Date();
     today.setDate(Date.now() + 5);
-    console.log(today); //Sun Feb 20 2022
-    setDeadline(
-      new Date(Date.now() + 1000 * 24 * 5 * 60 * 60).toLocaleString()
-    );
+    console.log(today);
+    let dt = new Date(Date.now() + 1000 * 24 * 5 * 60 * 60); //Sun Feb 20 2022
+    setDeadline(() => formatDate(dt));
     return () => {
       isMounted = false;
       controller.abort();
@@ -58,23 +58,23 @@ const Tasks: NextPage<Props> = ({ data }) => {
 
   return (
     <Dashboard>
-      <Container className="sm:min-h-screen">
+      <Container className="px-5 sm:min-h-screen">
         <section className="flex md:flex-row flex-col justify-between items-center">
-          <div className="form-group">
+          <div className="form-group mb-4">
             <input
               type="search"
               placeholder="Search for tasks..."
               className="form-control md:w-64"
             />
           </div>
-          <div className="flex space-x-5">
+          <div className="flex md:space-x-5">
             <Link href="/task/create" className="btn flex space-x-2">
               <MdAdd /> <span>Create Task</span>
             </Link>
           </div>
         </section>
-        <div className="flex md:flex-row flex-col space-x-12 justify-between">
-          <section className="md:w-1/2">
+        <div className="flex md:flex-row flex-col md:space-x-12 justify-between">
+          <section className="md:w-1/2 mt-5">
             <h2 className="text-2xl">Submitted Tasks</h2>
             <div className="card py-5">
               <h4 className="text-lg font-semibold">
@@ -118,9 +118,9 @@ const Tasks: NextPage<Props> = ({ data }) => {
                 </p>
                 <div className="flex justify-between border-t-2">
                   <div className=" flex space-x-3 items-center">
-                    <span className="font-bold">
-                      Deadline:{deadline !== NaN && deadline}
-                    </span>
+                    <div className="font-bold">
+                       {deadline as string}
+                    </div>
                   </div>
                   {/* <div>{new Date().setDate().getHours()} Days left</div> */}
                   {/* <div>{new Date(Date.now() + 5).getHours()} Days left</div> */}
