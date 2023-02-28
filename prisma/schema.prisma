@@ -41,7 +41,7 @@ model Course {
   videos       String[]
   requirements String[]
   category     String?
-  price        Float?  @default(0.0)
+  price        Float?  
   discount     Float?
   stars        Int?      @default(0)
   purchase     Int?      @default(0)

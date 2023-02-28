@@ -22,21 +22,43 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
         <section className="sm:hidden md:flex w-full">
           <aside className="p-5 h-screen w-[25%] bg-white dark:bg-gray-700 dark:text-gray-50 shadow-md">
             <menu className="flex space-y-3 flex-col flex-wrap">
-            <Link href={`#non`} className='course-link'>Teaching</Link>
-            <Link href={`#non`} className='course-link'>Development</Link>
-            <Link href={`#non`} className='course-link'>IT & Softwares</Link>
-            <Link href={`#non`} className='course-link'>Office Productivity</Link>
-            <Link href={`#non`} className='course-link'>Engineering</Link>
-            <Link href={`#non`} className='course-link'>Entrepreneur</Link>
-            <Link href={`#non`} className='course-link'>Health & Fitness</Link>
-            <Link href={`#non`} className='course-link'>Music</Link>
-            <Link href={`#non`} className='course-link'>Design</Link>
-            <Link href={`#non`} className='course-link'>Marketing</Link>
+              <Link href={`#non`} className="course-link">
+                Teaching
+              </Link>
+              <Link href={`#non`} className="course-link">
+                Development
+              </Link>
+              <Link href={`#non`} className="course-link">
+                IT & Softwares
+              </Link>
+              <Link href={`#non`} className="course-link">
+                Office Productivity
+              </Link>
+              <Link href={`#non`} className="course-link">
+                Engineering
+              </Link>
+              <Link href={`#non`} className="course-link">
+                Entrepreneur
+              </Link>
+              <Link href={`#non`} className="course-link">
+                Health & Fitness
+              </Link>
+              <Link href={`#non`} className="course-link">
+                Music
+              </Link>
+              <Link href={`#non`} className="course-link">
+                Design
+              </Link>
+              <Link href={`#non`} className="course-link">
+                Marketing
+              </Link>
             </menu>
           </aside>
           <main className="w-[100%]">
             <div className="w-3/4 mx-auto my-10 flex flex-col">
-              <Link href={'/tutor/course/create'} className="btn mb-4 ml-auto">Add Course</Link>
+              <Link href={'/tutor/course/create'} className="btn mb-4 ml-auto">
+                Add Course
+              </Link>
               <input
                 type="search"
                 name="search"
@@ -53,7 +75,7 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
                   image={course.image as string}
                   // link={course.link}
                   title={course.name}
-                  price={course?.price as Decimal}
+                  price={course?.price as number}
                   author={course.userId as string}
                 />
               ))}
