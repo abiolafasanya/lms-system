@@ -87,7 +87,7 @@ const account: NextPage<{ data: User }> = ({ data }) => {
                 <div className="flex sm:flex-col md:flex-row justify-between items-center">
                   <div className="flex flex-col">
                     <div className="flex space-x-2 items-center">
-                      <h2 className="text-2xl">Abiola Fasanya</h2>
+                      <h2 className="text-2xl">{user?.name}</h2>
                       {user?.emailVerified ? (
                         <MdVerified className="text-blue-500" />
                       ) : (
