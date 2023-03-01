@@ -19,6 +19,7 @@ import { EditorProps } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
+import { formatDate } from 'utility/formatter';
 
 const Editor = dynamic<EditorProps>(
   () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
@@ -52,7 +53,7 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
       const {data} = await Axios.post('/api/post/');
       if(data.error) return
       // console.log('api post', data)
-      setPosts(data.post)
+      setPosts(data.post as IBlog[])
       return
     }
     APIPost().then(data => data);
@@ -192,13 +193,13 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
                     <div className="flex justify-between">
                       <div className="block italic text-sm">
                         <Avatar
-                          name={post.user.username || post.user.name}
+                          name={post?.user?.username || post?.user?.name}
                           size="25"
                           round
                           className="mr-2"
                         />
-                        <b className="text-gray-700">{post.user.username}</b> on{' '}
-                        {`${new Date(post.createdAt).toLocaleString()}`}
+                        <b className="text-gray-700">{post?.user?.username}</b> on{' '}
+                        {formatDate(new Date(post.createdAt))}
                       </div>
                       <div className="flex items-center space-x-2">
                         <Link
@@ -208,7 +209,7 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
                           <FaEye />
                         </Link>
                         {session?.user?.name ===
-                          (post?.user?.username || post.user.name) && (
+                          (post?.user?.username || post?.user?.name) && (
                           <>
                             <Link
                               href={`/admin/post/${post.id}/edit`}
