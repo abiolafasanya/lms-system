@@ -8,10 +8,13 @@ export default class PostController extends Controller {
       const Post = this.prisma.post;
       const post = await Post.findMany({
         include: { user: true },
+        orderBy: {
+          createdAt: 'desc',
+        },
       });
       return res
         .status(200)
-        .json({ success: true, message: 'Record results', post });
+        .json({ success: true, message: 'All Posts', post });
     } catch (error) {
       res.status(500).json({ message: error });
     }
@@ -49,18 +52,17 @@ export default class PostController extends Controller {
 
       const post = await Post.create({
         data: {
-          title: body.title as string,
+          title: body?.title as string,
           content: body.content as string,
-          category: body.category as string[],
-          tags: body.tags as string[],
+          category: body?.category as string[],
+          tags: body?.tags as string[],
           userId: user.id as string,
-          published: false as boolean,
         },
       });
       if (!post) throw new Error('Bad request check your inputs');
       return res
         .status(200)
-        .json({ success: true, message: 'Record created', post });
+        .json({ success: true, message: 'Post created', post });
     } catch (error) {
       res.status(500).json({ message: error });
     } finally {

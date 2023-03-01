@@ -1,5 +1,3 @@
-const index = () => {
-    return {};
-}
- 
-export default index;
+import PostController from 'helper/postController';
+
+export default PostController.index;

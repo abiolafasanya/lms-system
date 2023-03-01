@@ -99,7 +99,7 @@ model Social {
 model Post {
   id                String @id @default(auto()) @map("_id") @db.ObjectId
   userId    String @db.ObjectId
-  title     String    @unique
+  title     String?    @unique
   content   String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -107,7 +107,7 @@ model Post {
   category  String[]
   tags      String[]
   image     String?
-  published Boolean   @default(false)
+  published Boolean?   @default(false)
   Comment   Comment[]
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

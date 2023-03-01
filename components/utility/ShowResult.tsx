@@ -3,12 +3,13 @@ import React, {useEffect} from 'react';
 import { MdRefresh } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import Axios from 'helper/axios';
+import { Assessment } from '@prisma/client';
 
 interface Iprops {
   score: number;
   questions: any[];
   user?: userDoc | undefined;
-  assessment?: any;
+  assessment?: Assessment;
  }
 
 type userDoc = {
@@ -23,7 +24,9 @@ const ShowResult = ({ score, questions, user, assessment }: Iprops) => {
   const router = useRouter();
 
   useEffect(() => {
-     gradeAssessment();
+    if(assessment?.id !== undefined){
+      gradeAssessment();
+    }
      console.log(score, user)
   }, [score, user ])
 
@@ -31,7 +34,7 @@ const ShowResult = ({ score, questions, user, assessment }: Iprops) => {
     const body = {
       assessmentScore: score,
       userId: user?.id,
-      assessmentId: assessment.id,
+      assessmentId: assessment?.id,
     };
     const { status, data } = await Axios.post('/api/grade', body);
     if (data.error) {

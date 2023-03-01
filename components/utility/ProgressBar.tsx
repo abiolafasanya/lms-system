@@ -4,24 +4,30 @@ interface progressDoc {
  
 }
 
-const ProgressBar = ({
+type progressProps = {
+  bgcolor: string;
+  progress: number;
+  height: string;
+  align: CanvasTextAlign;
+  className: string;
+  color: string;
+};
+
+const ProgressBar: React.FC<progressProps> = ({
   bgcolor,
   progress,
   height,
   align,
   className,
   color,
-}: any) => {
+}) => {
   const Parentdiv = {
     height: height,
     width: '100%',
-    // backgroundColor: 'whitesmoke',
     borderRadius: 40,
-    // margin: 50,
-    // border: '1px solid black',
   };
 
-  const Childdiv = {
+  const Childdiv: React.CSSProperties | undefined = {
     height: '100%',
     width: `${progress}%`,
     backgroundColor: bgcolor,
@@ -32,11 +38,11 @@ const ProgressBar = ({
   const progresstext = {
     padding: 10,
     color: color || 'black',
-    fontWeight: 900,
+    fontWeight: 700,
   };
 
   return (
-    <div style={Parentdiv} className={className as string}>
+    <div style={Parentdiv} className={className}>
       <div style={Childdiv}>
         <span style={progresstext}>{`${progress}%`}</span>
       </div>
