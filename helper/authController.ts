@@ -10,7 +10,7 @@ export class AuthController extends Controller {
         password: string;
       };
       let { username, email, password }: ReqData = req.body;
-      console.log(req.body)
+      // console.log(req.body)
 
       const User = this.prisma.user;
       const bcrypt = this.bcrypt;
@@ -32,7 +32,7 @@ export class AuthController extends Controller {
         );
       // return user;
       if (user) {
-        console.log(user);
+        // console.log(user);
         return res.status(201).json({
           status: 'success',
           user,
