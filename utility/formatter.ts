@@ -19,7 +19,8 @@ export function formatCurrency(number: number) {
 
 export function formatDate(date: Date) {
   const f = new Intl.DateTimeFormat(LOCALE.NG, {
-    dateStyle: 'full',
+    dateStyle: 'medium',
+    timeStyle: 'short',
   });
   return f.format(date);
 }

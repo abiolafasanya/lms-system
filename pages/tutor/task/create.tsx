@@ -1,4 +1,4 @@
-import React, { useState, useRef, useId } from 'react';
+import React, { useState, useId } from 'react';
 import Tutor from '@layout/Tutor';
 import Container from '@utility/Container';
 import dynamic from 'next/dynamic';
@@ -10,7 +10,8 @@ import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
 import Axios from 'helper/axios';
 import Link from 'next/link';
-import Select from 'react-select/dist/declarations/src/Select';
+// import Select from 'react-select/dist/declarations/src/Select';
+import { useSession } from 'next-auth/react';
 
 const animatedComponents = makeAnimated();
 
@@ -18,6 +19,7 @@ const Editor = dynamic<EditorProps>(
   () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
   { ssr: false }
 );
+
 
 const optionsCat = [
   { value: 'everyone', label: 'EveryOne' },
@@ -29,33 +31,75 @@ const optionsCat = [
 ];
 
 const create = () => {
+  const {data: session, status: userSession} = useSession();
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty()
   );
-  const descriptionRef = useRef<HTMLInputElement>(null);
-  const titleRef = useRef<HTMLInputElement>(null);
-  const pointRef = useRef<HTMLInputElement>(null);
-  const assignedToRef = useRef<Select>(null);
-  const deadlineRef = useRef<HTMLInputElement>(null);
-  const attachmentRef = useRef<HTMLInputElement>(null);
-
+  const [assignedTo, setAssignedTo] = useState<any>();
   const [description, setDescription] = useState<string>('');
-  const [title, setTitle] = useState<string>('');
-  const [point, setPoint] = useState(0);
-  const [deadline, setDeadline] = useState<any>();
-  const [assignedTo, setAssignedTo] = useState<any>('');
-  const [attachment, setAttachment] = useState<any>(null);
 
-  async function formHandler(e: React.SyntheticEvent) {
+  async function formHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const target = e.target;
-    console.log(target);
+    if(userSession !== 'authenticated') return null
+
+    const target = e.target as typeof e.target & {
+       title: {value: string},
+       attachment: {files: any},
+       point: {value: number},
+       deadline: {value: Date}
+    };
+
+    const body = {
+      title: target.title.value,
+      attachment: target.attachment.files[0],
+      point: target.point.value,
+      deadline: target.deadline.value,
+      assignedTo,
+      description,
+      userId: session?.user?.id,
+    }
+   
+
+  const formData = new FormData();
+
+  formData.append('file', body.attachment);
+  formData.append('upload_preset', 'my-uploads');
+  let URLCloudinary =
+    'https://api.cloudinary.com/v1_1/fastbeetech/image/upload';
+
+  let upload;
+
+  if (body.attachment !== null || body.attachment !== undefined) {
+    upload = await fetch(URLCloudinary, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        body.attachment = data.secure_url
+        return body;
+      })
+      .catch((error) => error.message);
+  }
+  if (body.attachment === null) {
+      body.attachment = {}
+  }
+
+
+  const { data, status } = await Axios.post('/api/task/create', upload);
+  if (data.error) {
+    console.error(data.error);
+  }
+  if (status === 200 || status === 201) {
+    console.log(data);
+  }
+
   }
 
   return (
     <Tutor>
-      <Container className={`min-h-screen`}>
+      <Container className={`min-h-screen md:max-w-5xl mx-auto`}>
         <main className="w-full">
           <section>
             <h1 className="text-2xl">Create Task</h1>
@@ -73,7 +117,6 @@ const create = () => {
                   <input
                     type="text"
                     id="title"
-                    ref={titleRef}
                     className="form-control"
                     // onChange={(e: any) => setTitle(e.target.value)}
                   />
@@ -109,10 +152,9 @@ const create = () => {
                       isClearable
                       className="dark:text-black"
                       isMulti
-                      ref={assignedToRef}
-                      // onChange={(e) =>
-                      //   setAssignedTo(e.map((item: any) => item.value))
-                      // }
+                      onChange={(e) =>
+                        setAssignedTo(e.map((item: any) => item.value))
+                      }
                     />
                   </div>
                   <div className="form-group w-full">
@@ -124,7 +166,6 @@ const create = () => {
                       id="attachment"
                       name="attachment"
                       className="file-input"
-                      onChange={(e: any) => setAttachment(e.target.files[0])}
                       multiple
                     />
                   </div>
@@ -138,7 +179,6 @@ const create = () => {
                       type="number"
                       id="point"
                       className="form-control"
-                      onChange={(e: any) => setPoint(e.target.value)}
                     />
                   </div>
                   <div className="form-group w-full">
@@ -149,7 +189,6 @@ const create = () => {
                       type="datetime-local"
                       id="deadline"
                       className="form-control"
-                      onChange={(e: any) => setDeadline(e.target.value)}
                     />
                   </div>
                 </div>

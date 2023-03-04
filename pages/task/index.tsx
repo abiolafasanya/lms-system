@@ -11,7 +11,8 @@ import {
 } from 'react-icons/md';
 import Link from 'next/link';
 import { GetServerSideProps, NextPage } from 'next';
-import { PrismaClient, Task } from '@prisma/client';
+import {getSession} from 'next-auth/react'
+import { PrismaClient, Task, Submission } from '@prisma/client';
 import { formatDate } from 'utility/formatter';
 
 // const tasks = [
@@ -21,25 +22,30 @@ import { formatDate } from 'utility/formatter';
 //   { name: 'Golang Task', graded: false },
 // ];
 
-type Props = { data: Task[] };
-const Tasks: NextPage<Props> = ({ data }) => {
+interface Iprops {
+  data: Task[];
+  submitted: SubmissionDoc[]
+}
+
+interface SubmissionDoc extends Submission {
+  task: Task
+}
+
+type Props = { data: Task[], submitted: Submission[]};
+const Tasks: NextPage<Iprops> = ({ data, submitted }) => {
   const [graded, setGraded] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [deadline, setDeadline] = useState<unknown>();
+  const [submissions, setSubmissions] = useState<SubmissionDoc[]>([])
 
   useEffect(() => {
     let isMounted = true;
-    const controller = new AbortController();
     console.log(tasks);
     setTasks(data);
-    let today = new Date();
-    today.setDate(Date.now() + 5);
-    console.log(today);
-    let dt = new Date(Date.now() + 1000 * 24 * 5 * 60 * 60); //Sun Feb 20 2022
-    setDeadline(() => formatDate(dt));
+    setSubmissions(() => submitted)
+    console.log(submissions);
     return () => {
       isMounted = false;
-      controller.abort();
     };
   }, [tasks]);
 
@@ -67,38 +73,33 @@ const Tasks: NextPage<Props> = ({ data }) => {
               className="form-control md:w-64"
             />
           </div>
-          <div className="flex md:space-x-5">
-            <Link href="/task/create" className="btn flex space-x-2">
-              <MdAdd /> <span>Create Task</span>
-            </Link>
-          </div>
         </section>
         <div className="flex md:flex-row flex-col md:space-x-12 justify-between">
           <section className="md:w-1/2 mt-5">
             <h2 className="text-2xl">Submitted Tasks</h2>
             <div className="card py-5">
               <h4 className="text-lg font-semibold">
-                You have Submitted a total of {tasks.length} tasks
+                You have Submitted a total of {submissions?.length} tasks
               </h4>
               <p className="text-base mb-4">
                 Below are the tasks you have Submitted
               </p>
-              {tasks.length > 0 &&
-                tasks.map((task: any) => (
+              {submissions?.length > 0 &&
+                submissions?.map((submission) => (
                   <div
-                    key={task.id}
+                    key={submission.id}
                     draggable
-                    className={checkClass(task?.graded)}
+                    className={checkClass(submission?.graded)}
                   >
                     <div className="flex space-x-4 items-center text-gray-700">
                       <MdDragIndicator className="text-xl" />
                       <MdOutlineAssignmentTurnedIn />
-                      <span className="font-bold">{task.title}</span>
-                      {task?.graded && (
+                      <span className="font-bold">{submission?.task.title}</span>
+                      {submission?.graded && (
                         <MdDoneOutline className="text-emerald-500" />
                       )}
                     </div>
-                    <div>Point: 25/30</div>
+                    <div>Point: {submission?.score}</div>
                   </div>
                 ))}
             </div>
@@ -107,25 +108,29 @@ const Tasks: NextPage<Props> = ({ data }) => {
             <h2 className="text-2xl">Tasks</h2>
             <div className="card">
               <h4 className="text-xl mb-4">Recent Task</h4>
-
-              <div className="bg-gray-100 rounded border my-2 p-5 text-gray-700">
+              {tasks.length > 0 &&
+                tasks.map((task) => (
+              <div key={task.id} className="bg-gray-100 rounded border my-2 p-5 text-gray-700">
                 <h3 className="text-lg font-bold">
-                  Create a Eccomerce Rest API
+                  {/* Create a Eccomerce Rest API */}
+                  {task.title}
                 </h3>
-                <p className="text-base mb-2">
-                  Using Expres NodeJs Framework, Postman, Document all the
-                  packages you use in the readme file
-                </p>
+                <p className="text-base mb-2" dangerouslySetInnerHTML={{ __html: task.description }} />
+                  {/* Using Expres NodeJs Framework, Postman, Document all the
+                  packages you use in the readme file */}
+                <div className='flex justify-between my-2'>
+                  <span className='font-semibold'>{task.point} Points</span>
+                  <Link href={`/task/${task.id}`} className='text-blue-500 hover:text-blue-600'>view</Link>
+                </div>
                 <div className="flex justify-between border-t-2">
                   <div className=" flex space-x-3 items-center">
                     <div className="font-bold">
-                       {deadline as string}
+                       {formatDate(new Date(task.deadline)) as string}
                     </div>
                   </div>
-                  {/* <div>{new Date().setDate().getHours()} Days left</div> */}
-                  {/* <div>{new Date(Date.now() + 5).getHours()} Days left</div> */}
-                </div>
               </div>
+                </div>                
+                ))}
             </div>
           </section>
         </div>
@@ -137,11 +142,19 @@ const Tasks: NextPage<Props> = ({ data }) => {
 export default Tasks;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
   const prisma = new PrismaClient();
   const tasks = await prisma.task.findMany();
+  const id = session?.user.id as string;
+  const userTasks = await prisma.submission.findMany({
+    where: {userId: id},
+    include: {task: true}
+  });
+  console.log(userTasks, id)
   return {
     props: {
       data: JSON.parse(JSON.stringify(tasks)),
+      submitted: JSON.parse(JSON.stringify(userTasks)),
     },
   };
 };

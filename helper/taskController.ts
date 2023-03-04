@@ -16,6 +16,25 @@ export default class taskcontroller extends Controller {
     }
   };
 
+  public static taskAndSubmission = async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+      const Task = this.prisma.task;
+      const task = await Task.findUnique({
+        where: { id: req.query.id as string },
+        include: {
+          Submission: {
+            include: { user: true },
+          },
+        },
+      });
+      return res
+        .status(200)
+        .json({ success: true, message: 'Record results', task });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  };
+
   public static show = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const Task = this.prisma.task;
@@ -35,7 +54,8 @@ export default class taskcontroller extends Controller {
 
   public static create = async (req: NextApiRequest, res: NextApiResponse) => {
     let body = req.body;
-    console.log(body);
+    let session = await this.getSession({req})
+    let sessionId = session?.user.id as string
     try {
       const Task = this.prisma.task;
 
@@ -47,11 +67,12 @@ export default class taskcontroller extends Controller {
           point: parseInt(body.point),
           deadline: new Date(body.deadline),
           assignedTo: body.assignedTo,
+          userId: sessionId,
         },
       })
         .then((data) => data)
         .catch((err) => console.log(err));
-      console.log({ task });
+      // console.log({ task });
       if (!task) throw new Error('Bad request check your inputs');
       return res
         .status(200)
@@ -101,13 +122,15 @@ export class Submission extends taskcontroller {
     res: NextApiResponse
   ) => {
     try {
-      let { taskId, userId, score, feedback, gradedAt } = req.body;
+      let { taskId, score, feedback } = req.body;
+      const session = await this.getSession({req});
+      // userId: session?.user.id as string;
+      // taskId,
       const input = {
-        taskId,
-        userId,
         score: parseInt(score),
         feedback,
         gradedAt: new Date(Date.now()),
+        graded: true
       };
 
       const Submission = this.prisma.submission;

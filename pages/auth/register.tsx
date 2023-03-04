@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { AlertMsg } from '@utility/Alert';
 import { useRouter } from 'next/router';
 import Axios from 'helper/axios';
@@ -21,7 +21,7 @@ const Register = () => {
   const [message, setMessage] = useState('');
 
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
       username: { value: string };
@@ -49,7 +49,7 @@ const Register = () => {
       return;
     }
     delete formData.confirmPassword
-    console.log(formData);
+    // console.log(formData);
     try {
       const { data, status } = await Axios.post('/api/auth/signup', formData);
 
@@ -68,7 +68,7 @@ const Register = () => {
         console.log(data);
         setTimeout(() => {
           router.push('/auth/login');
-        }, 5000);
+        }, 3000);
         return;
       }
     } catch (error) {
@@ -80,10 +80,10 @@ const Register = () => {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     usernameRef.current?.focus();
     return () => {
-      console.log('focused');
+      console.clear();
     };
   }, []);
 

@@ -6,19 +6,36 @@ import Modal from '@utility/Modal';
 import Axios from 'helper/axios';
 import classNames from 'classnames';
 import { GetServerSideProps, NextPage } from 'next';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import {
   MdDoneOutline,
   MdDragIndicator,
   MdOutlineAssignmentTurnedIn,
 } from 'react-icons/md';
+import {formatDate} from 'utility/formatter'
 
-type Props = { submissions: Submission[]; task: Task };
-const submission: NextPage = ({ data }: Props | any) => {
-  const [submissions, setSubmissions] = useState<Submission[] | any[]>([]);
-  const [task, setTask] = useState<Task>();
-  const [grade, setGrade] = useState('');
-  const [feedback, setFeedback] = useState('');
+interface Iprops {
+  submissions: Submission[];
+  task: Task;
+  data: TaskDoc;
+  id: string;
+}
+
+interface TaskDoc extends Task{
+  Submission: SM[]
+}
+
+interface SM extends Submission{
+  user: User
+}
+
+const submission: NextPage<Iprops> = ({ data }) => {
+  const [submissions, setSubmissions] = useState<SM[]>([]);
+  const [task, setTask] = useState<TaskDoc>();
+  const gradeRef = useRef<HTMLInputElement>(null)
+  const feedbackRef = useRef<HTMLTextAreaElement>(null)
+
   const [isGradeModal, setIsGradeModal] = useState(false);
   const [isFeedbackModal, setIsFeedbackModal] = useState(false);
   const [currentId, setCurrentId] = useState('');
@@ -31,15 +48,26 @@ const submission: NextPage = ({ data }: Props | any) => {
 
   useEffect(() => {
     let isMounted = true;
-    const controller = new AbortController();
-    setSubmissions(data.Submission);
-    setTask(data);
-    console.log(data);
+    async function res() {
+      const {data: DB, status} = await Axios.post(`/api/task/${data?.id}/tasks`);
+      if(DB.error) {
+        console.log(error)
+        // return null
+      }
+      return DB.task
+    }
+
+    res().then(data => {
+      setTask(data);
+      setSubmissions(data.Submission);
+    })
+
+    // console.log(data);
     return () => {
       isMounted = false;
-      controller.abort();
     };
-  }, []);
+  }, [success]);
+
 
   function pickIdAndOpenModal(e: any, submission: any) {
     setIsGradeModal(!isGradeModal);
@@ -56,7 +84,12 @@ const submission: NextPage = ({ data }: Props | any) => {
   }
   async function gradeHandler() {
     console.log('grade handler for ');
-    if (grade === '') {
+
+    let grade: string = gradeRef?.current?.value as string;
+    let feedback: string = feedbackRef?.current?.value as string;
+
+
+    if (grade === "") {
       SetError(true);
       setMessage('Please provide a score for this user');
       setTimeout(() => {
@@ -70,14 +103,15 @@ const submission: NextPage = ({ data }: Props | any) => {
       feedback,
       userId: currentGrading?.user?.id,
       taskId: task?.id,
-      gradedAt: Date.now().toLocaleString(),
     };
+
+    
 
     const { data, status } = await Axios.post(
       `/api/task/${currentId}/submission`,
       formData
     );
-    console.log(data);
+    // console.log(data);
 
     if (data.error) {
       SetError(true);
@@ -124,12 +158,16 @@ const submission: NextPage = ({ data }: Props | any) => {
     <div>
       <Tutor>
         <Container className={`h-screen dark:text-black`}>
+          <h2 className='text-2xl mb-3'>Submissions</h2>
+          <h2 className='text-base'><Link href="/tutor/task">Task</Link> &larr; {data.id}</h2>
+          {/* <div>Deadline for submission: {formatDate(new Date(task.deadline))}</div> */}
           {isFeedbackModal && (
             <Modal
               title="Task Feedback"
               action={showFeedback}
               close={closeFeedback}
               hideConfirm={true}
+              key={Date.now()}
             >
               <div>
                 <h2 className="font-semibold text-blue-600">Feedback:</h2>
@@ -141,9 +179,13 @@ const submission: NextPage = ({ data }: Props | any) => {
               </div>
               <div>
                 <h2 className="font-semibold text-blue-600">Time</h2>
-                <p className="text-base">
-                  {new Date(currentFeedback?.gradedAt).toLocaleString()}
-                </p>
+                <div className="text-base">
+                {
+                  currentFeedback?.gradedAt ? 
+                    (new Date(currentFeedback?.gradedAt).toLocaleString())
+                   : <span>N/A</span>
+                }
+                </div>
               </div>
               <div>
                 <h2 className="font-semibold text-blue-600">Re-Graded:</h2>
@@ -164,6 +206,8 @@ const submission: NextPage = ({ data }: Props | any) => {
               title="Grade Task"
               action={gradeHandler}
               close={closeGradeModal}
+              key={Date.now()}
+
             >
               {error && <AlertMsg message={message} type="alert-error " />}
               {success && <AlertMsg message={message} type="alert-success" />}
@@ -178,22 +222,28 @@ const submission: NextPage = ({ data }: Props | any) => {
                     defaultValue={currentGrading?.score}
                     // onCopy={e => console.log(e)}
                     className="form-control"
-                    onChange={({ target }) => setGrade(target.value)}
+                    ref={gradeRef}
+                    // onChange={({ target }) => setGrade(target.value)}
                     min={0}
                     max={100}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="" className="form-label">
+                  <label htmlFor="feedback" className="form-label">
                     Feedback
                   </label>
                   <textarea
                     cols={5}
                     className="text-area"
-                    contentEditable={true}
+                    // contentEditable={true}
                     placeholder="Feedback"
+                    id='feedback'
+                    name='feedback'
+                    itemID='feedback'
+                    key={Date.now()}
                     defaultValue={currentGrading?.feedback}
-                    onChange={({ target }) => setFeedback(target.value)}
+                    ref={feedbackRef}
+                    // onChange={({ target }) => setFeedback(target.value)}
                     maxLength={255}
                   ></textarea>
                 </div>
@@ -201,7 +251,7 @@ const submission: NextPage = ({ data }: Props | any) => {
             </Modal>
           )}
 
-          {submissions.length > 0 ? (
+          {submissions?.length > 0 ? (
             submissions?.map((submission) => (
               <div
                 key={submission.id}
@@ -218,12 +268,13 @@ const submission: NextPage = ({ data }: Props | any) => {
                     )}
                   </div>
                   <div>
-                    {submission?.user?.username ||
+                    {submission.user?.username ||
                       submission?.user?.email ||
                       submission?.user?.name}
                   </div>
                   <div className=" text-emerald-900">
-                    {new Date(task?.deadline as Date).toLocaleString()}
+                    {/* {new Date(task?.deadline as Date).toLocaleString()} */}
+                    {formatDate(new Date(submission?.submittedAt as Date))}
                   </div>
                   <div className="text-emerald-900">{submission?.score}</div>
                   <div className="flex space-x-4">
@@ -257,7 +308,7 @@ export default submission;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const prisma = new PrismaClient();
   const id = context.params?.id as string;
-  const task = await prisma.task.findFirst({
+  const task = await prisma.task.findUnique({
     where: { id: id },
     include: {
       Submission: {
@@ -265,22 +316,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     },
   });
-  //   const task = await prisma.submission.findMany({
-  //     where: { taskId: id },
-  //     include: {
-  //       task: {
-  //         select: {
-  //           id: true,
-  //           title: true,
-  //         },
-  //       },
-  //     },
-  //   });
 
   return {
     props: {
       data: JSON.parse(JSON.stringify(task)),
       editor: [],
+      id: id
     },
   };
 };

@@ -50,7 +50,7 @@ const index = () => {
               </p>
             </Alert>
           )}
-          <Container className="sm:px-5 md:px-0 md:mx-auto md:max-w-6xl">
+          <Container className="sm:px-5 w-full mx-auto md:max-w-6xl">
             <h2 className="text-2xl font-semibold py-4">Dashboard &larr; Student</h2>
             <section className="flex md:flex-row flex-col w-full">
               <div className="md:w-1/4 card flex sm:flex-col md:flex-row md:space-x-4 items-center p-5 rounded border">

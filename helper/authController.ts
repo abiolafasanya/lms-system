@@ -4,12 +4,17 @@ import Controller from './controller';
 export class AuthController extends Controller {
   static signup = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      let { username, email, password } = req.body;
+      type ReqData = {
+        username: string;
+        email: string;
+        password: string;
+      };
+      let { username, email, password }: ReqData = req.body;
       console.log(req.body)
 
       const User = this.prisma.user;
       const bcrypt = this.bcrypt;
-      const ifExist = await User.findFirst({ where: { email: email } });
+      const ifExist = await User.findUnique({ where: {email}});
       if (ifExist) {
         throw new Error('User already exists');
       }
@@ -38,12 +43,12 @@ export class AuthController extends Controller {
     }
   };
 
-  static signin = async (credentials: { email: any; password: any }) => {
+  static signin = async (credentials: { email: string; password: string }) => {
     let { email, password } = credentials;
     const User = this.prisma.user;
     const bcrypt = this.bcrypt;
     try {
-      const user = await User.findFirst({
+      const user = await User.findUnique({
         where: { email: email },
       });
       if (!user) return;
