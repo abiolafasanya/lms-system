@@ -58,7 +58,7 @@ const index = () => {
                 <div className="text-black dark:text-gray-300">
                   <h5>Courses</h5>
                   <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    20
+                    1
                   </h2>
                 </div>
               </div>
@@ -67,7 +67,7 @@ const index = () => {
                 <div className="text-black dark:text-gray-300">
                   <h5>Posts</h5>
                   <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    20
+                    10
                   </h2>
                 </div>
               </div>
@@ -76,7 +76,7 @@ const index = () => {
                 <div className="text-black dark:text-gray-300">
                   <h5>Tasks</h5>
                   <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    20
+                    1
                   </h2>
                 </div>
               </div>
@@ -85,13 +85,13 @@ const index = () => {
                 <div className="text-black dark:text-gray-300">
                   <h5>Announcement</h5>
                   <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    20
+                    1
                   </h2>
                 </div>
               </div>
             </section>
 
-            <motion.section
+            {/* <motion.section
               initial="hidden"
               animate="visible"
               variants={motion1}
@@ -153,7 +153,7 @@ const index = () => {
                   accusamus unde.
                 </p>
               </div>
-            </motion.section>
+            </motion.section> */}
           </Container>
         </Dashboard>
       )}
