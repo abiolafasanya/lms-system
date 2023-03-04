@@ -11,9 +11,10 @@ import {
 } from 'react-icons/md';
 import Link from 'next/link';
 import { GetServerSideProps, NextPage } from 'next';
-import {getSession} from 'next-auth/react'
+import { getSession } from 'next-auth/react';
 import { PrismaClient, Task, Submission } from '@prisma/client';
 import { formatDate } from 'utility/formatter';
+import Modal from '@utility/Modal';
 
 // const tasks = [
 //   { name: 'Html Task', graded: true },
@@ -24,34 +25,38 @@ import { formatDate } from 'utility/formatter';
 
 interface Iprops {
   data: Task[];
-  submitted: SubmissionDoc[]
+  submitted: SubmissionDoc[];
 }
 
 interface SubmissionDoc extends Submission {
-  task: Task
+  task: Task;
 }
 
-type Props = { data: Task[], submitted: Submission[]};
+type Props = { data: Task[]; submitted: Submission[] };
 const Tasks: NextPage<Iprops> = ({ data, submitted }) => {
   const [graded, setGraded] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [deadline, setDeadline] = useState<unknown>();
-  const [submissions, setSubmissions] = useState<SubmissionDoc[]>([])
+  const [submissions, setSubmissions] = useState<SubmissionDoc[]>([]);
+  const [isFeedbackModal, setIsFeedbackModal] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
     console.log(tasks);
     setTasks(data);
-    setSubmissions(() => submitted)
+    setSubmissions(() => submitted);
     console.log(submissions);
     return () => {
       isMounted = false;
     };
   }, [tasks]);
 
-  async function submitHandler(e: any) {
-    e.preventDefault();
-    console.log('submitHandler');
+  function showFeedback() {
+    setIsFeedbackModal(!isFeedbackModal);
+  }
+
+  function closeFeedback() {
+    setIsFeedbackModal(false);
   }
 
   const checkClass = (graded: boolean = false) =>
@@ -91,15 +96,72 @@ const Tasks: NextPage<Iprops> = ({ data, submitted }) => {
                     draggable
                     className={checkClass(submission?.graded)}
                   >
+                    {isFeedbackModal && (
+                      <Modal
+                        title="Task Feedback"
+                        action={showFeedback}
+                        close={closeFeedback}
+                        hideConfirm={true}
+                        key={Date.now()}
+                      >
+                        <div>
+                          <h2 className="font-semibold text-blue-600">
+                            Feedback:
+                          </h2>
+                          <p className="text-base">{submission?.feedback}</p>
+                        </div>
+                        <div>
+                          <h2 className="font-semibold text-blue-600">
+                            Feedback By:
+                          </h2>
+                          <p className="text-base">Dashboard</p>
+                        </div>
+                        <div>
+                          <h2 className="font-semibold text-blue-600">Time</h2>
+                          <div className="text-base">
+                            {submission?.gradedAt ? (
+                              new Date(submission?.gradedAt).toLocaleString()
+                            ) : (
+                              <span>N/A</span>
+                            )}
+                          </div>
+                        </div>
+                        <div>
+                          <h2 className="font-semibold text-blue-600">
+                            Re-Graded:
+                          </h2>
+                          <p className="text-base">
+                            {submission?.graded ? 'Graded' : 'Not Graded'}
+                          </p>
+                        </div>
+                        <div>
+                          <h2 className="font-semibold text-blue-600">
+                            Re-Graded:
+                          </h2>
+                          <p className="text-base">
+                            {submission?.regraded ? 'Regraded' : 'Not Regraded'}
+                          </p>
+                        </div>
+                      </Modal>
+                    )}
                     <div className="flex space-x-4 items-center text-gray-700">
                       <MdDragIndicator className="text-xl" />
                       <MdOutlineAssignmentTurnedIn />
-                      <span className="font-bold">{submission?.task.title}</span>
+                      <span className="font-bold">
+                        {submission?.task.title}
+                      </span>
                       {submission?.graded && (
                         <MdDoneOutline className="text-emerald-500" />
                       )}
                     </div>
                     <div>Point: {submission?.score}</div>
+                    <button
+                      className="btn bg-emerald-500 hover:bg-emerald-600 text-emerald-900"
+                      onClick={(e) => showFeedback()}
+                    >
+                      Feedback
+                    </button>
+                    {/* <Link href={`/task/${submission?.taskId}/submission`} >View</Link> */}
                   </div>
                 ))}
             </div>
@@ -110,26 +172,37 @@ const Tasks: NextPage<Iprops> = ({ data, submitted }) => {
               <h4 className="text-xl mb-4">Recent Task</h4>
               {tasks.length > 0 &&
                 tasks.map((task) => (
-              <div key={task.id} className="bg-gray-100 rounded border my-2 p-5 text-gray-700">
-                <h3 className="text-lg font-bold">
-                  {/* Create a Eccomerce Rest API */}
-                  {task.title}
-                </h3>
-                <p className="text-base mb-2" dangerouslySetInnerHTML={{ __html: task.description }} />
-                  {/* Using Expres NodeJs Framework, Postman, Document all the
+                  <div
+                    key={task.id}
+                    className="bg-gray-100 rounded border my-2 p-5 text-gray-700"
+                  >
+                    <h3 className="text-lg font-bold">
+                      {/* Create a Eccomerce Rest API */}
+                      {task.title}
+                    </h3>
+                    <p
+                      className="text-base mb-2"
+                      dangerouslySetInnerHTML={{ __html: task.description }}
+                    />
+                    {/* Using Expres NodeJs Framework, Postman, Document all the
                   packages you use in the readme file */}
-                <div className='flex justify-between my-2'>
-                  <span className='font-semibold'>{task.point} Points</span>
-                  <Link href={`/task/${task.id}`} className='text-blue-500 hover:text-blue-600'>view</Link>
-                </div>
-                <div className="flex justify-between border-t-2">
-                  <div className=" flex space-x-3 items-center">
-                    <div className="font-bold">
-                       {formatDate(new Date(task.deadline)) as string}
+                    <div className="flex justify-between my-2">
+                      <span className="font-semibold">{task.point} Points</span>
+                      <Link
+                        href={`/task/${task.id}`}
+                        className="text-blue-500 hover:text-blue-600"
+                      >
+                        view
+                      </Link>
+                    </div>
+                    <div className="flex justify-between border-t-2">
+                      <div className=" flex space-x-3 items-center">
+                        <div className="font-bold">
+                          {formatDate(new Date(task.deadline)) as string}
+                        </div>
+                      </div>
                     </div>
                   </div>
-              </div>
-                </div>                
                 ))}
             </div>
           </section>
@@ -142,15 +215,15 @@ const Tasks: NextPage<Iprops> = ({ data, submitted }) => {
 export default Tasks;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context)
+  const session = await getSession(context);
   const prisma = new PrismaClient();
   const tasks = await prisma.task.findMany();
   const id = session?.user.id as string;
   const userTasks = await prisma.submission.findMany({
-    where: {userId: id},
-    include: {task: true}
+    where: { userId: id },
+    include: { task: true },
   });
-  console.log(userTasks, id)
+  console.log(userTasks, id);
   return {
     props: {
       data: JSON.parse(JSON.stringify(tasks)),
