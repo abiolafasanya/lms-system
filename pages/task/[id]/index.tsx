@@ -38,19 +38,19 @@ const index: NextPage<Iprops> = ({ data }) => {
     const target = e.target as typeof e.target & {
       task: { files: any; value: string };
     };
-    console.log('submitHandler');
+    // console.log('submitHandler');
     let file: any;
     if (target.task.files) {
       file = target.task.files[0];
     } else {
       file = target.task.value;
     }
-    console.log(file);
+    // console.log(file);
     
     const formData = new FormData();
     formData.append('upload', file);
     formData.append('taskId', task?.id as string);
-    console.log(formData.get('upload'))
+    // console.log(formData.get('upload'))
     
     const { data, status } = await Axios.post('/api/task/submit', formData);
     if (data.error) {
@@ -61,7 +61,7 @@ const index: NextPage<Iprops> = ({ data }) => {
       return;
     }
     if (status === 200) {
-      console.log(data);
+      // console.log(data);
       setSuccess(true)
       setMessage(data.message)
       setTimeout(() => cleanup(), 5000)

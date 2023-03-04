@@ -68,7 +68,7 @@ const Register = () => {
         console.log(data);
         setTimeout(() => {
           router.push('/auth/login');
-        }, 3000);
+        }, 1000);
         return;
       }
     } catch (error) {

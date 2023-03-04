@@ -16,12 +16,6 @@ import { PrismaClient, Task, Submission } from '@prisma/client';
 import { formatDate } from 'utility/formatter';
 import Modal from '@utility/Modal';
 
-// const tasks = [
-//   { name: 'Html Task', graded: true },
-//   { name: 'JavaScript Task', graded: false },
-//   { name: 'TypeScript Task', graded: false },
-//   { name: 'Golang Task', graded: false },
-// ];
 
 interface Iprops {
   data: Task[];
@@ -42,10 +36,10 @@ const Tasks: NextPage<Iprops> = ({ data, submitted }) => {
 
   useEffect(() => {
     let isMounted = true;
-    console.log(tasks);
+    // console.log(tasks);
     setTasks(data);
     setSubmissions(() => submitted);
-    console.log(submissions);
+    // console.log(submissions);
     return () => {
       isMounted = false;
     };
@@ -161,7 +155,6 @@ const Tasks: NextPage<Iprops> = ({ data, submitted }) => {
                     >
                       Feedback
                     </button>
-                    {/* <Link href={`/task/${submission?.taskId}/submission`} >View</Link> */}
                   </div>
                 ))}
             </div>
@@ -223,7 +216,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     where: { userId: id },
     include: { task: true },
   });
-  console.log(userTasks, id);
   return {
     props: {
       data: JSON.parse(JSON.stringify(tasks)),

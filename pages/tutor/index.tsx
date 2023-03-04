@@ -59,7 +59,7 @@ const index = () => {
                 <div className="text-black dark:text-gray-300">
                   <h5>Courses</h5>
                   <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    20
+                    1
                   </h2>
                 </div>
               </div>
@@ -68,7 +68,7 @@ const index = () => {
                 <div className="text-black dark:text-gray-300">
                   <h5>Posts</h5>
                   <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    20
+                    10
                   </h2>
                 </div>
               </div>
@@ -77,7 +77,7 @@ const index = () => {
                 <div className="text-black dark:text-gray-300">
                   <h5>Tasks</h5>
                   <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    20
+                    1
                   </h2>
                 </div>
               </div>
@@ -86,75 +86,13 @@ const index = () => {
                 <div className="text-black dark:text-gray-300">
                   <h5>Announcement</h5>
                   <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    20
+                    1
                   </h2>
                 </div>
               </div>
             </section>
 
-            <motion.section
-              initial="hidden"
-              animate="visible"
-              variants={motion1}
-              className="grid grid-cols-1 md:grid-cols-4 gap-5 p-5"
-            >
-              <div className="shadow-md dark:bg-inherit bg-white border rounded p-5">
-                <h1 className="text-2xl">Title of info</h1>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo
-                  quas, iure unde reprehenderit quod placeat assumenda? Rerum ea
-                  accusamus unde.
-                </p>
-              </div>
-              <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
-                <h1 className="text-2xl">Title of info</h1>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo
-                  quas, iure unde reprehenderit quod placeat assumenda? Rerum ea
-                  accusamus unde.
-                </p>
-              </div>
-              <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
-                <h1 className="text-2xl">Title of info</h1>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo
-                  quas, iure unde reprehenderit quod placeat assumenda? Rerum ea
-                  accusamus unde.
-                </p>
-              </div>
-              <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
-                <h1 className="text-2xl">Title of info</h1>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo
-                  quas, iure unde reprehenderit quod placeat assumenda? Rerum ea
-                  accusamus unde.
-                </p>
-              </div>
-              <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
-                <h1 className="text-2xl">Title of info</h1>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo
-                  quas, iure unde reprehenderit quod placeat assumenda? Rerum ea
-                  accusamus unde.
-                </p>
-              </div>
-              <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
-                <h1 className="text-2xl">Title of info</h1>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo
-                  quas, iure unde reprehenderit quod placeat assumenda? Rerum ea
-                  accusamus unde.
-                </p>
-              </div>
-              <div className="shadow-md dark:bg-inherit border bg-white rounded p-5">
-                <h1 className="text-2xl">Title of info</h1>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo
-                  quas, iure unde reprehenderit quod placeat assumenda? Rerum ea
-                  accusamus unde.
-                </p>
-              </div>
-            </motion.section>
+        
           </Container>
         </Tutor>
       )}

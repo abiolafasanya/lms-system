@@ -51,7 +51,7 @@ const submission: NextPage<Iprops> = ({ data }) => {
     async function res() {
       const {data: DB, status} = await Axios.post(`/api/task/${data?.id}/tasks`);
       if(DB.error) {
-        console.log(error)
+        console.log(null)
         // return null
       }
       return DB.task
@@ -80,10 +80,10 @@ const submission: NextPage<Iprops> = ({ data }) => {
     setIsFeedbackModal(!isFeedbackModal);
     setIsGradeModal(false);
     setCurrentFeedback(submission);
-    console.log(submission);
+    // console.log(submission);
   }
   async function gradeHandler() {
-    console.log('grade handler for ');
+    // console.log('grade handler for ');
 
     let grade: string = gradeRef?.current?.value as string;
     let feedback: string = feedbackRef?.current?.value as string;
