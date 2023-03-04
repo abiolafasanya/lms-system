@@ -127,7 +127,7 @@ const Tasks: NextPage<Props> = ({ data }) => {
 
                     <td
                       dangerouslySetInnerHTML={{ __html: task.description }}
-                      className="table-data break-normal"
+                      className="table-data whitespace-normal"
                     />
                     <td className="table-data">
                       {
