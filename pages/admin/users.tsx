@@ -106,7 +106,7 @@ const users = () => {
             >
               {message === '' ? (
                 <h2 className="text-xl">
-                  You are about to remove this user confirm delete
+                  You are about to remove this task confirm delete
                 </h2>
               ) : (
                 <AlertMsg message={message} type="alert-info" />

@@ -101,6 +101,12 @@ const index: NextPage<Iprops> = ({ data , submissionData}) => {
       <Container className="min-h-screen md:max-w-6xl mx-auto">
         <section className="">
           <h2 className="text-2xl">Submit Task</h2>
+          <div className="text-gray-500">
+            <span>
+             <Link href="/task">Task</Link> &larr;{' '}
+            {task?.id}
+            </span>
+          </div>
           {success && <AlertMsg type='alert-success' message={message} />}
           {error && <AlertMsg type='alert-error' message={message} />}
           <div className="card">
@@ -196,7 +202,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // console.log(`getServerSideProps ${id}`);
   const prisma = new PrismaClient();
   const task = await prisma.task.findUnique({ where: { id: id }, include: {Submission: true} });
-  const subs = await prisma.submission.findFirst({ where: {userId: session?.user.id as string}});
+  const subs = await prisma.submission.findFirst({ where: {
+    userId: session?.user.id as string,
+    taskId: id
+  }
+});
   return {
     props: {
       data: JSON.parse(JSON.stringify(task)),
