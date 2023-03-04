@@ -119,7 +119,7 @@ const options: NextAuthOptions = {
     },
     async session({ session, token, user }) {
       const db = await prisma.user.findFirst({
-        where: { id: session?.user.id as string },
+        where: { email: session?.user.email as string },
       });
       const role = db?.role;
       session.user.role = role;
