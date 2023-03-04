@@ -33,12 +33,10 @@ const index: NextPage<Iprops> = ({ data , submissionData}) => {
   useEffect(() => {
     setTask(() => data);
     setSubmission(() => submissionData);
-    console.log(submissionData, 'submissions')
   }, []);
 
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(con => !con)
     const target = e.target as typeof e.target & {
       task: { files: any; value: string };
     };
@@ -46,24 +44,36 @@ const index: NextPage<Iprops> = ({ data , submissionData}) => {
     let file: any;
     if (target.task.files) {
       file = target.task.files[0];
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'my-uploads');
+    let URLCloudinary =
+    'https://api.cloudinary.com/v1_1/fastbeetech/image/upload';
+     
+    let upload = await fetch(URLCloudinary, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => data.secure_url)
+      file = upload
     } else {
       file = target.task.value;
     }
-
+    
     if (file === null || file === '' || file === undefined) {
       setError(true)
       setMessage('please select a file or paste a link')
       setTimeout(() => cleanup(), 5000)
       return
     }
-    // console.log(file);
+    setSubmitted(con => !con)
+
+
+    const body = {file, taskId: task?.id}
     
-    const formData = new FormData();
-    formData.append('upload', file);
-    formData.append('taskId', task?.id as string);
-    // console.log(formData.get('upload'))
-    
-    const { data, status } = await Axios.post('/api/task/submit', formData);
+    const { data, status } = await Axios.post('/api/task/submit', body);
     if (data.error) {
       console.log(data.error);
       setError(true)
@@ -72,7 +82,6 @@ const index: NextPage<Iprops> = ({ data , submissionData}) => {
       return;
     }
     if (status === 200) {
-      // console.log(data);
       setSuccess(true)
       setMessage(data.message)
       setTimeout(() => cleanup(), 5000)
