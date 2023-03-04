@@ -109,7 +109,7 @@ export default class taskcontroller extends Controller {
       const Task = this.prisma.task;
       const task = await Task.delete({ where: { id: req.query.id as string } });
       if (!task) throw new Error('Cannot find task');
-      return res.status(200).json({ success: true, message: 'Task deleted' });
+      return res.status(200).json({ success: true, message: 'Task successfully removed 🗑' });
     } catch (error) {
       res.status(500).json({ message: error });
     }
