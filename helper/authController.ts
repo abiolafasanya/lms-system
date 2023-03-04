@@ -16,7 +16,8 @@ export class AuthController extends Controller {
       const bcrypt = this.bcrypt;
       const ifExist = await User.findUnique({ where: {email}});
       if (ifExist) {
-        throw new Error('User already exists');
+        // throw new Error('User already exists');
+        return res.json({message: 'User already exists', error: true, success: false})
       }
       password = bcrypt.hashSync(password, 10);
       const newUser = { username, email, password };
