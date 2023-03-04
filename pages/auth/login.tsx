@@ -99,10 +99,10 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
   const OAuthMailHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target &  {
-      email: {value: string}
+      OEmail: {value: string}
     };
     setTimeout(async () => {
-      await signIn('email', { email: target.email.value });
+      await signIn('email', { email: target.OEmail.value });
     }, 3000);
   };
 
@@ -166,7 +166,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                 </label>
                 <input
                   type="email"
-                  id="email"
+                  id="OEmail"
                   className="form-control"
                 />
               </div>
