@@ -5,7 +5,7 @@ import ShowResult from '@utility/ShowResult';
 import { GetServerSideProps } from 'next';
 import { PrismaClient, Assessment, Question } from '@prisma/client';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { useSession } from  'next-auth/react';
 
 interface Iprops  {
   assessment: typeAssessment

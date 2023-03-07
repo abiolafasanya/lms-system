@@ -27,8 +27,7 @@ const ShowResult = ({ score, questions, user, assessment }: Iprops) => {
     if(assessment?.id !== undefined){
       gradeAssessment();
     }
-     console.log(score, user)
-  }, [score, user ])
+  }, [])
 
   async function gradeAssessment() {
     const body = {
@@ -42,7 +41,7 @@ const ShowResult = ({ score, questions, user, assessment }: Iprops) => {
       return;
     }
     if (status === 200) {
-      console.log(data);
+      console.log('graded');
       return;
     }
   }
