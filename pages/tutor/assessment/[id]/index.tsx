@@ -2,26 +2,26 @@ import React, { useState, useEffect } from 'react';
 import Tutor from '@layout/Tutor';
 import Container from '@utility/Container';
 import { GetServerSideProps } from 'next';
-import { PrismaClient, Assessment, Grade } from '@prisma/client';
+import { PrismaClient, Assessment, Grade, User } from '@prisma/client';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import styles from 'styles/AdminUser.module.css';
 
 interface Iprops  {
-  assessment: typeAssessment
+  grade: Igrade[];
 }
 
-interface typeAssessment extends Assessment  {
-  Grade: Grade[]
+interface Igrade extends Grade  {
+  user: User;
 }
 
 const prisma = new PrismaClient();
-const Asessment = ({assessment}: Iprops) => {
-  const { data: session } = useSession();
+const Asessment = ({grade}: Iprops) => {
+  const [grades, setGrades] = useState<Igrade[]>([])
   
 
   useEffect(() => {
-   console.log(assessment, 'assessment')
+   console.log(grades, 'grade')
+   setGrades(() => grade)
     return () => {
     };
   }, []);
@@ -34,7 +34,7 @@ const Asessment = ({assessment}: Iprops) => {
         <div className="text-gray-500">
           <span>
             <Link href="/tutor/assessment">Assessment</Link> &larr;{' '}
-            {assessment?.id}
+            Result
           </span>
         </div>
         <section className="mt-14 px-5 lg:w-3/4 mx-auto">
@@ -49,7 +49,18 @@ const Asessment = ({assessment}: Iprops) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr></tr>
+                  {
+                  grades?.length > 0 &&
+                  grades?.map((grade, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{grade?.user.username || grade?.user.name}</td>
+                      <td>NA</td>
+                      <td>{grade.assessmentScore}</td>
+                      <td></td>
+                    </tr>
+                  ))
+                  }
                 </tbody>
               </table>
         </section>
@@ -63,14 +74,16 @@ export default Asessment;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id as string;
-  const assessment = await prisma.grade.findFirst({
+  const grade = await prisma.grade.findMany({
     where: { assessmentId: id },
+    include: {
+      user: true
+    }
   });
-  console.log(id)
 
   return {
     props: {
-      assessment: JSON.parse(JSON.stringify(assessment)),
+      grade: JSON.parse(JSON.stringify(grade)),
     },
   };
 };
