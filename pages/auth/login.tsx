@@ -70,10 +70,8 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
         setError(false);
         setMessage('');
       }, 5000);
-      // console.log(data);
       return;
     }
-    console.log(data);
     if (data !== null) {
       target.email.value = '';
       target.password.value = '';

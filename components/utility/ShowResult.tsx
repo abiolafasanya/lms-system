@@ -49,7 +49,7 @@ const ShowResult = ({ score, questions, user, assessment }: Iprops) => {
 
   return (
     <div className="md:mx-auto md:w-3/4 py-5">
-      <div className="logo flex justify-center items-center">
+      <div className="logo flex sm:flex-col md:flex-row justify-center items-center">
         <Image
           // src="/completed-bro.svg"
           src={CompletedAssessment}
