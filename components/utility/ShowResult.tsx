@@ -4,6 +4,7 @@ import { MdRefresh } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import Axios from 'helper/axios';
 import { Assessment } from '@prisma/client';
+import CompletedAssessment from 'public/Completed-bro.svg'
 
 interface Iprops {
   score: number;
@@ -27,8 +28,7 @@ const ShowResult = ({ score, questions, user, assessment }: Iprops) => {
     if(assessment?.id !== undefined){
       gradeAssessment();
     }
-     console.log(score, user)
-  }, [score, user ])
+  }, [])
 
   async function gradeAssessment() {
     const body = {
@@ -42,16 +42,17 @@ const ShowResult = ({ score, questions, user, assessment }: Iprops) => {
       return;
     }
     if (status === 200) {
-      console.log(data);
+      console.log('graded');
       return;
     }
   }
 
   return (
     <div className="md:mx-auto md:w-3/4 py-5">
-      <div className="logo flex justify-center items-center">
+      <div className="logo flex sm:flex-col md:flex-row justify-center items-center">
         <Image
-          src="/completed-bro.png"
+          // src="/completed-bro.svg"
+          src={CompletedAssessment}
           height={256}
           width={256}
           alt="check result"

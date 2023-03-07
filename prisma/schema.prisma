@@ -156,8 +156,8 @@ model Grade {
   taskId          String?     @db.ObjectId
   assessment      Assessment? @relation(fields: [assessmentId], references: [id])
   tasks           Task?       @relation(fields: [taskId], references: [id])
-  user            User        @relation(fields: [userId], references: [id])
-  userId          String      @db.ObjectId
+  user            User?        @relation(fields: [userId], references: [id])
+  userId          String?      @db.ObjectId
 }
 
 model User {

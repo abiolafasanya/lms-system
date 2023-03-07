@@ -1,5 +1,6 @@
 import React, { useState, useId } from 'react';
 import Tutor from '@layout/Tutor';
+import {AlertMsg} from '@utility/Alert';
 import Container from '@utility/Container';
 import dynamic from 'next/dynamic';
 import { EditorProps } from 'react-draft-wysiwyg';
@@ -12,6 +13,7 @@ import Axios from 'helper/axios';
 import Link from 'next/link';
 // import Select from 'react-select/dist/declarations/src/Select';
 import { useSession } from 'next-auth/react';
+import { updateReturn } from 'typescript';
 
 const animatedComponents = makeAnimated();
 
@@ -21,15 +23,6 @@ const Editor = dynamic<EditorProps>(
 );
 
 
-const optionsCat = [
-  { value: 'everyone', label: 'EveryOne' },
-  { value: 'course', label: 'Course' },
-  { value: 'general', label: 'General' },
-  { value: 'sport', label: 'Sport' },
-  { value: 'entertainment', label: 'Entertainment' },
-  { value: 'random', label: 'Random' },
-];
-
 const create = () => {
   const {data: session, status: userSession} = useSession();
   const [editorState, setEditorState] = useState<EditorState>(
@@ -37,6 +30,17 @@ const create = () => {
   );
   const [assignedTo, setAssignedTo] = useState<any>();
   const [description, setDescription] = useState<string>('');
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState('');
+
+  function cleanup() {
+    setError(false)
+    setSuccess(false)
+    setMessage('')
+    setAssignedTo([])
+    setDescription('')
+  }
 
   async function formHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -47,7 +51,7 @@ const create = () => {
        title: {value: string},
        attachment: {files: any},
        point: {value: number},
-       deadline: {value: Date}
+       deadline: {value: Date | null}
     };
 
     const body = {
@@ -59,8 +63,8 @@ const create = () => {
       description,
       userId: session?.user?.id,
     }
-   
 
+      
   const formData = new FormData();
 
   formData.append('file', body.attachment);
@@ -90,9 +94,20 @@ const create = () => {
   const { data, status } = await Axios.post('/api/task/create', upload);
   if (data.error) {
     console.error(data.error);
+    setError(true)
+    setMessage(data.message)
+    setTimeout(() => cleanup(), 5000)
+    return
   }
   if (status === 200 || status === 201) {
-    console.log(data);
+    target.title.value = ''
+      target.attachment.files = null
+      target.point.value = 0
+      target.deadline.value = null
+    setSuccess(true)
+    setMessage(data.message)
+    setTimeout(() => cleanup(), 3000)
+    return
   }
 
   }
@@ -108,6 +123,8 @@ const create = () => {
                 <Link href="/tutor/task">Task</Link> &larr; Create Task
               </span>
             </div>
+            {success && <AlertMsg type='alert-success' message={message} />}
+            {error && <AlertMsg type='alert-error' message={message} />}
             <div className="card text-dark ">
               <form onSubmit={formHandler}>
                 <div className="form-group">
@@ -118,7 +135,6 @@ const create = () => {
                     type="text"
                     id="title"
                     className="form-control"
-                    // onChange={(e: any) => setTitle(e.target.value)}
                   />
                 </div>
                 <div className="form-group">

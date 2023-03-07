@@ -59,7 +59,7 @@ export default class taskcontroller extends Controller {
     try {
       const Task = this.prisma.task;
 
-      const task = await Task.create({
+      const create = await Task.create({
         data: {
           title: body.title,
           description: body.description,
@@ -73,10 +73,10 @@ export default class taskcontroller extends Controller {
         .then((data) => data)
         .catch((err) => console.log(err));
       // console.log({ task });
-      if (!task) throw new Error('Bad request check your inputs');
+      if (!create) throw new Error('Bad request check your inputs');
       return res
         .status(200)
-        .json({ success: true, message: 'Record created', task });
+        .json({ success: true, message: 'Record created', task: create });
     } catch (error) {
       res.status(500).json({ message: error });
     } finally {
@@ -109,7 +109,7 @@ export default class taskcontroller extends Controller {
       const Task = this.prisma.task;
       const task = await Task.delete({ where: { id: req.query.id as string } });
       if (!task) throw new Error('Cannot find task');
-      return res.status(200).json({ success: true, message: 'Task deleted' });
+      return res.status(200).json({ success: true, message: 'Task successfully removed 🗑' });
     } catch (error) {
       res.status(500).json({ message: error });
     }
@@ -149,4 +149,21 @@ export class Submission extends taskcontroller {
       res.status(400).json({ success: false, error: error });
     }
   };
+
+  public static submit = async (
+    req: NextApiRequest,
+    res: NextApiResponse
+  ) => {
+    const session = await this.getSession({req});
+    let params = {
+      userId: session?.user.id as string,
+      taskId: req.body.taskId,
+      submission: req.body.file,
+    }
+    const submission = await this.prisma.submission.create({data: params})
+      if (!submission) {
+        return res.json({ message: 'Task submission failed 😔' });
+      }
+      return res.status(200).json({ message: 'Submission has been recieved 😊' });
+  }
 }

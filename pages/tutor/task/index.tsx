@@ -2,23 +2,19 @@ import React, { useState, useEffect, useId } from 'react';
 import Tutor from '@layout/Tutor';
 import Container from '@utility/Container';
 import classNames from 'classnames';
-import {
-  MdAdd,
-  MdDragIndicator,
-  MdDoneOutline,
-  MdOutlineAssignmentTurnedIn,
-  MdViewColumn,
-  MdPreview,
-} from 'react-icons/md';
+import Axios from 'helper/axios';
+import { MdAdd, MdPreview } from 'react-icons/md';
 import Link from 'next/link';
 import { GetServerSideProps, NextPage } from 'next';
 import { PrismaClient, Task } from '@prisma/client';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { CustomTable } from '@utility/Table';
-import { BsViewList } from 'react-icons/bs';
+import { BsTrash } from 'react-icons/bs';
+import Modal from '@utility/Modal';
+import { AlertMsg } from '@utility/Alert';
 
-const header = ['S/N', 'Title', 'Description', 'Deadline', 'View'];
+const header = ['S/N', 'Title', 'Description', 'Deadline', 'Action'];
 
 const animatedComponents = makeAnimated();
 
@@ -31,39 +27,42 @@ const selectOptions = [
 
 type Props = { data: Task[] };
 const Tasks: NextPage<Props> = ({ data }) => {
-  const [graded, setGraded] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [deadline, setDeadline] = useState<any>(NaN);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [taskId, setTaskId] = useState('');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     let isMounted = true;
-    const controller = new AbortController();
-    console.log(tasks);
     setTasks(data);
-    let today = new Date();
-    today.setDate(Date.now() + 5);
-    console.log(today); //Sun Feb 20 2022
-    setDeadline(
-      new Date(Date.now() + 1000 * 24 * 5 * 60 * 60).toLocaleString()
-    );
     return () => {
       isMounted = false;
-      controller.abort();
     };
-  }, [tasks]);
+  }, []);
 
-  async function submitHandler(e: any) {
-    e.preventDefault();
-    console.log('submitHandler');
+  useEffect(() => {
+    getTasks()
+      .then((tasks) => {
+        setTasks(() => tasks);
+      })
+      .catch((err) => err);
+  }, [deleteModal]);
+
+  const getTasks = async () => {
+    const { data } = await Axios.get('/api/task/');
+    return data.task;
+  };
+
+  async function deleteTask(id: string) {
+    setDeleteModal((con) => !con);
+    setTaskId(() => id);
+    return;
   }
 
-  const checkClass = (graded: boolean = false) =>
-    classNames(
-      'flex justify-between my-2 items-center py-5 px-7 bg-white/50 border overflow-clip',
-      {
-        'border-l-4 border-l-emerald-500 bg-emerald-50': graded,
-      }
-    );
+  async function action() {
+    const { data } = await Axios.delete('/api/task/' + taskId);
+    setMessage(data.message);
+  }
 
   return (
     <Tutor>
@@ -104,17 +103,31 @@ const Tasks: NextPage<Props> = ({ data }) => {
           </div>
         </section>
         <section>
+          {deleteModal && (
+            <Modal
+              title="Remove User"
+              action={action}
+              close={() => setDeleteModal(() => false)}
+            >
+              {message === '' ? (
+                <h2 className="text-xl">
+                  You are about to remove task {taskId} confirm to delete
+                </h2>
+              ) : (
+                <AlertMsg message={message} type="alert-info" />
+              )}
+            </Modal>
+          )}
           <CustomTable header={header}>
-            {tasks.length > 0 &&
+            {tasks?.length > 0 &&
               tasks.map((task, index) => (
-                <>
-                  <tr className="table-row">
+                  <tr key={index} className="table-row">
                     <td className="table-data">{index + 1}</td>
                     <td className="table-data">{task.title}</td>
 
                     <td
                       dangerouslySetInnerHTML={{ __html: task.description }}
-                      className="table-data"
+                      className="table-data whitespace-normal"
                     />
                     <td className="table-data">
                       {
@@ -123,16 +136,22 @@ const Tasks: NextPage<Props> = ({ data }) => {
                         ).toLocaleString() as unknown as string
                       }
                     </td>
-                    <td className="items-center table-data">
+                    <td className="items-center table-data flex space-x-2">
                       <Link
-                        href={`/tutor/task/${task.id}/submission`}
+                        href={`/tutor/task/${task.id}/`}
                         className="flex items-center space-x-2"
+                        title="view"
                       >
-                        <MdPreview /> visit
+                        <MdPreview className="text-blue-500 text-lg" />
                       </Link>
+                      <button
+                        onClick={() => deleteTask(task.id)}
+                        title="delete"
+                      >
+                        <BsTrash className="text-red-500 text-lg" />
+                      </button>
                     </td>
                   </tr>
-                </>
               ))}
           </CustomTable>
         </section>

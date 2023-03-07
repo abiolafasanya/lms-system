@@ -26,13 +26,10 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
     if (status !== 'unauthenticated') {
       setTimeout(() => {
         push('/dashboard');
-      }, 300);
+      }, 50);
     }
   }, []);
 
-  const [email, setEmail] = useState('');
-  const [OAuthEmail, setOAuthEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
@@ -73,10 +70,8 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
         setError(false);
         setMessage('');
       }, 5000);
-      console.log(data);
       return;
     }
-    console.log(data);
     if (data !== null) {
       target.email.value = '';
       target.password.value = '';
@@ -94,19 +89,19 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
         });
         setIsAuth(data?.ok as boolean);
         push('/dashboard');
-      }, 5000);
+      }, 1000);
     }
   }
 
   // Email without password login
   const OAuthMailHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const target = e.target as HTMLInputElement;
-    console.log(target);
-    // console.log(OAuthEmail);
-    // setTimeout(async () => {
-    //   await signIn('email', { email: OAuthEmail });
-    // }, 3000);
+    const target = e.target as typeof e.target &  {
+      OEmail: {value: string}
+    };
+    setTimeout(async () => {
+      await signIn('email', { email: target.OEmail.value });
+    }, 3000);
   };
 
   // Social OAuth Handler
@@ -137,8 +132,6 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                   type="email"
                   id="email"
                   className="form-control"
-                  value={email}
-                  onChange={({ target }) => setEmail(target.value)}
                 />
               </div>
               <div className="form-group">
@@ -149,7 +142,6 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                   type="password"
                   id="password"
                   className="form-control"
-                  onChange={({ target }) => setPassword(target.value)}
                 />
               </div>
               <div className="form-group">
@@ -174,8 +166,6 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                   type="email"
                   id="OEmail"
                   className="form-control"
-                  value={OAuthEmail}
-                  onChange={(e) => setOAuthEmail(e.target.value)}
                 />
               </div>
               <div className="form-group">

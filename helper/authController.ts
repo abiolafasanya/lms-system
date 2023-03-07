@@ -10,13 +10,14 @@ export class AuthController extends Controller {
         password: string;
       };
       let { username, email, password }: ReqData = req.body;
-      console.log(req.body)
+      // console.log(req.body)
 
       const User = this.prisma.user;
       const bcrypt = this.bcrypt;
       const ifExist = await User.findUnique({ where: {email}});
       if (ifExist) {
-        throw new Error('User already exists');
+        // throw new Error('User already exists');
+        return res.json({message: 'User already exists', error: true, success: false})
       }
       password = bcrypt.hashSync(password, 10);
       const newUser = { username, email, password };
@@ -32,7 +33,7 @@ export class AuthController extends Controller {
         );
       // return user;
       if (user) {
-        console.log(user);
+        // console.log(user);
         return res.status(201).json({
           status: 'success',
           user,
