@@ -50,7 +50,7 @@ const ShowResult = ({ score, questions, user, assessment }: Iprops) => {
     <div className="md:mx-auto md:w-3/4 py-5">
       <div className="logo flex justify-center items-center">
         <Image
-          src="/completed-bro.png"
+          src="/completed-bro.svg"
           height={256}
           width={256}
           alt="check result"
