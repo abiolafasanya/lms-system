@@ -180,34 +180,30 @@ export default class assessmentController extends Controller {
 
   public static grade = async (req: NextApiRequest, res: NextApiResponse) => {
     interface gradeData {
-      userId: string;
       assessmentScore: number;
       assessmentId: string;
+      userId: string;
     }
+    const session = await this.getSession({req});
     try {
       const body = req.body as gradeData;
       const Grade = this.prisma.grade;
       const findId = await this.prisma.grade.findFirst({
-        where: { userId: body.userId },
+        where: { userId: session?.user.id as string, assessmentId: body.assessmentId },
       });
-      const foundAssessment = findId?.assessmentId as string;
-      let id: string;
-      if (findId) {
-        id = findId.id;
-      } else id = ''
-
-      const grade = await Grade.upsert({
-        create: body,
-        update: body,
-        where: { id: id },
-      });
-
-      console.log(grade);
+      let grade;
+      if(findId?.id){
+        grade = await Grade.update({where: {id: findId.id as string}, data: {assessmentScore: body.assessmentScore}})
+      } else {
+        grade = await Grade.create({data: body})
+      }
+      // console.log(grade);
       if (!grade) throw new Error('Error occured while recording!');
       return res.status(200).json({ success: true, message: 'Grade recorded' });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: error });
+      res.json({ error: error });
+      return
     }
   };
 }
