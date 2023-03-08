@@ -43,11 +43,6 @@ const Editor = dynamic<EditorProps>(
     const [likes, setLikes] = useState(0);
 
     const { data: session, status: authSession } = useSession();
-    
-
-    useEffect(() => {
-      console.log(comments)
-    }, [])
 
     function cleanup() {
       setTimeout(() => {
@@ -127,7 +122,7 @@ const Editor = dynamic<EditorProps>(
             You are about to remove this comment press confirm to continue
           </Modal>
         )}
-          <div className="mx-7 m-2 flex space-x-3 items-center text-blue-500">
+          <div className="mx-7 m-2 flex space-x-3 sm:flex-wrap md:flex-nowrap items-center text-blue-500">
             <button className="flex space-x-3"
             onClick={() => setLikes(likes => likes === 0 ? 1 : 0)}
             >
