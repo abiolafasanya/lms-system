@@ -31,7 +31,7 @@ export default Alert;
 type AlertProp = { message: string; type: any };
 
 export const AlertMsg: React.FC<AlertProp> = ({ message, type }) => {
-  console.log(message, type);
+  // console.log(message, type);
   return (
     <div className={type + ' flex items-center space-x-2'} >
       <FaInfoCircle />

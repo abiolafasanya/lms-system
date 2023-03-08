@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SetStateAction } from 'react';
 import Dashboard from '@layout/Dashboard';
 import Container from '@utility/Container';
-import { sideBarMenu, sideFooter } from 'data/index';
 import Link from 'next/link';
 import { GetServerSideProps, NextPage } from 'next';
-import { Post, PrismaClient } from '@prisma/client';
-import { IBlog } from 'utility/interfaces';
 import { useRouter } from 'next/router';
 import styles from 'styles/Posts.module.css';
-import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaEye, FaRegThumbsUp, FaTrash } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
 import Avatar from 'react-avatar';
 import Modal from '@utility/Modal';
+import Comments from '@utility/Comment';
 import { AlertMsg } from '@utility/Alert';
 import Axios from 'helper/axios';
 import dynamic from 'next/dynamic';
@@ -20,13 +18,29 @@ import { EditorState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import { formatDate } from 'utility/formatter';
+import { BsChatDots } from 'react-icons/bs';
+import { Post, Comment, User, PrismaClient } from '@prisma/client';
+import { IBlog } from 'utility/interfaces';
 
 const Editor = dynamic<EditorProps>(
   () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
   { ssr: false }
 );
 
-const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
+interface IPost extends Post {
+  user: User;
+  comments: IComment[]
+}
+
+interface IComment extends Comment {
+  user: User;
+}
+
+interface Iprops {
+  serverPost: IPost
+}
+
+const Posts: NextPage<Iprops> = ({ serverPost }) => {
   const router = useRouter();
   const { data: session, status: authSession } = useSession();
 
@@ -34,26 +48,28 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
     EditorState.createEmpty()
   );
 
-  
   const [posts, setPosts] = useState<IBlog[]>([]);
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [showPost, setShowPost] = useState(false);
+  const [isComment, setIsComment] = useState(false);
+  const [likes, setLikes] = useState(0);
   const [postId, setPostId] = useState('');
   const [content, setContent] = useState<string>('');
+  
 
   const modalText = 'Are you sure you want to delete this post?';
 
   useEffect(() => {
     let isMounted = true;
-    // let _id = window.location.pathname.split('/')[2];
     const APIPost = async () => {
       const {data} = await Axios.post('/api/post/');
       if(data.error) return
-      // console.log('api post', data)
       setPosts(data.post)
+      // console.log('api post', data)
+      // console.log('posts', posts)
       return
     }
     APIPost().then(data => data);
@@ -61,7 +77,7 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
     return () => {
       isMounted = false;
     };
-  }, [success, error, openModal]);
+  }, [success, openModal]);
 
   function closeModal() {
     setOpenModal(false);
@@ -97,7 +113,7 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
     setPostId(id);
   }
 
-  async function postHandler(e: React.FormEvent<HTMLFormElement>) {
+ async function postHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setContent(
       draftToHtml(convertToRaw(editorState.getCurrentContent()))
@@ -127,7 +143,6 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
       }
     } 
 
-
   return (
     <Dashboard>
       <Container
@@ -152,7 +167,7 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
             </button>
           </div>
           <div className="w-full">
-            {showPost && (
+          {showPost && (
               <form onSubmit={postHandler}>
                 <div className="form-group mb-0">
                   <Editor
@@ -184,10 +199,6 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
                 >
                   <h1 className="card-header text-2xl mb-2">{post?.title}</h1>
                   <div className="card-body">
-                    <div
-                      className={styles.text}
-                      dangerouslySetInnerHTML={{ __html: post.content }}
-                    />
                   </div>
                   <div className="card-footer mt-2">
                     <div className="flex justify-between">
@@ -202,6 +213,7 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
                         {formatDate(new Date(post.createdAt))}
                       </div>
                       <div className="flex items-center space-x-2">
+                        
                         <Link
                           href={`/admin/post/${post.id}`}
                           className="text-blue-500 hover:text-gray-600"
@@ -209,7 +221,7 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
                           <FaEye />
                         </Link>
                         {session?.user?.name ===
-                          (post?.user?.username || post?.user?.name) && (
+                          ( post?.user?.username || post?.user?.name) && (
                           <>
                             <Link
                               href={`/admin/post/${post.id}/edit`}
@@ -228,6 +240,31 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
                       </div>
                     </div>
                   </div>
+                  <div
+                    className={styles.text + ' mx-7'}
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                /> 
+                {/* <div className="mx-7 m-2 flex space-x-3 items-center text-blue-500">
+                  <button className="flex space-x-3"
+                  onClick={() => setLikes(likes => likes === 0 ? 1 : 0)}
+                  >
+                  <span>{likes}</span>
+                  <FaRegThumbsUp className="text-blue-500" />
+                  </button>
+                  <span>Likes</span>
+                  <button className='flex space-x-3 items-center' 
+                  onClick={() => setIsComment(bool => !bool)}>
+                  <BsChatDots className="text-blue-500" />
+                  <span>Comment</span>
+                  </button>
+                </div> */}
+                 <Comments 
+                    postId={post.id} 
+                    setSuccess={setSuccess as SetStateAction<boolean>} 
+                    setError={setError as SetStateAction<boolean>} 
+                    setMessage={setMessage as SetStateAction<string>} 
+                    comments={post?.Comment}
+                  />
                 </div>
               ))}
           </div>
@@ -237,10 +274,11 @@ const Posts: NextPage<{serverPost: any}> = ({ serverPost }) => {
   );
 };
 
+
 const prisma = new PrismaClient();
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const posts = await prisma.post.findMany({
-    include: { user: true },
+    include: { user: true, Comment: {include: {user: true}} },
     orderBy: {
       createdAt: 'desc',
     },
