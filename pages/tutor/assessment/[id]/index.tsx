@@ -43,7 +43,6 @@ const Asessment = ({grade}: Iprops) => {
                   <tr>
                     <th>S/N</th>
                     <th>Username</th>
-                    <th>Class</th>
                     <th>Score</th>
                     <th>Action</th>
                   </tr>
@@ -55,7 +54,6 @@ const Asessment = ({grade}: Iprops) => {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{grade?.user.username || grade?.user.name}</td>
-                      <td>NA</td>
                       <td>{grade.assessmentScore}</td>
                       <td></td>
                     </tr>

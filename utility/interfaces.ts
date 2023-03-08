@@ -10,11 +10,22 @@ export type IUser = {
   name?: string;
   email: string;
 };
+
+export interface IComment {
+  id?: string;
+  userId?: string;
+  postId?: string;
+  content?: string;
+  createdAt: Date;
+  updatedAt?: Date;
+  user?: IUser;
+}
 export interface IBlog {
   id: string;
   title: string;
   user: IUser;
   content: string;
+  Comment: IComment[];
   headline?: string;
   picture?: string;
   createdAt: Date;
