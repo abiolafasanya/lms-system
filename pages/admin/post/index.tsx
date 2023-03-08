@@ -209,8 +209,8 @@ const Posts: NextPage<Iprops> = ({ serverPost }) => {
                   <div className="card-body">
                   </div>
                   <div className="card-footer mt-2">
-                    <div className="flex justify-between">
-                      <div className="block italic text-sm">
+                    <div className="flex justify-between sm:flex-wrap md:flex-nowrap">
+                      <div className="sm:flex sm:flex-wrap md:block italic text-sm">
                         <Avatar
                           name={post?.user?.username || post?.user?.name}
                           size="25"
@@ -220,8 +220,7 @@ const Posts: NextPage<Iprops> = ({ serverPost }) => {
                         <b className="text-gray-700">{post?.user?.username}</b> on{' '}
                         {formatDate(new Date(post.createdAt))}
                       </div>
-                      <div className="flex items-center space-x-2">
-                        
+                      <div className="flex items-center space-x-2 sm:flex-wrap md:flex-nowrap">
                         <Link
                           href={`/admin/post/${post.id}`}
                           className="text-blue-500 hover:text-gray-600"
@@ -252,20 +251,6 @@ const Posts: NextPage<Iprops> = ({ serverPost }) => {
                     className={styles.text + ' mx-7'}
                     dangerouslySetInnerHTML={{ __html: post.content }}
                 /> 
-                {/* <div className="mx-7 m-2 flex space-x-3 items-center text-blue-500">
-                  <button className="flex space-x-3"
-                  onClick={() => setLikes(likes => likes === 0 ? 1 : 0)}
-                  >
-                  <span>{likes}</span>
-                  <FaRegThumbsUp className="text-blue-500" />
-                  </button>
-                  <span>Likes</span>
-                  <button className='flex space-x-3 items-center' 
-                  onClick={() => setIsComment(bool => !bool)}>
-                  <BsChatDots className="text-blue-500" />
-                  <span>Comment</span>
-                  </button>
-                </div> */}
                  <Comments 
                     postId={post.id} 
                     setSuccess={setSuccess as SetStateAction<boolean>} 
