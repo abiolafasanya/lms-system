@@ -83,6 +83,16 @@ const Posts: NextPage<Iprops> = ({ serverPost }) => {
     setOpenModal(false);
   }
 
+  function cleanup() {
+    setTimeout(() => {
+      setError(false)
+      setMessage('')
+      setSuccess(false)
+      setContent('')
+      setEditorState(() => EditorState.createEmpty())
+    }, 3000)
+  }
+
   async function confirmDelete() {
     console.log('confirming', postId);
     const POST_URL = `/api/post/${postId}/delete`;
@@ -93,17 +103,14 @@ const Posts: NextPage<Iprops> = ({ serverPost }) => {
         setError(false);
         setOpenModal(false);
         setMessage('Your post has been deleted successfully');
-        setTimeout(() => {
-          setSuccess(false);
-          setMessage('');
-          router.push('/admin/post');
-        }, 3000);
+        cleanup()
       }
     } catch (error) {
       setOpenModal(false);
       setError(true);
       setSuccess(false);
-      setMessage(error as string);
+      setMessage("Internal Error!, Try later");
+      cleanup()
     }
   }
 
