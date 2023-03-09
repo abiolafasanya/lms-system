@@ -55,7 +55,7 @@ const Tasks: NextPage<Iprops> = ({ data, submitted }) => {
 
   const checkClass = (graded: boolean = false) =>
     classNames(
-      'flex justify-between my-2 items-center py-5 px-7 bg-white/50 border overflow-clip',
+      'flex justify-between overflow-auto my-2 items-center py-5 px-7 bg-white/50 border overflow-clip',
       {
         'border-l-4 border-l-emerald-500 bg-emerald-50': graded,
       }

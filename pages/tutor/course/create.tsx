@@ -35,12 +35,14 @@ const create = () => {
   const [success, setSuccess] = useState(false)
   const [message, setMessage] = useState('');
 
+  // return console.log(auth.session?.user)
+
 useEffect(() => {
   setAuthor(() => auth.session?.user)
 },[author, auth])
 
 
-  async function handleSubmit(e: React.SyntheticEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const target = e.target as typeof e.target & {
@@ -49,6 +51,7 @@ useEffect(() => {
       price: { value: string };
       image: { files: string | Blob };
     };
+    
 
     const name = target.name.value;
     const description = draftToHtml(
@@ -58,45 +61,55 @@ useEffect(() => {
     const [image]: any = target.image.files;
 
     let formData = new FormData();
-    formData.append('image', image);
-    formData.append('name', name);
-    formData.append('description', description);
-    formData.append('requirements', requirements);
-    formData.append('price', price);
-    formData.append('userId', author?.id);
+    formData.append('file', image);
+    formData.append('upload_preset', 'my-uploads');
+    let URLCloudinary =
+      'https://api.cloudinary.com/v1_1/fastbeetech/image/upload';
 
-
-    const {data, status} = await Axios.post('/api/course/create', formData, {
-      headers: { 'Content-Type': 'multipart/form-data'},
-    })
+      const uploadImage = await fetch(URLCloudinary, {
+        method: 'POST',
+        body: formData,
+      })
+      const res = await uploadImage.json();
+    const formBody = {
+      image: res.secure_url, name, description, requirements, price: parseInt(price), userId: author?.id,
+    }
+    const {data, status} = await Axios.post('/api/course/create', formBody)
 
     if(data.error) {
       console.log(status, data.error)
       setError(true)
       setMessage("Course not created 😭 there was an interruption")
-      setTimeout(() => {
-        setError(false)
-        setMessage('')
-      }, 5000)
+      cleanup()
       return
     }
 
-    if(status === 200 || status === 201) {
+    if(status === 200 && data.success) {
       setSuccess(true)
       setMessage("Successfully created course 😊")
-      setTimeout(() => {
-        setSuccess(false)
-        setMessage('')
-      }, 5000)
-      console.log('successful', data)
+      target.name.value = ''
+      target.author.value = ''
+      target.price.value = ''
+      setEditorState(EditorState.createEmpty())
+      setRequirements([])
+      cleanup()
+      // console.log('successful', data)
       return 
     }
 
   }
 
+  function cleanup() {
+    setTimeout(() => {
+      setSuccess(false)
+      setError(false)
+      setMessage('')
+    }, 3000)
+  }
+
   return (
     <Tutor>
-      <Container className={`min-h-screen dark:text-gray-100`}>
+      <Container className={`min-h-screen md:max-w-6xl mx-auto dark:text-gray-100`}>
         <main className="w-full">
           <section>
             <h1 className="text-2xl">Create Course</h1>

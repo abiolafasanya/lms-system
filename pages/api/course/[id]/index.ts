@@ -1,4 +1,4 @@
 import courseController from 'helper/courseController';
 
 
-export default courseController.create;
+export default courseController.show;

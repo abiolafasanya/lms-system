@@ -6,7 +6,7 @@ import { sideBarMenu, sideFooter, courseMenuItems } from 'data/index';
 import Link from 'next/link';
 import { GetStaticProps, NextPage } from 'next';
 import { PrismaClient, Course } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime';
+
 
 
 interface CourseProps {
@@ -72,11 +72,7 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
               {courses.map((course, index) => (
                 <Item
                   key={index}
-                  image={course.image as string}
-                  // link={course.link}
-                  title={course.name}
-                  price={course?.price as number}
-                  author={course.userId as string}
+                  {...course}
                 />
               ))}
             </div>
