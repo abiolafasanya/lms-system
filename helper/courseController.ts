@@ -34,38 +34,39 @@ export default class courseController extends Controller {
   };
 
   public static create = async (req: NextApiRequest, res: NextApiResponse) => {
-    let body = req.body;
+    type Data = {
+      userId: string;
+      description: string;
+      name: string;
+      image: string;
+      requirements: Array<string>;
+      price: number;
+    }
+    let body: Data = req.body;
+    // const session = await this.getSession({req})
+  //  return console.log(body, session?.user)
     try {
-      const Course = this.prisma.course;
-
       const user = await this.prisma.user.findFirst({
         where: {
-          email: req.body.email,
+          id: req.body.userId,
         },
       });
       // console.log('here', user);
+      
 
       if (!user) throw new Error('no user attached to course');
 
-      const course = await Course.create({
-        data: {
-          name: body.name,
-          description: body.description,
-          category: body.category,
-          price: body.price,
-          discount: body.discount,
-          image: body.image,
-          requirements: body.requirements,
-          material: body.material,
-          videos: body.videos,
-        },
+      const course = await this.prisma.course.create({
+        data: body,
       });
+      // console.log(course)
       if (!course) throw new Error('Bad request check your inputs');
       return res
         .status(200)
-        .json({ success: true, message: 'Record created', course });
+        .json({ success: true, message: 'Record created' });
     } catch (error) {
-      res.status(500).json({ message: error });
+      // console.log(error)
+      res.json({ error: error });
     } finally {
       await this.prisma.$disconnect();
     }
