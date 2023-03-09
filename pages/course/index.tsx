@@ -70,11 +70,7 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
               {courses.map((course, index) => (
                 <Item
                   key={index}
-                  image={course?.image as string}
-                  // link={course.link}
-                  title={course?.name}
-                  price={course?.price as number}
-                  author={course?.userId as string}
+                  {...course}
                 />
               ))}
             </div>
