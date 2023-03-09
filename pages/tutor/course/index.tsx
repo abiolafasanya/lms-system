@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Tutor from '@layout/Tutor';
 import Container from '@utility/Container';
 import Item from 'components/course/Item';
-import { sideBarMenu, sideFooter, courseMenuItems } from 'data/index';
+import { sideBarMenu, sideFooter } from 'data/index';
 import Link from 'next/link';
-import { GetStaticProps, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { PrismaClient, Course } from '@prisma/client';
 
 
@@ -12,6 +12,12 @@ import { PrismaClient, Course } from '@prisma/client';
 interface CourseProps {
   courses: Course[];
 }
+
+const filterList = [
+  'Development', 'Teaching', ' IT & Softwares', 
+  ' Office Productivity', 'Engineering','Entrepreneur', 
+  'Health & Fitness', 'Music', 'Design', 'Marketing'
+]
 
 const Index: NextPage<CourseProps> = ({ courses }) => {
   // console.log(courses);
@@ -22,36 +28,12 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
         <section className="sm:hidden md:flex w-full">
           <aside className="p-5 h-screen w-[25%] bg-white dark:bg-gray-700 dark:text-gray-50 shadow-md">
             <menu className="flex space-y-3 flex-col flex-wrap">
-              <Link href={`#non`} className="course-link">
-                Teaching
+            { filterList.map((list, index) => (
+              <Link key={index} href={`#non`} className="course-link">
+                {list}
               </Link>
-              <Link href={`#non`} className="course-link">
-                Development
-              </Link>
-              <Link href={`#non`} className="course-link">
-                IT & Softwares
-              </Link>
-              <Link href={`#non`} className="course-link">
-                Office Productivity
-              </Link>
-              <Link href={`#non`} className="course-link">
-                Engineering
-              </Link>
-              <Link href={`#non`} className="course-link">
-                Entrepreneur
-              </Link>
-              <Link href={`#non`} className="course-link">
-                Health & Fitness
-              </Link>
-              <Link href={`#non`} className="course-link">
-                Music
-              </Link>
-              <Link href={`#non`} className="course-link">
-                Design
-              </Link>
-              <Link href={`#non`} className="course-link">
-                Marketing
-              </Link>
+             ))
+             }
             </menu>
           </aside>
           <main className="w-[100%]">
@@ -87,7 +69,7 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
 
 export default Index;
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const prisma = new PrismaClient();
   const course = await prisma.course.findMany();
 
