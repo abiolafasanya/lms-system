@@ -172,7 +172,7 @@ const Editor = dynamic<EditorProps>(
              {
              showComment &&  comments?.length > 0 && 
               comments?.map((comment, index) => (
-                <div key={index} className='mx-7 bg-gray-50 p-5 my-2 rounded-sm'>
+                <div key={index} className='card mx-7 bg-gray-50 p-5 my-2 rounded-sm dark:bg-gray-700'>
                   <div className="card-footer mt-2">
                     <div className="flex justify-between">
                       <div className="block italic text-sm">
@@ -182,7 +182,7 @@ const Editor = dynamic<EditorProps>(
                           round
                           className="mr-2"
                         />
-                        <b className="text-gray-700">{comment?.user?.username}</b> on{' '}
+                        <b className="text-gray-700 dark:text-gray-400">{comment?.user?.username}</b> on{' '}
                         {formatDate(new Date(comment.createdAt))}
                       </div>
                       <div className="flex items-center space-x-2">
