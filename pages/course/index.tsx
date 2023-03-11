@@ -46,7 +46,7 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
               />
             </div>
 
-            <div className="dark:bg-gray-800 dark:text-gray-100 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+            <div className="dark:bg-gray-800 dark:text-gray-100 px-5 flex gap-4 flex-wrap">
               {courses.map((course, index) => (
                 <Item
                   key={index}

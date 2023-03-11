@@ -142,7 +142,7 @@ const Tasks: NextPage<Iprops> = ({ data, submitted }) => {
                       <MdDragIndicator className="text-xl" />
                       <MdOutlineAssignmentTurnedIn />
                       <span className="font-bold">
-                        {submission?.task.title}
+                        {submission?.task?.title}
                       </span>
                       {submission?.graded && (
                         <MdDoneOutline className="text-emerald-500" />
