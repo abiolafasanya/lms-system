@@ -6,6 +6,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import { PrismaClient, Task, Submission } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
+import {useRouter} from 'next/router';
 import Axios from 'helper/axios';
 import { useSession, getSession } from 'next-auth/react';
 
@@ -18,7 +19,7 @@ interface TaskDoc extends Task {
   Submission: Submission[]
 }
 const index: NextPage<Iprops> = ({ data , submissionData}) => {
-
+  const router = useRouter()
   const {data: session} = useSession();
   const userSession = session?.user.id as string
 
@@ -85,6 +86,7 @@ const index: NextPage<Iprops> = ({ data , submissionData}) => {
       setSuccess(true)
       setMessage(data.message)
       setTimeout(() => cleanup(), 5000)
+      router.push('/task')
       return;
     }
   }
