@@ -13,7 +13,7 @@ import Axios from 'helper/axios';
 import Link from 'next/link';
 // import Select from 'react-select/dist/declarations/src/Select';
 import { useSession } from 'next-auth/react';
-import { updateReturn } from 'typescript';
+import { useRouter } from 'next/router';
 
 const animatedComponents = makeAnimated();
 
@@ -24,6 +24,7 @@ const Editor = dynamic<EditorProps>(
 
 
 const create = () => {
+  const router = useRouter()
   const {data: session, status: userSession} = useSession();
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty()
@@ -107,6 +108,7 @@ const create = () => {
     setSuccess(true)
     setMessage(data.message)
     setTimeout(() => cleanup(), 3000)
+    router.push('/tutor/task')
     return
   }
 
