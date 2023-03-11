@@ -77,8 +77,10 @@ const account: NextPage<{ data: User }> = ({ data }) => {
             <div className="w-full flex sm:flex-col md:flex-row md:space-x-8">
               <div className="sm:w-full mx-auto md:w-1/4">
                 <Image
-                  src="/avatar.png"
+                  src={user?.image ? user?.image : "/avatar.png"}
                   alt="profile"
+                  className={user?.image ? 'rounded-full' : undefined}
+                  priority
                   width={256}
                   height={256}
                 />
@@ -158,7 +160,7 @@ const account: NextPage<{ data: User }> = ({ data }) => {
                   type="file"
                   id="Image"
                   className="form-control "
-                  defaultValue={user?.image as string}
+                  // defaultValue={user?.image as any}
                 />
               </div>
             </div>
