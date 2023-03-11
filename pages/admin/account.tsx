@@ -119,7 +119,7 @@ const account: NextPage<{ data: User }> = ({ data }) => {
           </div>
         </section>
 
-        <section className="bg-white mt-8 p-5 shadow-sm rounded border">
+        <section className="card bg-white mt-8 p-5 shadow-sm rounded border dark:border-none">
           {error && <AlertMsg type="alert-error" message={message} />}
           {success && <AlertMsg type="alert-success" message={message} />}
           <form onSubmit={updateAccount} className="">
@@ -160,7 +160,6 @@ const account: NextPage<{ data: User }> = ({ data }) => {
                   type="file"
                   id="Image"
                   className="form-control "
-                  // defaultValue={user?.image as string}
                 />
               </div>
             </div>
