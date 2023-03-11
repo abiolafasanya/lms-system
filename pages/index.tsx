@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <Layout>
       <Head>
-        <title>LMSCApp Management System</title>
+        {/* <title>LMSCApp Management System</title> */}
         <meta
           name="description"
           content="Learning Management System suitable for almost everything"
@@ -31,7 +31,6 @@ export default function Home() {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
-        <title>LMS App</title>
       </Head>
 
       <main className="font-montserrat md:max-w-6xl">
@@ -43,8 +42,8 @@ export default function Home() {
             width={500}
             alt="learning"
           />
-          <div className="flex flex-col py-8">
-            <h3 className="sm:text-2xl md:text-3xl font-semibold text-gray-900 sm:text-center md:text-justify">
+          <div className="flex flex-col py-8 text-gray-900 dark:text-gray-300">
+            <h3 className="sm:text-2xl md:text-3xl font-semibold sm:text-center md:text-justify">
               LMS provides an all-in-one platform for learning and upgrading the
               skill set
             </h3>

@@ -29,7 +29,7 @@ const Header: React.FC<PropTypes> = (props) => {
   return (
     <header>
       <Head>
-        <title>{headData.title}</title>
+        <title>{headData.title || 'LMS App'}</title>
         <meta name="description" content={headData.content} />
         <meta name="about" content="Learning Management System suitable for almost everything" />
         <meta name="author" content="abiola fasanya" />
