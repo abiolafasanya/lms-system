@@ -157,7 +157,7 @@ const submission: NextPage<Iprops> = ({ data }) => {
   return (
     <div>
       <Tutor>
-        <Container className={`h-screen dark:text-black`}>
+        <Container className={`h-screen`}>
           <h2 className='text-2xl mb-3'>Submissions</h2>
           <h2 className='text-base'><Link href="/tutor/task">Task</Link> &larr; {data.id}</h2>
           {/* <div>Deadline for submission: {formatDate(new Date(task.deadline))}</div> */}

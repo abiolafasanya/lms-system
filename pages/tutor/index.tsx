@@ -4,13 +4,22 @@ import { GoInfo } from 'react-icons/go';
 import Tutor from 'components/layout/Tutor';
 import Container from 'components/utility/Container';
 import { sideBarMenu, sideFooter, headMenu } from 'data/index';
-import { MdArticle } from 'react-icons/md';
 import Alert from 'components/utility/Alert';
-import { motion } from 'framer-motion';
-import { motion1 } from 'data/motion';
 import { ThreeCircles } from 'react-loader-spinner';
+import Status from '@utility/Status'
+import {GetServerSideProps, NextPage} from 'next';
+import { getSession } from 'next-auth/react';
+import { PrismaClient, Course, User, Post, Task, Submission } from '@prisma/client';
 
-const index = () => {
+interface Iprops {
+  courses: Course[];
+  posts: Post[];
+  users: User[];
+  tasks: Task[];
+  submissions: Submission[];
+}
+
+const index: NextPage<Iprops> = ({courses, users, posts, tasks, submissions}) => {
   const [alert, setAlert] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 
@@ -53,47 +62,8 @@ const index = () => {
           )}
         <Container className="sm:px-5 mx-auto md:max-w-6xl">
             <h2 className="text-2xl font-semibold py-4">Dashboard &larr; Tutor</h2>
-            <section className="flex md:flex-row flex-col w-full">
-              <div className="md:w-1/4 card flex sm:flex-col md:flex-row md:space-x-4 items-center p-5 rounded border">
-                <FaSchool className="text-[48px] text-black dark:text-gray-300" />
-                <div className="text-black dark:text-gray-300">
-                  <h5>Courses</h5>
-                  <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    1
-                  </h2>
-                </div>
-              </div>
-              <div className="md:w-1/4 card flex sm:flex-col md:flex-row md:space-x-4 items-center p-5 rounded border">
-                <MdArticle className="text-[48px] text-black dark:text-gray-300" />
-                <div className="text-black dark:text-gray-300">
-                  <h5>Posts</h5>
-                  <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    10
-                  </h2>
-                </div>
-              </div>
-              <div className="md:w-1/4 card flex sm:flex-col md:flex-row md:space-x-4 items-center p-5 rounded border">
-                <FaTasks className="text-[48px] text-black dark:text-gray-300" />
-                <div className="text-black dark:text-gray-300">
-                  <h5>Tasks</h5>
-                  <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    1
-                  </h2>
-                </div>
-              </div>
-              <div className="md:w-1/4 card flex sm:flex-col md:flex-row md:space-x-4 items-center p-5 rounded border">
-                <GoInfo className="text-[48px] text-black dark:text-gray-300" />
-                <div className="text-black dark:text-gray-300">
-                  <h5>Announcement</h5>
-                  <h2 className="text-2xl font-bold rounded-full p-1 text-center mx-auto dark:border-gray-300 border-gray-800 border-2 w-[48px] border-dark">
-                    1
-                  </h2>
-                </div>
-              </div>
-            </section>
-
-        
-          </Container>
+            <Status users={users} tasks={tasks} posts={posts} submissions={submissions}/>
+        </Container>
         </Tutor>
       )}
     </>
@@ -101,3 +71,24 @@ const index = () => {
 };
 
 export default index;
+
+
+
+export const getServerSideProps: GetServerSideProps = async(context) => {
+  const prisma = new PrismaClient();
+  const session = await getSession(context);
+  const users = await prisma.user.findMany()
+  const posts = await prisma.post.findMany()
+  const courses = await prisma.course.findMany()
+  const tasks = await prisma.task.findMany()
+  const submissions = await prisma.submission.findMany()
+  return {
+      props: {
+          users: JSON.parse(JSON.stringify(users)),
+          courses: JSON.parse(JSON.stringify(courses)),
+          posts: JSON.parse(JSON.stringify(posts)),
+          tasks: JSON.parse(JSON.stringify(tasks)),
+          submissions: JSON.parse(JSON.stringify(submissions)),
+      }
+  }
+}

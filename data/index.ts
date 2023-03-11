@@ -3,7 +3,7 @@ import {
   GoMilestone,
   GoFileDirectory,
   GoSettings,
-  GoTasklist,
+  GoInfo,
 } from 'react-icons/go';
 
 import {
@@ -15,7 +15,22 @@ import {
   MdBadge,
 } from 'react-icons/md';
 
-import { FaSignOutAlt, FaTasks } from 'react-icons/fa';
+import { FaSignOutAlt, FaTasks, FaSchool } from 'react-icons/fa';
+
+export const statusBar = [
+  {
+    name: 'Course', icon: FaSchool
+  },
+  {
+    name: 'Post', icon: MdArticle
+  },
+  {
+    name: 'Task', icon: FaTasks
+  },
+  {
+    name: 'Announcement', icon: GoInfo
+  },
+]
 
 export const sideBarMenu = [
   { name: 'Dashboard', icon: GoDashboard, link: '/dashboard' },

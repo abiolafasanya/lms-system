@@ -31,7 +31,13 @@ const Header: React.FC<PropTypes> = (props) => {
       <Head>
         <title>{headData.title}</title>
         <meta name="description" content={headData.content} />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="about" content="Learning Management System suitable for almost everything" />
+        <meta name="author" content="abiola fasanya" />
+        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <nav className="font-montserrat flex justify-between items-center py-3 sm:px-1 md:px-8 lg:max-w-6xl w-full lg:mx-auto border-b">
         <div className="font-bold text-2xl">TSCAPP</div>
