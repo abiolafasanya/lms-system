@@ -31,6 +31,7 @@ export default function Home() {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+        <title>LMS App</title>
       </Head>
 
       <main className="font-montserrat md:max-w-6xl">
