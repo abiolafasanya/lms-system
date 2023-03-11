@@ -3,7 +3,7 @@ import Dashboard from '@layout/Dashboard';
 import Container from '@utility/Container';
 import { AlertMsg } from '@utility/Alert';
 import { sideBarMenu, sideFooter } from 'data/index';
-import { GetStaticProps, NextPage, GetServerSideProps } from 'next';
+import { NextPage, GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { User, PrismaClient } from '@prisma/client';
 import Axios from 'helper/axios';
