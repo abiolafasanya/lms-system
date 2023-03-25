@@ -37,7 +37,7 @@ export default class courseController extends Controller {
     type Data = {
       userId: string;
       description: string;
-      name: string;
+      title: string;
       image: string;
       requirements: Array<string>;
       price: number;
