@@ -58,8 +58,8 @@ model Curriculum {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   title    String
   topics   Topic[]
-  course   Course  @relation(fields: [courseId], references: [id])
-  courseId String  @db.ObjectId
+  course   Course?  @relation(fields: [courseId], references: [id])
+  courseId String?  @db.ObjectId
 }
 
 model Topic {

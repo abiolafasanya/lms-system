@@ -113,8 +113,11 @@ export default class courseController extends Controller {
     console.log(req.query, req.body, 'here')
     try{
       const curriculum = await this.prisma.curriculum.create({
-        data: {title: req.body.title as string}
-      })
+        data: {
+          title: req.body.title as string,
+          courseId: req.query.id as string,
+        },
+      });
       if(!curriculum) {
         return res.status(400).json({error: true, message: 'Error occured while createing'})
       }
