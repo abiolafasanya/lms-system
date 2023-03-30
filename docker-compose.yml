@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: abiola78
+      POSTGRES_DB: tscapp
+    # ports:
+      # - "5432:5432"
+  
+# postgresql://abiola:abiola78@localhost:5432/mydb?schema=public
+  

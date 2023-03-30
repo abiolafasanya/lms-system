@@ -2,70 +2,76 @@ import React, { useState, useEffect } from 'react';
 import Tutor from '@layout/Tutor';
 import Container from '@utility/Container';
 import Item from 'components/course/Item';
-import { sideBarMenu, sideFooter } from 'data/index';
-import Link from 'next/link';
+import { sideBarMenu, sideFooter, courseMenuItems } from 'data/index';
 import { GetServerSideProps, NextPage } from 'next';
 import { PrismaClient, Course } from '@prisma/client';
-
+import {BsSearch} from 'react-icons/bs'
+import {formatCurrency} from 'utility/formatter'
+import Link from 'next/link';
 
 
 interface CourseProps {
   courses: Course[];
 }
 
-const filterList = [
-  'Development', 'Teaching', ' IT & Softwares', 
-  ' Office Productivity', 'Engineering','Entrepreneur', 
-  'Health & Fitness', 'Music', 'Design', 'Marketing'
-]
-
 const Index: NextPage<CourseProps> = ({ courses }) => {
-  // console.log(courses);
-  const [showBar, setShowBar] = useState<boolean>(false);
   return (
     <Tutor menu={sideBarMenu} footer={sideFooter}>
-      <Container className={'dark:bg-gray-800 bg-[#eee] min-h-screen w-full'}>
-        <section className="sm:hidden md:flex w-full">
-          <aside className="p-5 h-screen w-[25%] bg-white dark:bg-gray-700 dark:text-gray-50 shadow-md">
-            <menu className="flex space-y-3 flex-col flex-wrap">
-            { filterList.map((list, index) => (
-              <Link key={index} href={`#non`} className="course-link">
-                {list}
-              </Link>
-             ))
-             }
-            </menu>
-          </aside>
-          <main className="w-[100%]">
-            <div className="w-3/4 mx-auto my-10 flex flex-col">
-              <Link href={'/tutor/course/create'} className="btn mb-4 ml-auto">
-                Add Course
-              </Link>
-              <input
-                type="search"
-                name="search"
-                id="search"
-                className="form-control rounded-sm flex placeholder:text-center"
-                placeholder="Search"
-              />
+      <Container className={'dark:bg-gray-800 min-h-screen w-full'}>
+        <section>
+          <div className="max-w-6xl mx-auto flex justify-between items-center">
+            <div className="flex md:space-x-14">
+              <div className="flex space-x-4">
+                <h3 className="text-lg">Category</h3>
+                <select>
+                  <option>All</option>
+                </select>
+              </div>
+
+              <div className="flex space-x-4">
+                <h3 className="text-lg">Authour</h3>
+                <select>
+                  <option>All</option>
+                </select>
+              </div>
             </div>
 
-            <div className="md:mx-5 dark:bg-gray-800 dark:text-gray-100 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
-              {courses.map((course, index) => (
-                <Item
-                  key={index}
-                  {...course}
-                />
-              ))}
+            <div>
+              <form>
+                <div className="form-group flex">
+                  <input type="search" id="search" className={formControl} />
+                  <button className={btnStyle}>
+                    <BsSearch color="white" />
+                  </button>
+                </div>
+              </form>
             </div>
-          </main>
+          </div>
         </section>
-        <section></section>
-        <section></section>
+
+        <section>
+          <div className="max-w-6xl mx-auto">
+            <div className="flex justify-between my-2 items-center">
+              <h2 className="text-2xl mb-2">Courses</h2>
+              <Link href="/tutor/course/create" className="btn rounded-sm">
+                Create new course
+              </Link>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-1 md:grid-cols-3  w-full">
+              {courses &&
+                courses.map((course, index) => (<Item key={index} course={course} url='/tutor/course' />))}
+            </div>
+          </div>
+        </section>
       </Container>
     </Tutor>
   );
-};
+};        
+
+
+const formControl = 'py-3 px-5 h-12 border dark:border-none dark:bg-gray-200 dark:border-gray-600 dark:text-black outline-none dark:focus:border-white focus:border-blue-500 bg-white'
+const btnStyle= 'py-3 px-5 h-12 bg-blue-500 hover:bg-blue-600  outline-none <rounded-r-sm></rounded-r-sm>'
+const cardStyle= "rounded-b-md bg-white shadow-md hover:border-b hover:border-blue-500"
 
 export default Index;
 

@@ -1,0 +1,1000 @@
+ 1030  ip addr show
+ 1031  clear
+ 1032  ipconfig
+ 1033  ifconfig
+ 1034  vagrant ssh db01
+ 1035  logout
+ 1036  exit
+ 1037  vagrant ssh app01
+ 1038  clear
+ 1039  exit
+ 1040  echo $0
+ 1041  $1 = Abiola
+ 1042  $1=abiola
+ 1043  $1='abiola'
+ 1044  echo $1
+ 1045  name='Abiola'
+ 1046  $name
+ 1047  echo $name
+ 1048  x=3
+ 1049  y=7
+ 1050  z=$x+$y
+ 1051  echo $z
+ 1052  clear
+ 1053  id -u
+ 1054  whoami -u
+ 1055  id -user
+ 1056  clear
+ 1057  id -group
+ 1058  id -g
+ 1059  clear
+ 1060  id
+ 1061  uid
+ 1062  clear
+ 1063  whoami -all
+ 1064  current-user-info
+ 1065  id -user-group
+ 1066  id
+ 1067  id -u -G
+ 1068  whoami -groups
+ 1069  id -user -groups
+ 1070  cd
+ 1071  cd vagrant-vms
+ 1072  ls
+ 1073  cd centos7
+ 1074  vagrant up
+ 1075  vagrant status
+ 1076  vagrant ssh
+ 1077  ls
+ 1078  cat Vagrantfile
+ 1079  code .
+ 1080  ls
+ 1081  vagrant reload
+ 1082  sudo mount /dev/sda4 /media/abiola/
+ 1083  clear
+ 1084  ls
+ 1085  cd practice
+ 1086  ls
+ 1087  cd
+ 1088  cd 
+ 1089  clear
+ 1090  ls
+ 1091  ls -C
+ 1092  cd myshellscripts
+ 1093  cd myshellscript
+ 1094  ls
+ 1095  cat devopsscript1.sh
+ 1096  clear
+ 1097  ls
+ 1098  clear
+ 1099  vim Vagrantfile
+ 1100  clear
+ 1101  vim Vagrantfile
+ 1102  cat Vagrantfile
+ 1103  vim Vagrantfile
+ 1104  vagrant up
+ 1105  vim Vagrantfile
+ 1106  vagrant up
+ 1107  vagrant reload
+ 1108  vagrant ssh scriptbox
+ 1109  vagrant ssh web01
+ 1110  vagrant halt
+ 1111  vagrant up
+ 1112  code .
+ 1113  clear
+ 1114  vagrant destroy
+ 1115  clear
+ 1116  vagrant up
+ 1117  vagrant reload
+ 1118  vagrant up
+ 1119  varant reload
+ 1120  vagrant reload
+ 1121  clear
+ 1122  exit
+ 1123  shutdown now
+ 1124  exit
+ 1125  shutdown now
+ 1126  ls
+ 1127  cd Documents
+ 1128  ls
+ 1129  cd www
+ 1130  ls
+ 1131  cd typescript
+ 1132  ls
+ 1133  cd LMS_Next_Typescript
+ 1134  ls
+ 1135  clear
+ 1136  code .
+ 1137  npm run prisma studio
+ 1138  prisma studio
+ 1139  prisma db pull
+ 1140  npm prisma db pull
+ 1141  npm run pull
+ 1142  clear && npm run dev
+ 1143  git pull origin
+ 1144  clear
+ 1145  npm install
+ 1146  clear
+ 1147  npm 
+ 1148  npm whoami
+ 1149  clear
+ 1150  npm install
+ 1151  clear
+ 1152  npm install
+ 1153  clear
+ 1154  yarn dev
+ 1155  clear
+ 1156  npm run dev
+ 1157  clear
+ 1158  npm refresh
+ 1159  npm run regresh
+ 1160  npm run refresh
+ 1161  .env
+ 1162  npm prisma init
+ 1163  npm run prisma init
+ 1164  npm run prisma migrate
+ 1165  clear
+ 1166  npm generate
+ 1167  npm run generate
+ 1168  npm run refresh
+ 1169  clear
+ 1170  clear && npm run dev
+ 1171  npm run studio
+ 1172  ls
+ 1173  history
+ 1174  clear
+ 1175  sudo mount /dev/sda4/media/abiola/
+ 1176  ls && mkdir testing && cd testing && touch index.html
+ 1177  ls
+ 1178  clear
+ 1179  shutdown now
+ 1180  sudo mount /dev/sda4/media/abiola/
+ 1181  sudo -i
+ 1182  clear
+ 1183  ls
+ 1184  sudo mount /dev/sda4/media/abiola/
+ 1185  cd /dev/sda4/media
+ 1186  cd /dev/sda4/
+ 1187  cd /dev
+ 1188  ls
+ 1189  cd sda4
+ 1190  ls
+ 1191  cat sda4
+ 1192  sudo mount /sda4
+ 1193  exit
+ 1194  sudo mount /dev/sda4/media/abiola/224C6E1A4C6DE8CD
+ 1195  sudo mount
+ 1196  clear
+ 1197  mount /dev/sda4
+ 1198  cd /media/
+ 1199  ls
+ 1200  cd abiola
+ 1201  ls
+ 1202  sudo mount /dev/sda4/
+ 1203  ls -l
+ 1204  ls -a
+ 1205  clear
+ 1206  ls
+ 1207  npx create-react-app blog
+ 1208  clear
+ 1209  npm init vite@latest blog -- --template react-ts
+ 1210  cd blog
+ 1211  npm install
+ 1212  clear && npm run dev
+ 1213  clear
+ 1214  code .
+ 1215  npm run dev
+ 1216  clear
+ 1217  cd Documents
+ 1218  ls
+ 1219  mkdir mobile
+ 1220  cd mobile
+ 1221  clear
+ 1222  free -m
+ 1223  history
+ 1224  sudo mount /dev/sda4 /media/abiola/
+ 1225  npx create-expo-app MyApp
+ 1226  npm install -g npm@9.6.1
+ 1227  npm -v
+ 1228  clear
+ 1229  ls
+ 1230  cd MyApp
+ 1231  ls
+ 1232  clear
+ 1233  code .
+ 1234  clear
+ 1235  npm start
+ 1236  java --version
+ 1237  clear
+ 1238  tar -C /usr/local/ -xvf android-studio-2022.1.1.21-linux android-studio-2022.1.1.21-linux.tar.gz
+ 1239  tar -C /opt/ -xvf android-studio-2022.1.1.21-linux.tar android-studio-2022.1.1.21-linux.tar.gz
+ 1240  cd
+ 1241  ls
+ 1242  cd Downloads
+ 1243  ls
+ 1244  ls -ltr
+ 1245  tar -C /opt/ -xvf android-studio-2022.1.1.21-linux.tar android-studio-2022.1.1.21-linux.tar.gz
+ 1246  tar -C /opt/ -xvf android-studio-2022.1.1.21-linux.tar.gz
+ 1247  sudo tar -C /opt/ -xvf android-studio-2022.1.1.21-linux.tar.gz
+ 1248  cd /opt
+ 1249  ls
+ 1250  cd andriod-studio
+ 1251  cd android-studio
+ 1252  ls
+ 1253  cat Install-Linux-tar.txt
+ 1254  cd bin
+ 1255  ./studio.sh
+ 1256  exit
+ 1257  cd /usr/temp
+ 1258  cd /usr/tmp
+ 1259  ls
+ 1260  cd /usr
+ 1261  ls
+ 1262  cd local
+ 1263  ls
+ 1264  cd ..
+ 1265  .s
+ 1266  ls
+ 1267  cd 
+ 1268  cd /opt
+ 1269  ls
+ 1270  free -m
+ 1271  clear
+ 1272  cd
+ 1273  clear
+ 1274  cd Documents
+ 1275  ls
+ 1276  cd mobile
+ 1277  cd MyApp
+ 1278  ls
+ 1279  clear
+ 1280  yarn start
+ 1281  ls
+ 1282  clear
+ 1283  npm start
+ 1284  cd Documents/andriod
+ 1285  cd Documents
+ 1286  ls
+ 1287  cd mobile
+ 1288  ls
+ 1289  cd MyApp
+ 1290  clear
+ 1291  ls
+ 1292  clear
+ 1293  clear && code .
+ 1294  npm start
+ 1295  clear
+ 1296  npm start
+ 1297  cd
+ 1298  clear
+ 1299  ls
+ 1300  cd Desktop
+ 1301  mkdir html/jss1
+ 1302  ls
+ 1303  mkdir -p html/jss1
+ 1304  ls
+ 1305  cd html/jss1
+ 1306  ls
+ 1307  clear
+ 1308  code .
+ 1309  ls
+ 1310  cd
+ 1311  ls
+ 1312  cd Downloads
+ 1313  ls
+ 1314  cd
+ 1315  clear
+ 1316  sudo mount /dev/sda4 /media/abiola/
+ 1317  clear
+ 1318  ls
+ 1319  ls -ltr
+ 1320  Templates
+ 1321  ./Templates
+ 1322  clear
+ 1323  ls
+ 1324  cd folder
+ 1325  ls
+ 1326  cd ..
+ 1327  ls
+ 1328  cd practice
+ 1329  ls
+ 1330  cd action
+ 1331  ls
+ 1332  cd ..
+ 1333  cd sample
+ 1334  ls
+ 1335  cat bashscript.sh
+ 1336  bashscript1.sh
+ 1337  cat bashscript1.sh
+ 1338  clear
+ 1339  shutdown now
+ 1340  mkdir controller model config route app.ts
+ 1341  rm app.ts
+ 1342  ls
+ 1343  rm -r app.ts
+ 1344  ls
+ 1345  touch app.ts
+ 1346  npm i -D typescript @types/express @types/node express
+ 1347  clear
+ 1348  npm i nodemon
+ 1349  npx tsc init
+ 1350  npx tsc --init
+ 1351  npm i dotenv
+ 1352  npm i ts-node mongoose
+ 1353  clear
+ 1354  npm run dev
+ 1355  clear
+ 1356  npm run dev
+ 1357  clear
+ 1358  npm run dev
+ 1359  npm i cors
+ 1360  npm i --save-dev @types/cors
+ 1361  clear
+ 1362  npm run dev
+ 1363  clear
+ 1364  npm build
+ 1365  npm run build
+ 1366  clear
+ 1367  npm run dev
+ 1368  clear
+ 1369  npm run dev
+ 1370  clear
+ 1371  exit
+ 1372  ls
+ 1373  cd Documents/www
+ 1374  ls
+ 1375  mkdir api
+ 1376  cd api && mkdir gallery && cd gallery && npm init -y && clear && code .
+ 1377  sudo mount /dev/sda4 /media/abiola/
+ 1378  shutdown now
+ 1379  cd Desktop/html
+ 1380  ls
+ 1381  cd jss1
+ 1382  code .
+ 1383  shutdown now
+ 1384  cd
+ 1385  ls
+ 1386  clear
+ 1387  $HOME/ .bash_profile
+ 1388  clear
+ 1389  $HOME/.bash_profile
+ 1390  cd $HOME/.bash_profile
+ 1391  .bash_profile
+ 1392  ./bash_profile
+ 1393  clear
+ 1394  ls
+ 1395  exit
+ 1396  sudo gedit /etc/default/grub
+ 1397  clear
+ 1398  learn
+ 1399  clear
+ 1400  cd Documents/mobile/MyApp && code .
+ 1401  clear
+ 1402  ls
+ 1403  clear
+ 1404  npm start
+ 1405  clear
+ 1406  ls
+ 1407  clear
+ 1408  ls
+ 1409  clear
+ 1410  ls
+ 1411  clear
+ 1412  npm start
+ 1413  clear
+ 1414  npm start
+ 1415  cd
+ 1416  clear
+ 1417  ls -a
+ 1418  sudo -i
+ 1419  clear
+ 1420  echo $ANDROID_HOME
+ 1421  echo ANDROID_HOME
+ 1422  whoami
+ 1423  ls -a
+ 1424  cat .bashrc
+ 1425  clear
+ 1426  ls -a
+ 1427  vim .bashrc
+ 1428  echo $ANDROID_HOME
+ 1429  exit
+ 1430  ls -a
+ 1431  cat .bashrc
+ 1432  echo $ANDROID_HOME
+ 1433  clear
+ 1434  exit
+ 1435  whoami
+ 1436  cat $ANDRIOD_HOME
+ 1437  exit
+ 1438  cd
+ 1439  ls
+ 1440  cd /opt
+ 1441  ls
+ 1442  cd android-studio
+ 1443  ls
+ 1444  cd bin
+ 1445  ls
+ 1446  cd
+ 1447  ln -s /opt/andriod-studio/bin/studio.sh andriod
+ 1448  ls
+ 1449  ls Andriod
+ 1450  file Andriod
+ 1451  ls
+ 1452  andriod
+ 1453  bash andriod
+ 1454  file andriod
+ 1455  cd andriod
+ 1456  unlink andriod
+ 1457  ls
+ 1458  cd Andriod
+ 1459  clear
+ 1460  ls
+ 1461  cat Andriod
+ 1462  cd Android
+ 1463  ls
+ 1464  ls Sdk
+ 1465  cd
+ 1466  clear
+ 1467  ls
+ 1468  cd /opt/andriod-studio/bin
+ 1469  cd /opt/andriod-studio/
+ 1470  cd /opt
+ 1471  l;s
+ 1472  ls
+ 1473  cd android-studio
+ 1474  ls
+ 1475  cd bin
+ 1476  ls
+ 1477  ./studio.sh
+ 1478  exit
+ 1479  code .
+ 1480  exit
+ 1481  cd
+ 1482  cd Documents/mobile/MyApp
+ 1483  clear
+ 1484  ls
+ 1485  clear
+ 1486  npm start
+ 1487  clear
+ 1488  npm start
+ 1489  clear
+ 1490  npm start
+ 1491  clear
+ 1492  npm start
+ 1493  clear
+ 1494  npm i crypto uuid
+ 1495  ln -s Documents/mobile/MyApp mapp
+ 1496  ls
+ 1497  file mapp
+ 1498  cd mapp
+ 1499  ls
+ 1500  cd
+ 1501  ls
+ 1502  cd /opt
+ 1503  ls
+ 1504  cd andriod-studio
+ 1505  cd android-studio
+ 1506  cd bin
+ 1507  ls
+ 1508  cd
+ 1509  ln -s /opt/android-studio/bin/studio.sh anstudio
+ 1510  ls
+ 1511  file anstudio
+ 1512  anstudio
+ 1513  cd anstudio
+ 1514  clear
+ 1515  ls
+ 1516  cat anstudio
+ 1517  clear
+ 1518  ls
+ 1519  bash anstudio
+ 1520  clear
+ 1521  cd mapp
+ 1522  code .
+ 1523  shutdown now
+ 1524  sudo mount /dev/sda4 /media/abiola/
+ 1525  ls
+ 1526  cd Desktop
+ 1527  ls
+ 1528  cd html
+ 1529  ls
+ 1530  mkdir jss3 && cd jss3 && touch index.html style.css
+ 1531  ls
+ 1532  clear
+ 1533  code .
+ 1534  exit
+ 1535  shutdown now
+ 1536  ls
+ 1537  cd mapp
+ 1538  code .
+ 1539  clear
+ 1540  npm start
+ 1541  clear
+ 1542  npm start
+ 1543  exit
+ 1544  cd Documents/www
+ 1545  ls
+ 1546  mkdir ecommerce
+ 1547  cd ecommerce
+ 1548  clear
+ 1549  cd ..
+ 1550  ls
+ 1551  mv ecommerce eshop
+ 1552  ls
+ 1553  cd eshop
+ 1554  clear
+ 1555  mkdir client server
+ 1556  ls
+ 1557  code .
+ 1558  start terminal
+ 1559  clear
+ 1560  start terminal
+ 1561  start termina
+ 1562  start bash
+ 1563  clear
+ 1564  ls
+ 1565  cd client
+ 1566  ls
+ 1567  cd e-shop
+ 1568  clear
+ 1569  ls
+ 1570  npm run dev
+ 1571  clear
+ 1572  exit
+ 1573  cd Documents/www
+ 1574  ls
+ 1575  cd eshop
+ 1576  ls
+ 1577  clear && code . && clear
+ 1578  ls && clear
+ 1579  code .
+ 1580  bash
+ 1581  exit
+ 1582  shutdown now
+ 1583  cd Documents/www
+ 1584  ls
+ 1585  cd eshop
+ 1586  ls
+ 1587  code .
+ 1588  ls
+ 1589  clear && cat package.json
+ 1590  npm i multer cors cloudinary
+ 1591  clear && cat package.json
+ 1592  ls
+ 1593  mkdir backend
+ 1594  cd backend
+ 1595  npm init -y
+ 1596  npm i express @types/express typescript node-ts cors multer nodemailer mongoose jsonwebtoken dotenv cookie-parser @types/cookie-parser 
+ 1597  cat package.json
+ 1598  ls
+ 1599  mkdir dist src
+ 1600  tsc --init
+ 1601  tsc
+ 1602  tsc -i
+ 1603  tsc init
+ 1604  clear
+ 1605  npm i -D cookier-parser @types/express @types/jsonwebtoken @types/node nodemon typescript
+ 1606  npm i -D cookie-parser @types/express @types/jsonwebtoken @types/node nodemon typescript
+ 1607  npm i -D ts-node
+ 1608  npm install
+ 1609  tsc init
+ 1610  tsc --init
+ 1611  tsc
+ 1612  tsc --init
+ 1613  npx tsc --init
+ 1614  ls
+ 1615  cd src
+ 1616  clear
+ 1617  mkdir controller model route config middleware utils && touch app.ts .env .gitignore && clear && echo "Task Completed"
+ 1618  ls
+ 1619  ls -a
+ 1620  cd ..
+ 1621  ls
+ 1622  cd ..
+ 1623  ls
+ 1624  cd eshop
+ 1625  ls
+ 1626  cd ..
+ 1627  mkdir tt
+ 1628  cd eshop
+ 1629  mv -R server package-lock.json node_modules ~ ../tt
+ 1630  ls
+ 1631  mv -R server package-lock.json node_modules ~ tt
+ 1632  mv -r server package-lock.json node_modules ~ tt
+ 1633  mv  server package-lock.json node_modules ~ tt
+ 1634  mv  server package-lock.json node_modules ~ ../tt
+ 1635  ls
+ 1636  cd ..
+ 1637  ls
+ 1638  cd tt
+ 1639  ls
+ 1640  cd ..
+ 1641  cd eshop
+ 1642  ls
+ 1643  mv package.json ../tt
+ 1644  ls
+ 1645  cd ..
+ 1646  cd tt
+ 1647  ls
+ 1648  cd ..
+ 1649  cd eshop
+ 1650  clear
+ 1651  ls
+ 1652  mv backend server
+ 1653  ls
+ 1654  cd client
+ 1655  ls
+ 1656  mv e-shop ../
+ 1657  ls
+ 1658  cd ..
+ 1659  ls
+ 1660  rm client
+ 1661  rm -r client
+ 1662  ls
+ 1663  mv e-shop client
+ 1664  ls
+ 1665  clear
+ 1666  ls
+ 1667  cd server
+ 1668  ls
+ 1669  mv package.json package-lock.json node_modules ~ ../
+ 1670  ls
+ 1671  cd ..
+ 1672  ls
+ 1673  clear
+ 1674  ls
+ 1675  npm i chalk
+ 1676  npm i express-session
+ 1677  npm i -D @types/express-session
+ 1678  npm i bcrypt
+ 1679  npm i --save-dev @types/bcrypt
+ 1680  clear
+ 1681  npm run dev
+ 1682  clear && npm run dev
+ 1683  npm run build
+ 1684  ls
+ 1685  clear
+ 1686  ls
+ 1687  cd server
+ 1688  ls
+ 1689  mv tsconfig.json ../
+ 1690  ls
+ 1691  cd ..
+ 1692  ls
+ 1693  clear
+ 1694  npm run dev
+ 1695  clear
+ 1696  npm run dev
+ 1697  npm run build
+ 1698  clear
+ 1699  npm run dev
+ 1700  cd server
+ 1701  clear && ls
+ 1702  npm run dev
+ 1703  clear
+ 1704  npm run dev
+ 1705  clear
+ 1706  npm run dev
+ 1707  clear
+ 1708  npm run build
+ 1709  clear
+ 1710  npm run dev
+ 1711  npm start
+ 1712  clear
+ 1713  npm run dev
+ 1714  clear
+ 1715  npm run dev
+ 1716  clear
+ 1717  npm run dev
+ 1718  npm run build
+ 1719  clear
+ 1720  npm run dev
+ 1721  cd Desktop
+ 1722  ls
+ 1723  cd html
+ 1724  clear
+ 1725  ls
+ 1726  cd jss1
+ 1727  clear
+ 1728  code .
+ 1729  start chrome
+ 1730  exit
+ 1731  npm run dev
+ 1732  cd client && clear && npm run dev
+ 1733  clear && npm run dev
+ 1734  exit
+ 1735  npm i cloudinary
+ 1736  npm uninstall cloudinary
+ 1737  cd .. && cd server && npm i cloudinary && cd .. && cd client && clear
+ 1738  cd .. && cd server && npm i cors && cd .. && cd client && clear
+ 1739  cd .. && cd server && npm i -D @types/cors && cd .. && cd client && clear
+ 1740  cd ..
+ 1741  cd server
+ 1742  npm i --save-dev @types/nodemailer
+ 1743  npm i ejs
+ 1744  npm i --save-dev @types/ejs
+ 1745  npm i joi
+ 1746  exit
+ 1747  cd Documents/www
+ 1748  cd eshop && code . && clear && cd server && npm run dev
+ 1749  clear
+ 1750  npm run dev
+ 1751  exit
+ 1752  mongo
+ 1753  cd ..
+ 1754  ls
+ 1755  cd ..
+ 1756  ls
+ 1757  kodecamp
+ 1758  ls
+ 1759  cd kodecamop
+ 1760  cd kodecamp
+ 1761  ls
+ 1762  cd easyloan
+ 1763  ls
+ 1764  clear
+ 1765  code .
+ 1766  ls
+ 1767  sudo mount /dev/sda4 /media/abiola
+ 1768  clear
+ 1769  cd Documents/www/eshop
+ 1770  clear
+ 1771  ls
+ 1772  cd server 
+ 1773  ls
+ 1774  clear
+ 1775  npm run dev
+ 1776  exit
+ 1777  cd Documents/www
+ 1778  ls
+ 1779  cd typescript
+ 1780  ls
+ 1781  cd LMS_Next_Typescript
+ 1782  ls
+ 1783  code .
+ 1784  ls
+ 1785  git branch
+ 1786  clear
+ 1787  git log
+ 1788  clear
+ 1789  npm run dev
+ 1790  clear
+ 1791  npm run dev
+ 1792  cd
+ 1793  clear
+ 1794  ls
+ 1795  cd vagrant-vms
+ 1796  ls
+ 1797  cd
+ 1798  clear
+ 1799  ls
+ 1800  cd cloned
+ 1801  ls
+ 1802  cd
+ 1803  clear
+ 1804  ls
+ 1805  cd Documents
+ 1806  ls
+ 1807  cd www
+ 1808  ls
+ 1809  cd go
+ 1810  ls
+ 1811  cd src
+ 1812  ls
+ 1813  mkdir kodecamp
+ 1814  rm kodecamp
+ 1815  ls
+ 1816  mv kodecamp kodecloud
+ 1817  ls
+ 1818  cd kodecloud
+ 1819  ls
+ 1820  clear
+ 1821  go version
+ 1822  go
+ 1823  go help
+ 1824  sudo apt install golang-go
+ 1825  sudo apt autoremove
+ 1826  go version
+ 1827  go --version
+ 1828  sudp apt install golang-go
+ 1829  sudo apt install golang-go
+ 1830  go help
+ 1831  sudo go help
+ 1832  sudo snap install go
+ 1833  clear
+ 1834  cd
+ 1835  sudo -i
+ 1836  cd /etc/
+ 1837  ls
+ 1838  cd ..
+ 1839  cd
+ 1840  clear
+ 1841  cd /opt
+ 1842  ls
+ 1843  cd ..
+ 1844  cd /usr
+ 1845  ls
+ 1846  cd bin
+ 1847  ls
+ 1848  cd 
+ 1849  cd /etc
+ 1850  clear
+ 1851  ls
+ 1852  cd ..
+ 1853  cd
+ 1854  cd 
+ 1855  clear
+ 1856  cd /usr
+ 1857  ls
+ 1858  cd local
+ 1859  ls
+ 1860  go version
+ 1861  cd go
+ 1862  ls
+ 1863  cd src
+ 1864  ls
+ 1865  clear
+ 1866  cd ..
+ 1867  cd
+ 1868  ls
+ 1869  mkdir go
+ 1870  ls
+ 1871  clear
+ 1872  ls
+ 1873  echo "export GOPATH=$HOME/go" >> ~/.profile
+ 1874  echo "export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin" >> ~/.profile
+ 1875  source ~/.profile
+ 1876  go version
+ 1877  go path
+ 1878  go help
+ 1879  clear
+ 1880  go help
+ 1881  go gopath
+ 1882  clear
+ 1883  go help
+ 1884  go gopath
+ 1885  go --gopath
+ 1886  clear
+ 1887  cd go
+ 1888  mkdir src bin package
+ 1889  ls
+ 1890  cd
+ 1891  cd Document
+ 1892  cd Documents/www
+ 1893  ls
+ 1894  cd go
+ 1895  ls
+ 1896  cp /.* ../../../go
+ 1897  cp -r /.* ../../../go
+ 1898  clear
+ 1899  ls
+ 1900  cd bin
+ 1901  ls
+ 1902  cd ..
+ 1903  cd pkg
+ 1904  ls
+ 1905  cd ..
+ 1906  pwd
+ 1907  cp src pkg bin /home/abiola/go
+ 1908  cp -r src pkg bin /home/abiola/go
+ 1909  cd
+ 1910  cd go
+ 1911  ls
+ 1912  rm package
+ 1913  ls
+ 1914  go version
+ 1915  cd
+ 1916  rm go
+ 1917  rm -r go
+ 1918  clear
+ 1919  cd go
+ 1920  ls
+ 1921  cd dev
+ 1922  ls
+ 1923  cd ..
+ 1924  cd
+ 1925  mv go cogo
+ 1926  ls
+ 1927  mkdir go
+ 1928  cd go
+ 1929  ls
+ 1930  cd ..
+ 1931  cp Documents/www/go/src go
+ 1932  cp -r Documents/www/go/src go
+ 1933  cd go
+ 1934  ls
+ 1935  cd src
+ 1936  ls
+ 1937  cd ..
+ 1938  mkdir pkg bin
+ 1939  ls
+ 1940  clear
+ 1941  cd src
+ 1942  ls
+ 1943  cd learning
+ 1944  ls
+ 1945  code .
+ 1946  cd ..
+ 1947  cd kodecloud
+ 1948  code .
+ 1949  sudo apt install yarn
+ 1950  yarn --version
+ 1951  clear
+ 1952  exit
+ 1953  npx run prisma studio
+ 1954  npm run prisma studio
+ 1955  yarn prisma studio
+ 1956  clear
+ 1957  yarn prisma studio
+ 1958  npm run studio
+ 1959  npm run prisma studio
+ 1960  clear
+ 1961  exit
+ 1962  yarn --version
+ 1963  clear
+ 1964  yarn prisma studio
+ 1965  yarn start prisma studio
+ 1966  yarn run  prisma studio
+ 1967  npm run studio
+ 1968  npm run prisma studio
+ 1969  npm prisma generate
+ 1970  npm run prisma generate
+ 1971  prisma generate
+ 1972  clear
+ 1973  npx prisma generate
+ 1974  npx prisma studio
+ 1975  npx prisma migrate
+ 1976  npx prisma generate
+ 1977  clear
+ 1978  [200~docker build -t my-next-app .
+ 1979  ~docker build -t my-next-app .
+ 1980  clear
+ 1981  docker build -t LMS_Next_Typescript .
+ 1982  docker build -t Llms_next_app .
+ 1983  docker build -t lms_next_app .
+ 1984  clear
+ 1985  docker build -t lms_next_app .
+ 1986  pwd
+ 1987  clear
+ 1988  docker build -t lms_next_app .
+ 1989  docker --version
+ 1990  cd /var/lib/docker/tmp/buildkit-mount230396033
+ 1991  cd /var
+ 1992  ls
+ 1993  cd lib
+ 1994  ls
+ 1995  cd docker
+ 1996  sudo -i
+ 1997  sudo mount /dev/sda4 /media/abiola
+ 1998  clear
+ 1999  exit
+ 2000  docker compose
+ 2001  clear
+ 2002  docker-compose --version
+ 2003  sudo apt update && sudo apt install docker-compose
+ 2004  docker-compose --version
+ 2005  clear
+ 2006  docker compose version
+ 2007  ls
+ 2008  chmod 700 docker-compose.yml
+ 2009  ls
+ 2010  clear
+ 2011  docke system df
+ 2012  docker system df
+ 2013  clear
+ 2014  docker ps -a
+ 2015  clear
+ 2016  git add .
+ 2017  git status
+ 2018  git commit -m "postgress and docker integration"
+ 2019  git checkout -b dev-2
+ 2020  git checkout dev
+ 2021  git branch
+ 2022  clear
+ 2023  docker system prune --all --force --volumes
+ 2024  docker ps
+ 2025  docker stop dee
+ 2026  docker ps
+ 2027  docker images
+ 2028  clear
+ 2029  history >> docker.txt

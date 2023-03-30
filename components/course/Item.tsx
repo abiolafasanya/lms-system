@@ -4,33 +4,42 @@ import Link from 'next/link';
 import { formatCurrency } from 'utility/formatter';
 import { PrismaClient, Course } from '@prisma/client';
 
-interface IProps extends Course {}
+interface IProps {
+  course: Course;
+  url?: string;
+}
 
-const Item = (props: IProps) => {
+const Item = ({ course, url }: IProps) => {
+  const redirectUrl = url ? `${url}/${course.id}` : `/course/${course.id}`
   return (
-    <div className="bg-white dark:bg-gray-700 dark:text-gray-200 shadow-md rounded-md">
-      <div className='w-[350px]'>
-        <h3 className="text-center text-xl p-3 font-semibold capitalize">{props.name}</h3>
-      <div className='w-full h-[150px]'>
-      <Image
-        src={props.image as string}
-        className={'w-full h-full object-cover object-center'}
-        width={150}
-        height={150}
-        alt={props.name}
-      />
+    <Link href={redirectUrl} className={cardStyle}>
+      <div className={`bg-gray-300 px-5 py-14 rounded-t-md`}>
+        <h2 className="text-center text-lg font-semibold">{course.title}</h2>
       </div>
-      <div className='px-5 flex flex-col flex-wrap my-2'>
-        <Link href={`#url`} className="font-semibold capitalize">{props.name}</Link>
-          <div className='flex justify-between my-2'>
-          <div>Rating {props?.stars  as number * 100}%</div>
-          <div>{formatCurrency(props?.price as number)}</div>
-          </div>
-          <button className='btn rounded-sm'>Enroll</button>
+      <div className="px-5 py-3">
+        <h2 className="font-semibold text-lg">{course.title}</h2>
+        <p
+          className="text-sm truncate text-clip"
+          dangerouslySetInnerHTML={{ __html: course.description }}
+        />
+        <div className="flex justify-between items-center jstext-sm mt-2">
+          <span className="text-sm">Abiola Fasanya</span>
+          <span className="text-sm text-blue-500 font-semibold">
+            {course.price === 0
+              ? 'free'
+              : formatCurrency(course.price as number)}
+          </span>
+        </div>
       </div>
-      </div>
-    </div>
+    </Link>
   );
 };
+
+const cardStyle =
+  'rounded-b-md bg-white shadow-md hover:border-b hover:border-blue-500';
+const formControl =
+  'py-3 px-5 h-12 border dark:border-none dark:bg-gray-200 dark:border-gray-600 dark:text-black outline-none dark:focus:border-white focus:border-blue-500 bg-white';
+const btnStyle =
+  'py-3 px-5 h-12 bg-blue-500 hover:bg-blue-600  outline-none rounded-r-sm';
 
 export default Item;

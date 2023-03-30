@@ -34,26 +34,45 @@ model Session {
 }
 
 model Course {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
   description  String
-  material     String[]
-  videos       String[]
   requirements String[]
   category     String?
-  price        Float?
-  discount     Float?    @default(0)
-  stars        Int?      @default(0)
-  purchase     Int?      @default(0)
+  price        Float?       @default(0)
+  discount     Int?         @default(0)
+  rating       Int?
   image        String?
-  tutorId      String?   @db.ObjectId
-  userId       String?   @db.ObjectId
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  Tutor        Tutor?    @relation(fields: [tutorId], references: [id], onDelete: Cascade)
-  User         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tutorId      String?      @db.ObjectId
+  userId       String?      @db.ObjectId
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  Tutor        Tutor?       @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  User         User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   student      Student[]
   Task         Task[]
+  Curriculum   Curriculum[]
+}
+
+model Curriculum {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  topics   Topic[]
+  course   Course?  @relation(fields: [courseId], references: [id])
+  courseId String?  @db.ObjectId
+}
+
+model Topic {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  video     String?
+  file      String?
+  duration  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  Curriculum   Curriculum? @relation(fields: [curriculumId], references: [id])
+  curriculumId String?     @db.ObjectId
 }
 
 model Tutor {
@@ -119,8 +138,8 @@ model Comment {
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  post      Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Question {
@@ -156,8 +175,8 @@ model Grade {
   taskId          String?     @db.ObjectId
   assessment      Assessment? @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
   tasks           Task?       @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  user            User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String?      @db.ObjectId
+  user            User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String?     @db.ObjectId
 }
 
 model User {
@@ -206,11 +225,11 @@ model Submission {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   task        Task?     @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  taskId      String?    @db.ObjectId
+  taskId      String?   @db.ObjectId
   submission  String?
   score       Int?
   graded      Boolean   @default(false)
-  gradedBy    String?     
+  gradedBy    String?
   feedback    String?
   regraded    Boolean   @default(false)
   userId      String?   @db.ObjectId
