@@ -52,9 +52,10 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
         <section>
           <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl mb-2">Courses</h2>
-          <div className='grid gap-5 sm:grid-cols-1 md:grid-cols-3 '>
-            <Item courses={courses} />
-          </div>
+          <div className="grid gap-5 sm:grid-cols-1 md:grid-cols-3  w-full">
+              {courses &&
+                courses.map((course, index) => (<Item key={index} course={course} />))}
+            </div>
           </div>
         </section>
       </Container>

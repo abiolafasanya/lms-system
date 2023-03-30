@@ -20,29 +20,30 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
       <Container className={'dark:bg-gray-800 min-h-screen w-full'}>
         <section>
           <div className="max-w-6xl mx-auto flex justify-between items-center">
+            <div className="flex md:space-x-14">
+              <div className="flex space-x-4">
+                <h3 className="text-lg">Category</h3>
+                <select>
+                  <option>All</option>
+                </select>
+              </div>
 
-            <div className='flex md:space-x-14'>
-            <div className='flex space-x-4'>
-            <h3 className='text-lg'>Category</h3>
-              <select>
-                <option>All</option>
-              </select>
-            </div>
-            
-            <div className='flex space-x-4'>
-            <h3 className='text-lg'>Authour</h3>
-              <select>
-                <option>All</option>
-              </select>
-            </div>
+              <div className="flex space-x-4">
+                <h3 className="text-lg">Authour</h3>
+                <select>
+                  <option>All</option>
+                </select>
+              </div>
             </div>
 
             <div>
               <form>
-                  <div className='form-group flex'>
-                    <input type="search" id="search" className={formControl} />
-                    <button className={btnStyle} ><BsSearch color="white"/></button>
-                  </div>
+                <div className="form-group flex">
+                  <input type="search" id="search" className={formControl} />
+                  <button className={btnStyle}>
+                    <BsSearch color="white" />
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -50,13 +51,16 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
 
         <section>
           <div className="max-w-6xl mx-auto">
-         <div className="flex justify-between my-2 items-center">
-         <h2 className="text-2xl mb-2">Courses</h2>
-         <Link href='/tutor/course/create' className='btn rounded-sm'>Create new course</Link>
-         </div>
-          <div className='grid gap-5 sm:grid-cols-1 md:grid-cols-3 '>
-            <Item courses={courses}/>
-          </div>
+            <div className="flex justify-between my-2 items-center">
+              <h2 className="text-2xl mb-2">Courses</h2>
+              <Link href="/tutor/course/create" className="btn rounded-sm">
+                Create new course
+              </Link>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-1 md:grid-cols-3  w-full">
+              {courses &&
+                courses.map((course, index) => (<Item key={index} course={course} url='/tutor/course' />))}
+            </div>
           </div>
         </section>
       </Container>

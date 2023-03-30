@@ -2,10 +2,10 @@ version: '3'
 
 services:
   web:
-    build: /Dockerfile
-    ports:
-      - "3000:3000"
-    working_dir: /app
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      
   db:
     image: postgres:15-alpine
     environment:
