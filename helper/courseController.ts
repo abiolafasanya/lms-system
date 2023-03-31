@@ -106,24 +106,4 @@ export default class courseController extends Controller {
     }
   };
 
-
-  // curriculum area
-
-  public static addCurriculum = async (req: NextApiRequest, res: NextApiResponse) => {
-    console.log(req.query, req.body, 'here')
-    try{
-      const curriculum = await this.prisma.curriculum.create({
-        data: {
-          title: req.body.title as string,
-          courseId: req.query.id as string,
-        },
-      });
-      if(!curriculum) {
-        return res.status(400).json({error: true, message: 'Error occured while createing'})
-      }
-      return res.status(200).json({error: false, message: 'Curriculum created!', data: curriculum})
-    } catch (error) {
-      return res.status(500).json({message: error})
-    }
-  }
 }

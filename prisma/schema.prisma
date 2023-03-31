@@ -34,45 +34,45 @@ model Session {
 }
 
 model Course {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   description  String
   requirements String[]
   category     String?
-  price        Float?       @default(0)
-  discount     Int?         @default(0)
+  price        Float?    @default(0)
+  discount     Int?      @default(0)
   rating       Int?
   image        String?
-  tutorId      String?      @db.ObjectId
-  userId       String?      @db.ObjectId
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  Tutor        Tutor?       @relation(fields: [tutorId], references: [id], onDelete: Cascade)
-  User         User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tutorId      String?   @db.ObjectId
+  userId       String?   @db.ObjectId
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  Tutor        Tutor?    @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  User         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   student      Student[]
   Task         Task[]
-  Curriculum   Curriculum[]
+  modules      Module[]
 }
 
-model Curriculum {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+model Module {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
   title    String
-  topics   Topic[]
-  course   Course?  @relation(fields: [courseId], references: [id])
   courseId String?  @db.ObjectId
+  lessons  Lesson[]
+  course   Course?  @relation(fields: [courseId], references: [id])
 }
 
-model Topic {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  video     String?
-  file      String?
-  duration  DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+model Lesson {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  video       String?
+  file        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  Curriculum   Curriculum? @relation(fields: [curriculumId], references: [id])
-  curriculumId String?     @db.ObjectId
+  module   Module? @relation(fields: [moduleId], references: [id])
+  moduleId String? @db.ObjectId
 }
 
 model Tutor {

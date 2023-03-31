@@ -12,6 +12,10 @@
 /.next/
 /out/
 
+/.yarn/
+docker.txt
+
+
 # production
 /build
 
