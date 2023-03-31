@@ -12,7 +12,7 @@ interface Iprops  {
 }
 
 interface typeAssessment extends Assessment  {
-  Question: Question[]
+  questions: Question[]
 }
 
 const prisma = new PrismaClient();
@@ -29,7 +29,7 @@ const Asessment = ({assessment}: Iprops) => {
 
   useEffect(() => {
     const controller = new AbortController();
-    let quest = assessment.Question;
+    let quest = assessment.questions;
     setQuestion(() => quest);
     let su = session?.user;
     setUserInfo(() => su as typeof su);
@@ -191,7 +191,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const assessment = await prisma.assessment.findFirst({
     where: { id: id },
     include: {
-      Question: true,
+      questions: true,
     },
   });
 

@@ -271,7 +271,7 @@ const Posts: NextPage<Iprops> = ({ serverPost }) => {
 const prisma = new PrismaClient();
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const posts = await prisma.post.findMany({
-    include: { user: true, Comment: {include: {user: true}} },
+    include: { user: true, comments: {include: {user: true}} },
     orderBy: {
       createdAt: 'desc',
     },

@@ -15,7 +15,6 @@ const prisma = new PrismaClient();
 
 const Assessment = (props: Iprops) => {
   const [assessments, setAssessment] = useState<any[]>([]);
-  const [isAccessment, setIsAccessment] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');

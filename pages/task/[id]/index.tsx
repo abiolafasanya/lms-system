@@ -16,7 +16,7 @@ interface Iprops {
 }
 
 interface TaskDoc extends Task {
-  Submission: Submission[]
+  submissions: Submission[]
 }
 const index: NextPage<Iprops> = ({ data , submissionData}) => {
   const router = useRouter()
@@ -203,7 +203,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context)
   // console.log(`getServerSideProps ${id}`);
   const prisma = new PrismaClient();
-  const task = await prisma.task.findUnique({ where: { id: id }, include: {Submission: true} });
+  const task = await prisma.task.findUnique({ where: { id: id }, include: {submissions: true} });
   const subs = await prisma.submission.findFirst({ where: {
     userId: session?.user.id as string,
     taskId: id

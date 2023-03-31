@@ -47,10 +47,10 @@ model Course {
   userId       String?   @db.ObjectId
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
-  Tutor        Tutor?    @relation(fields: [tutorId], references: [id], onDelete: Cascade)
-  User         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  student      Student[]
-  Task         Task[]
+  tutor        Tutor?    @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  user         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  students     Student[]
+  tasks        Task[]
   modules      Module[]
 }
 
@@ -76,16 +76,16 @@ model Lesson {
 }
 
 model Tutor {
-  id       String     @id @default(auto()) @map("_id") @db.ObjectId
-  about    String
-  rating   Float      @default(0.0)
-  active   Boolean?   @default(false)
-  userId   String     @db.ObjectId
-  date     DateTime   @default(now())
-  courses  Course[]
-  Question Question[]
-  socials  Social[]
-  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  about     String
+  rating    Float      @default(0.0)
+  active    Boolean?   @default(false)
+  userId    String     @db.ObjectId
+  date      DateTime   @default(now())
+  courses   Course[]
+  questions Question[]
+  socials   Social[]
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Student {
@@ -97,7 +97,7 @@ model Student {
   courseId    String?      @db.ObjectId
   userId      String       @db.ObjectId
   date        DateTime     @default(now())
-  Assessment  Assessment[]
+  assessments Assessment[]
   socials     Social[]
   Course      Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
   user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -116,19 +116,19 @@ model Social {
 }
 
 model Post {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String    @db.ObjectId
-  title     String?   @unique
-  content   String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  headlines String?
-  category  String[]
-  tags      String[]
-  image     String?
-  published Boolean?  @default(false)
-  Comment   Comment[]
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String    @db.ObjectId
+  title      String?   @unique
+  content    String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  headlines  String?
+  categories String[]
+  tags       String[]
+  image      String?
+  published  Boolean?  @default(false)
+  comments   Comment[]
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
@@ -152,7 +152,7 @@ model Question {
   question     String
   options      Json[]
   Assessment   Assessment? @relation(fields: [assessmentId], references: [id])
-  Tutor        Tutor?      @relation(fields: [tutorId], references: [id])
+  tutor        Tutor?      @relation(fields: [tutorId], references: [id])
 }
 
 model Assessment {
@@ -163,8 +163,8 @@ model Assessment {
   title       String
   description String?
   Student     Student?   @relation(fields: [studentId], references: [id])
-  Grade       Grade[]
-  Question    Question[]
+  grades      Grade[]
+  questions   Question[]
 }
 
 model Grade {
@@ -192,15 +192,15 @@ model User {
   updatedAt     DateTime     @updatedAt
   role          String?      @default("user")
   accounts      Account[]
-  Comment       Comment[]
-  Course        Course[]
-  Grade         Grade[]
-  Post          Post[]
-  Task          Task[]
+  comments      Comment[]
+  courses       Course[]
+  grades         Grade[]
+  posts         Post[]
+  tasks         Task[]
   sessions      Session[]
-  Student       Student[]
-  Tutor         Tutor[]
-  Submission    Submission[]
+  students      Student[]
+  tutors        Tutor[]
+  submissions   Submission[]
 }
 
 model Task {
@@ -215,10 +215,10 @@ model Task {
   updatedAt   DateTime     @updatedAt
   courseId    String?      @db.ObjectId
   attachment  String?
-  Grade       Grade[]
+  grades       Grade[]
   userId      String       @db.ObjectId
   course      Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  Submission  Submission[]
+  submissions  Submission[]
 }
 
 model Submission {

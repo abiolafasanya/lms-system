@@ -125,8 +125,7 @@ export default class assessmentController extends Controller {
   public static update = async (req: NextApiRequest, res: NextApiResponse) => {
     let body = req.body;
     try {
-      const Question = this.prisma.question;
-      const question = await Question.update({
+      const question = await this.prisma.question.update({
         where: { id: req.query.id as string },
         data: body,
       });

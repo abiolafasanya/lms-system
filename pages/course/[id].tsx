@@ -32,7 +32,7 @@ const show: NextPage<Iprops> = ({ course }) => {
             {course.title}
           </h2>
           <Link
-            href={`/tutor/course/${course.id}/content`}
+            href={`/course/${course.id}/enroll`}
             className="btn rounded-full inline-block"
           >
             Enroll for course
@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     where: { id },
     include: {
       modules: { include: { lessons: true } },
-      User: {
+      user: {
         select: {
           name: true,
           image: true,

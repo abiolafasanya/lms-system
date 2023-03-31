@@ -253,7 +253,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     where: { id },
     include: {
       modules: { include: { lessons: true } },
-      User: {
+      user: {
         select: {
           name: true,
           image: true,

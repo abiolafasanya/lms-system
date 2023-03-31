@@ -7,7 +7,7 @@ export default class PostController extends Controller {
     try {
       const Post = this.prisma.post;
       const post = await Post.findMany({
-        include: { user: true, Comment: {include: {user: true}} },
+        include: { user: true, comments: {include: {user: true}} },
         orderBy: {
           createdAt: 'desc',
         },
@@ -54,7 +54,7 @@ export default class PostController extends Controller {
         data: {
           title: body?.title as string,
           content: body.content as string,
-          category: body?.category as string[],
+          categories: body?.category as string[],
           tags: body?.tags as string[],
           userId: user.id as string,
         },
