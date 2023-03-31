@@ -23,7 +23,7 @@ interface Iprops {
 }
 
 interface TaskDoc extends Task{
-  Submission: SM[]
+  submissions: SM[]
 }
 
 interface SM extends Submission{
@@ -59,7 +59,7 @@ const submission: NextPage<Iprops> = ({ data }) => {
 
     res().then(data => {
       setTask(data);
-      setSubmissions(data.Submission);
+      setSubmissions(data.submissions);
     })
 
     // console.log(data);
@@ -311,7 +311,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const task = await prisma.task.findUnique({
     where: { id: id },
     include: {
-      Submission: {
+      submissions: {
         include: { user: true },
       },
     },

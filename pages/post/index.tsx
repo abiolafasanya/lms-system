@@ -251,20 +251,6 @@ const Posts: NextPage<Iprops> = ({ serverPost }) => {
                     className={styles.text + ' mx-7'}
                     dangerouslySetInnerHTML={{ __html: post.content }}
                 /> 
-                {/* <div className="mx-7 m-2 flex space-x-3 items-center text-blue-500">
-                  <button className="flex space-x-3"
-                  onClick={() => setLikes(likes => likes === 0 ? 1 : 0)}
-                  >
-                  <span>{likes}</span>
-                  <FaRegThumbsUp className="text-blue-500" />
-                  </button>
-                  <span>Likes</span>
-                  <button className='flex space-x-3 items-center' 
-                  onClick={() => setIsComment(bool => !bool)}>
-                  <BsChatDots className="text-blue-500" />
-                  <span>Comment</span>
-                  </button>
-                </div> */}
                  <Comments 
                     postId={post.id} 
                     setSuccess={setSuccess as SetStateAction<boolean>} 
@@ -285,7 +271,7 @@ const Posts: NextPage<Iprops> = ({ serverPost }) => {
 const prisma = new PrismaClient();
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const posts = await prisma.post.findMany({
-    include: { user: true, Comment: {include: {user: true}} },
+    include: { user: true, comments: {include: {user: true}} },
     orderBy: {
       createdAt: 'desc',
     },

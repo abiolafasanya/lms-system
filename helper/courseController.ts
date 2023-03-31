@@ -7,7 +7,7 @@ export default class courseController extends Controller {
     try {
       const Course = this.prisma.course;
       const course = await Course.findMany({
-        include: { User: true },
+        include: { user: true },
       });
       return res
         .status(200)
@@ -41,10 +41,10 @@ export default class courseController extends Controller {
       image: string;
       requirements: Array<string>;
       price: number;
-    }
+    };
     let body: Data = req.body;
     // const session = await this.getSession({req})
-  //  return console.log(body, session?.user)
+    //  return console.log(body, session?.user)
     try {
       const user = await this.prisma.user.findFirst({
         where: {
@@ -52,7 +52,6 @@ export default class courseController extends Controller {
         },
       });
       // console.log('here', user);
-      
 
       if (!user) throw new Error('no user attached to course');
 
@@ -61,9 +60,7 @@ export default class courseController extends Controller {
       });
       // console.log(course)
       if (!course) throw new Error('Bad request check your inputs');
-      return res
-        .status(200)
-        .json({ success: true, message: 'Record created' });
+      return res.status(200).json({ success: true, message: 'Record created' });
     } catch (error) {
       // console.log(error)
       res.json({ error: error });
@@ -93,6 +90,37 @@ export default class courseController extends Controller {
     }
   };
 
+  public static enroll = async (req: NextApiRequest, res: NextApiResponse) => {
+    let body = req.body;
+    console.log(body);
+    try {
+      const user = this.prisma.user;
+      const course = await user.update({
+        where: { id: req.query.id as string },
+        data: {
+          courses: {
+            connect: {
+              id: req.query.id as string,
+            },
+          },
+        },
+      });
+      // console.log(course);
+
+      if (!course) throw new Error(`Invalid Input: ${req.query.id}`);
+      return res
+        .status(200)
+        .json({
+          success: true,
+          message: 'You have enrolled for this course',
+          course,
+        });
+    } catch (error) {
+      console.log(error);
+      return new Error(error as errType);
+    }
+  };
+
   public static destroy = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const Course = this.prisma.course;
@@ -105,5 +133,4 @@ export default class courseController extends Controller {
       res.status(500).json({ message: error });
     }
   };
-
 }

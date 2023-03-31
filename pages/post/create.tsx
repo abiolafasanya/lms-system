@@ -69,7 +69,7 @@ const index = () => {
       if (authSession !== 'authenticated') throw new Error('not authenticated');
       const { data, status } = await Axios.post('/api/post/create', formData);
 
-      if (status === 400 || status === 401) {
+      if (data.error) {
         setSuccess(false);
         setError(true);
         setMessage(data.message);

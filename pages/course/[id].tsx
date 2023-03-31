@@ -24,7 +24,7 @@ const show: NextPage<Iprops> = ({ course }) => {
       <Container>
         <div className="text-gray-500 mb-4 flex justify-between items-center">
           <span>
-            <Link href="/course">Course</Link> &larr; Create Course
+            <Link href="/course">Course</Link> &larr; {course.id}
           </span>
         </div>
         <header className={headerStyle}>
@@ -32,7 +32,7 @@ const show: NextPage<Iprops> = ({ course }) => {
             {course.title}
           </h2>
           <Link
-            href={`/tutor/course/${course.id}/content`}
+            href={`/course/${course.id}/enroll`}
             className="btn rounded-full inline-block"
           >
             Enroll for course
@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     where: { id },
     include: {
       modules: { include: { lessons: true } },
-      User: {
+      user: {
         select: {
           name: true,
           image: true,

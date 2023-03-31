@@ -228,14 +228,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const assessment = await prisma.assessment.findFirst({
     where: { id: id },
     include: {
-      Question: true,
+      questions: true,
     },
   });
 
   return {
     props: {
       a: JSON.parse(JSON.stringify(assessment)),
-      q: JSON.parse(JSON.stringify(assessment?.Question)),
+      q: JSON.parse(JSON.stringify(assessment?.questions)),
     },
   };
 };

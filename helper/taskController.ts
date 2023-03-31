@@ -22,7 +22,7 @@ export default class taskcontroller extends Controller {
       const task = await Task.findUnique({
         where: { id: req.query.id as string },
         include: {
-          Submission: {
+          submissions: {
             include: { user: true },
           },
         },
@@ -133,9 +133,7 @@ export class Submission extends taskcontroller {
         graded: true
       };
 
-      const Submission = this.prisma.submission;
-      console.log(input);
-      const submission = await Submission.update({
+      const submission = await this.prisma.submission.update({
         where: { id: req.query.id as string },
         data: input,
       })
