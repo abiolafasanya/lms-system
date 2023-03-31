@@ -24,7 +24,7 @@ const show: NextPage<Iprops> = ({ course }) => {
       <Container>
         <div className="text-gray-500 mb-4 flex justify-between items-center">
           <span>
-            <Link href="/course">Course</Link> &larr; Create Course
+            <Link href="/course">Course</Link> &larr; {course.id}
           </span>
         </div>
         <header className={headerStyle}>
