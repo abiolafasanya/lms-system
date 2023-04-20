@@ -6,7 +6,10 @@ import { useSession, signIn, getCsrfToken } from 'next-auth/react';
 import { GetServerSideProps, NextPage } from 'next';
 import useAuth from 'hooks/useAuth';
 import Link from 'next/link';
+import { useLocalStorage } from 'hooks/useLocalStorage';
+import { userTracker } from 'utility';
 
+import useTracker from 'hooks/useTracker';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const csrfToken = await getCsrfToken(context);
   return {
@@ -16,17 +19,41 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 type IProps = { csrfToken: string };
 
+type visitType = {
+  id: string;
+  date: string | Date;
+};
+
 const Login: NextPage<IProps> = ({ csrfToken }) => {
   const { auth, setAuth } = useAuth();
   let { push, asPath } = useRouter();
   const { data: session, status } = useSession();
+  const [myVisit, setMyVisit] = useLocalStorage<visitType[]>('lastVisit', []);
+  const { recordVisit, lastVisit, setTracker} = useTracker();
+
+  function recordHandler() {
+    const lastIndex = lastVisit.length - 1;
+    const recordVisit = lastVisit[lastIndex]?.date
+      ? lastVisit[lastIndex].date
+      : new Date(Date.now());
+    userTracker({ userId: session?.user.id, lastVisit: recordVisit }).then(
+      (res) => {
+        recordVisit(res.data?.visit as string);
+        setTracker(res.data);
+        console.log(res.data);
+        alert(res.data?.visit);
+      }
+    );
+  }
 
   useEffect(() => {
     console.log(session);
+
     if (status !== 'unauthenticated') {
       setTimeout(() => {
-        push('/dashboard');
-      }, 50);
+        recordHandler();
+      }, 3000);
+      push('/dashboard');
     }
   }, []);
 
@@ -78,6 +105,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
       setSuccess(true);
       setMessage('Logged in successfully');
       setIsAuth(false);
+      recordVisit(session?.user.id as string);
       setTimeout(() => {
         setSuccess(false);
         setMessage('');
@@ -96,8 +124,8 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
   // Email without password login
   const OAuthMailHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const target = e.target as typeof e.target &  {
-      OEmail: {value: string}
+    const target = e.target as typeof e.target & {
+      OEmail: { value: string };
     };
     setTimeout(async () => {
       await signIn('email', { email: target.OEmail.value });
@@ -105,7 +133,13 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
   };
 
   // Social OAuth Handler
-  const OAuthSignin = (provider: any) => () => signIn(provider);
+  const OAuthSignin = (provider: any) => () => {
+    return signIn(provider).then((res) => {
+      if (res?.ok) {
+        recordVisit(session?.user.id as string);
+      }
+    });
+  };
 
   return (
     <div className="font-montserrat">
@@ -128,21 +162,13 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                 <label htmlFor="email" className="form-label">
                   Email
                 </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="form-control"
-                />
+                <input type="email" id="email" className="form-control" />
               </div>
               <div className="form-group">
                 <label htmlFor="password" className="form-label">
                   Password
                 </label>
-                <input
-                  type="password"
-                  id="password"
-                  className="form-control"
-                />
+                <input type="password" id="password" className="form-control" />
               </div>
               <div className="form-group">
                 <div className="flex font-semibold flex-wrap justify-between items-center">
@@ -162,11 +188,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
                 <label htmlFor="OEmail" className="form-label">
                   Email
                 </label>
-                <input
-                  type="email"
-                  id="OEmail"
-                  className="form-control"
-                />
+                <input type="email" id="OEmail" className="form-control" />
               </div>
               <div className="form-group">
                 <button className="flex w-full btn  justify-center font-semibold py-3 md:text-normal bg-gray-500 hover:bg-gray-600">

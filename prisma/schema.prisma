@@ -34,24 +34,25 @@ model Session {
 }
 
 model Course {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   description  String
   requirements String[]
   category     String?
-  price        Float?    @default(0)
-  discount     Int?      @default(0)
+  price        Float?     @default(0)
+  discount     Int?       @default(0)
   rating       Int?
   image        String?
-  tutorId      String?   @db.ObjectId
-  userId       String?   @db.ObjectId
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  tutor        Tutor?    @relation(fields: [tutorId], references: [id], onDelete: Cascade)
-  user         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tutorId      String?    @db.ObjectId
+  userId       String?    @db.ObjectId
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  tutor        Tutor?     @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  user         User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
   students     Student[]
   tasks        Task[]
   modules      Module[]
+  progress     Progress[]
 }
 
 model Module {
@@ -165,6 +166,7 @@ model Assessment {
   Student     Student?   @relation(fields: [studentId], references: [id])
   grades      Grade[]
   questions   Question[]
+  progress    Progress[]
 }
 
 model Grade {
@@ -194,13 +196,15 @@ model User {
   accounts      Account[]
   comments      Comment[]
   courses       Course[]
-  grades         Grade[]
+  grades        Grade[]
   posts         Post[]
   tasks         Task[]
   sessions      Session[]
   students      Student[]
   tutors        Tutor[]
   submissions   Submission[]
+  progress      Progress[]
+  visits        Visit[]
 }
 
 model Task {
@@ -215,10 +219,25 @@ model Task {
   updatedAt   DateTime     @updatedAt
   courseId    String?      @db.ObjectId
   attachment  String?
-  grades       Grade[]
+  grades      Grade[]
   userId      String       @db.ObjectId
   course      Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  submissions  Submission[]
+  submissions Submission[]
+  progress    Progress[]
+}
+
+model Progress {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  user         User?       @relation(fields: [userId], references: [id])
+  userId       String?     @db.ObjectId
+  course       Course?     @relation(fields: [courseId], references: [id])
+  courseId     String?     @db.ObjectId
+  assessment   Assessment? @relation(fields: [assessmentId], references: [id])
+  assessmentId String?     @db.ObjectId
+  task         Task?       @relation(fields: [taskId], references: [id])
+  taskId       String?     @db.ObjectId
+  isCompleted  Boolean?    @default(false)
+  createdAt    DateTime    @default(now())
 }
 
 model Submission {
@@ -236,6 +255,14 @@ model Submission {
   category    String    @default("general")
   submittedAt DateTime  @default(now())
   gradedAt    DateTime?
+}
+
+model Visit {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String   @db.ObjectId
+  lastVisit     DateTime
+  lastOperation String?
 }
 
 model VerificationToken {

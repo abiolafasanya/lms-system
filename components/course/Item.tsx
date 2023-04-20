@@ -13,7 +13,7 @@ const Item = ({ course, url }: IProps) => {
   const redirectUrl = url ? `${url}/${course.id}` : `/course/${course.id}`
   return (
     <Link href={redirectUrl} className={cardStyle}>
-      <div className={`bg-gray-300 px-5 py-14 rounded-t-md`}>
+      <div className={`bg-gray-300 dark:bg-gray-400 px-5 py-14 rounded-t-md`}>
         <h2 className="text-center text-lg font-semibold">{course.title}</h2>
       </div>
       <div className="px-5 py-3">
@@ -36,10 +36,6 @@ const Item = ({ course, url }: IProps) => {
 };
 
 const cardStyle =
-  'rounded-b-md bg-white shadow-md hover:border-b hover:border-blue-500';
-const formControl =
-  'py-3 px-5 h-12 border dark:border-none dark:bg-gray-200 dark:border-gray-600 dark:text-black outline-none dark:focus:border-white focus:border-blue-500 bg-white';
-const btnStyle =
-  'py-3 px-5 h-12 bg-blue-500 hover:bg-blue-600  outline-none rounded-r-sm';
+  'rounded-b-md bg-white dark:bg-gray-700 shadow-md hover:border-b hover:border-blue-500 dark:border-gray-500';
 
 export default Item;

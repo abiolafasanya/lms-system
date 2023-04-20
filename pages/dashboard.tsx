@@ -9,7 +9,8 @@ import { ThreeCircles } from 'react-loader-spinner';
 import {GetServerSideProps, NextPage} from 'next';
 import { getSession } from 'next-auth/react';
 import { PrismaClient, Course, User, Post, Task, Submission } from '@prisma/client';
-  
+import useTracker from 'hooks/useTracker';
+
 interface Iprops {
     courses: Course[];
     posts: Post[];

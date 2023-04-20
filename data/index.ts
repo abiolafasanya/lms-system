@@ -35,7 +35,7 @@ export const statusBar = [
 export const sideBarMenu = [
   { name: 'Dashboard', icon: GoDashboard, link: '/dashboard' },
   { name: 'Courses', icon: GoFileDirectory, link: '/course' },
-  { name: 'My Learning', icon: GoMilestone, link: '#my-learning' },
+  { name: 'Timeline', icon: GoMilestone, link: '/timeline' },
   { name: 'Assessment', icon: MdAssessment, link: '/assessment' },
   { name: 'Tasks', icon: FaTasks, link: '/task' },
   { name: 'Posts', icon: MdArticle, link: '/post' },

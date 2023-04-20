@@ -124,6 +124,7 @@ const options: NextAuthOptions = {
       const role = db?.role;
       session.user.role = role;
       session.user.id = db?.id;
+      
       await prisma.$disconnect();
       return session;
     },
