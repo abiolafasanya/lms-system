@@ -4,6 +4,7 @@ import { SessionProvider } from 'next-auth/react';
 import { AuthProvider } from 'context/AuthProvider';
 import { ThemeProvider } from 'next-themes';
 import { motion } from 'framer-motion';
+import { TrackerProvider } from 'context/TrackerProvider';
 
 function MyApp({
   Component,
@@ -23,7 +24,9 @@ function MyApp({
             }}
             key={router.route}
           >
-            <Component {...pageProps} />
+            <TrackerProvider>
+              <Component {...pageProps} />
+            </TrackerProvider>
           </motion.div>
         </SessionProvider>
       </AuthProvider>

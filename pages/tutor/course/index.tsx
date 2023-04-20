@@ -70,7 +70,7 @@ const Index: NextPage<CourseProps> = ({ courses }) => {
 
 
 const formControl = 'py-3 px-5 h-12 border dark:border-none dark:bg-gray-200 dark:border-gray-600 dark:text-black outline-none dark:focus:border-white focus:border-blue-500 bg-white'
-const btnStyle= 'py-3 px-5 h-12 bg-blue-500 hover:bg-blue-600  outline-none <rounded-r-sm></rounded-r-sm>'
+const btnStyle= 'py-3 px-5 h-12 bg-blue-500 hover:bg-blue-600  outline-none rounded-r-sm'
 const cardStyle= "rounded-b-md bg-white shadow-md hover:border-b hover:border-blue-500"
 
 export default Index;

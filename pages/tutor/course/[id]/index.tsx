@@ -211,7 +211,7 @@ const show: NextPage<Iprops> = ({ course }) => {
   return (
     <Tutor>
       <Container>
-        <div className="text-gray-500 mb-4 flex justify-between items-center">
+        <div className="text-gray-500  mb-4 flex justify-between items-center">
           <span>
             <Link href="/tutor/course">Course</Link> &larr; Create Course
           </span>
@@ -243,7 +243,7 @@ const show: NextPage<Iprops> = ({ course }) => {
   );
 };
 
-const headerStyle = 'bg-gray-300 py-24 px-7 flex flex-col space-y-8 justify-center items-center ';
+const headerStyle = 'bg-gray-300 dark:bg-gray-700 py-24 px-7 flex flex-col space-y-8 justify-center items-center ';
 export default show;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
