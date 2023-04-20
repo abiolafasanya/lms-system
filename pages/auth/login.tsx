@@ -35,12 +35,12 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
     const lastIndex = lastVisit.length - 1;
     const recordVisit = lastVisit[lastIndex]?.date
       ? lastVisit[lastIndex].date
-      : new Date(Date.now());
+      : new Date(Date.now()).toLocaleDateString();
     userTracker({ userId: session?.user.id, lastVisit: recordVisit }).then(
       (res) => {
-        recordVisit(res.data?.visit as string);
         setTracker(res.data);
         console.log(res.data);
+        // recordVisit(session?.user.id as string);
         alert(res.data?.visit);
       }
     );

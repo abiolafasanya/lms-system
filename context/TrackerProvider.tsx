@@ -4,7 +4,7 @@ import { PropTypes } from 'utility/types';
 import Axios from 'helper/axios';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 
-const TrackContext = createContext<defaultTypes | PropTypes>({});
+const TrackContext = createContext({} as defaultTypes);
 
 type progressType = {
   userId?: string | null;
@@ -18,62 +18,69 @@ type progressType = {
   isCompleted?: boolean | null;
 };
 
-type defaultTypes =  {
-  // userTracker: (body: progressType) => Promise<any>;
+interface defaultTypes {
   setTracker: React.Dispatch<React.SetStateAction<{}>>;
   recordVisit: (id: string) => void;
   lastVisit: visitType[];
-  setLastVisit: (data: visitType[]) => void;
-  children: React.ReactNode
+  setLastVisit: React.Dispatch<React.SetStateAction<visitType[]>>;
+  tracker: {};
 }
+
  
 type visitType = {
   id: string;
-  date: string | Date
-}
+  date: string;
+};
 
-export const TrackerProvider: React.FC<defaultTypes> = ({ children }) => {
-      const [tracker, setTracker] = useState({});
-      useEffect(() => {
-        console.log(tracker, 'user tracker')
-      }, [tracker])
+export const TrackerProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [tracker, setTracker] = useState({});
+  useEffect(() => {
+    console.log(tracker, 'user tracker');
+  }, [tracker]);
 
-    
+  const [lastVisit, setLastVisit] = useLocalStorage<visitType[]>(
+    'lastVisit',
+    []
+  );
 
-      const [lastVisit, setLastVisit] = useLocalStorage<visitType[]>('lastVisit', []);
+  async function userTracker(body: progressType) {
+    const { data } = await Axios.post('/api/progress', body).then(
+      (response) => response
+    );
+    return { data };
+  }
 
-       async function userTracker(body: progressType) {
-        const { data } = await Axios.post('/api/progress', body).then(
-          (response) => response
-        );
-        return {data};
-      }
-
-      function recordVisit(id: string) {
-        setLastVisit((visits) => {
-          if (visits.find((visit) => visit.id === id) == null) {
-            return [...visits, { id, date: new Date(Date.now()) }];
+  function recordVisit(id: string) {
+    setLastVisit((visits) => {
+      if (visits.find((visit) => visit.id === id) == null) {
+        return [
+          ...visits,
+          { id, date: new Date(Date.now()).toLocaleDateString() },
+        ];
+      } else {
+        return visits.map((visit) => {
+          if (visit.id === id) {
+            return {
+              ...visit,
+              date: new Date(Date.now()).toLocaleDateString(),
+            };
           } else {
-            return visits.map((visit) => {
-              if (visit.id === id) {
-                return { ...visit, date: new Date(Date.now()) };
-              } else {
-                return visit;
-              }
-            });
+            return visit;
           }
         });
       }
+    });
+  }
 
-      return (
-        <TrackContext.Provider value={{ tracker, 
-        setTracker, 
-        recordVisit , 
-        lastVisit, 
-        setLastVisit}}>
-          {children}
-        </TrackContext.Provider>
-      );
-    };
+  return (
+    <TrackContext.Provider
+      value={{ tracker, setTracker, recordVisit, lastVisit, setLastVisit }}
+    >
+      {children}
+    </TrackContext.Provider>
+  );
+};
 
 export default TrackContext
