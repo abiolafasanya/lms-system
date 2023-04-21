@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse} from "next"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const prisma = new PrismaClient()
-    console.log(req.body,"notification")
+    // console.log(req.body,"notification")
   const session = await getSession({ req });
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const visit = await prisma.visit.create({
     data: {
       user: { connect: { id: user?.id } },
-      lastVisit,
+      lastVisit: new Date(lastVisit),
       lastOperation,
     },
   });

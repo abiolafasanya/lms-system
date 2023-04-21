@@ -48,7 +48,7 @@ export default function Home() {
               LMS provides an all-in-one platform for learning and upgrading the
               skill set
             </h3>
-            <Link href='/dashboard' className="sm:text-2xl md:text-xl sm:mx-auto md:mx-0 md:mr-auto py-3 px-5 rounded-sm bg-blue-500 hover:bg-blue-600 text-white mt-5">
+            <Link href='/dashboard' className="sm:mx-auto md:mx-0 btn w-[150px] text-center mt-5 py-3">
               Get Started
             </Link>
           </div>

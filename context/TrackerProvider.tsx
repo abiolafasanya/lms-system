@@ -16,6 +16,7 @@ type progressType = {
   lastVisit?: string | Date;
   lastOperation?: string;
   isCompleted?: boolean | null;
+
 };
 
 interface defaultTypes {
@@ -24,9 +25,10 @@ interface defaultTypes {
   lastVisit: visitType[];
   setLastVisit: React.Dispatch<React.SetStateAction<visitType[]>>;
   tracker: {};
+  mobileToggle: boolean;
+  mtoggle: () => void;
 }
 
- 
 type visitType = {
   id: string;
   date: string;
@@ -36,6 +38,8 @@ export const TrackerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [tracker, setTracker] = useState({});
+  const [mobileToggle, setMobileToggle] = useState<boolean>(false);
+
   useEffect(() => {
     console.log(tracker, 'user tracker');
   }, [tracker]);
@@ -74,13 +78,25 @@ export const TrackerProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   }
 
+  const mtoggle = () => {
+    setMobileToggle((toggle) => !toggle);
+  };
+
   return (
     <TrackContext.Provider
-      value={{ tracker, setTracker, recordVisit, lastVisit, setLastVisit }}
+      value={{
+        tracker,
+        setTracker,
+        recordVisit,
+        lastVisit,
+        setLastVisit,
+        mobileToggle,
+        mtoggle,
+      }}
     >
       {children}
     </TrackContext.Provider>
   );
 };
 
-export default TrackContext
+export default TrackContext;

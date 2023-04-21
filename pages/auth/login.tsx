@@ -39,9 +39,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
     userTracker({ userId: session?.user.id, lastVisit: recordVisit }).then(
       (res) => {
         setTracker(res.data);
-        console.log(res.data);
-        // recordVisit(session?.user.id as string);
-        alert(res.data?.visit);
+        console.log(res);
       }
     );
   }
