@@ -28,7 +28,12 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
   const { auth, setAuth } = useAuth();
   let { push, asPath } = useRouter();
   const { data: session, status } = useSession();
-  const [myVisit, setMyVisit] = useLocalStorage<visitType[]>('lastVisit', []);
+  const [submitting, setSubmitting] = useState(false)
+
+  useEffect(() => {
+    handleStatusChange(status);
+  }, [status]);
+
   const { recordVisit, lastVisit, setTracker} = useTracker();
 
   function recordHandler() {
@@ -44,16 +49,25 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
     );
   }
 
-  useEffect(() => {
-    console.log(session);
-
-    if (status !== 'unauthenticated') {
-      setTimeout(() => {
-        recordHandler();
-      }, 3000);
-      push('/dashboard');
+  function handleStatusChange(status: string) {
+    switch (status) {
+      case 'authenticated':
+        push('/dashboard');
+        break;
+      case 'loading':
+        // Handle loading state
+        break;
+      case 'unauthenticated':
+        // Handle unauthenticated state
+        break;
+      default:
+        // Handle any unexpected status values
+        break;
     }
-  }, []);
+  }
+  
+
+
 
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -63,6 +77,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
   // Credentials Login
   async function credentialsLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setSubmitting(true)
 
     const target = e.target as typeof e.target & {
       email: { value: string };
@@ -84,6 +99,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
       callbackUrl: `/dashboard?callbackUrl=${asPath}`,
     });
 
+
     let data = req;
     if (data?.error) {
       setError(true);
@@ -94,6 +110,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
       setTimeout(() => {
         setError(false);
         setMessage('');
+        setSubmitting(false)
       }, 5000);
       return;
     }
@@ -105,6 +122,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
       setIsAuth(false);
       recordVisit(session?.user.id as string);
       setTimeout(() => {
+        setSubmitting(false)
         setSuccess(false);
         setMessage('');
         setAuth({
@@ -170,7 +188,7 @@ const Login: NextPage<IProps> = ({ csrfToken }) => {
               </div>
               <div className="form-group">
                 <div className="flex font-semibold flex-wrap justify-between items-center">
-                  <button className="btn">Submit</button>
+                  <button className="btn">{submitting ? 'Submitting...': 'Submit'}</button>
                   <Link href="/auth/register">
                     <span className="text-blue-500">Signup</span>
                   </Link>

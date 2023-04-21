@@ -27,7 +27,7 @@ const index: NextPage<IProgress> = (props) => {
       <Container>
         Course progress
         <ProgressTracker progress={progress} />
-      <button className="btn" onClick={completeLesson}>Complete Lesson 1</button>
+      <button className="btn">Complete Lesson 1</button>
       </Container>
     </Dashboard>
   )

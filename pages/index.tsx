@@ -44,7 +44,7 @@ export default function Home() {
             alt="learning"
           />
           <div className="flex flex-col py-8 text-gray-900 dark:text-gray-300">
-            <h3 className="sm:text-2xl md:text-3xl font-semibold sm:text-center md:text-justify">
+            <h3 className="sm:text-lg sm:px-5 md:px-0 md:text-2xl font-semibold sm:text-center md:text-left">
               LMS provides an all-in-one platform for learning and upgrading the
               skill set
             </h3>

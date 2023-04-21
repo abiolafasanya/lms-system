@@ -1,6 +1,5 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, createContext } from 'react';
 import { Progress, Assessment } from '@prisma/client';
-import { PropTypes } from 'utility/types';
 import Axios from 'helper/axios';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 
@@ -13,7 +12,7 @@ type progressType = {
   taskId?: string | null;
   progress?: Progress | null;
   assessment?: Assessment | null;
-  lastVisit?: string | Date;
+  lastVisit?: string;
   lastOperation?: string;
   isCompleted?: boolean | null;
 
@@ -39,11 +38,6 @@ export const TrackerProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [tracker, setTracker] = useState({});
   const [mobileToggle, setMobileToggle] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(tracker, 'user tracker');
-  }, [tracker]);
-
   const [lastVisit, setLastVisit] = useLocalStorage<visitType[]>(
     'lastVisit',
     []
