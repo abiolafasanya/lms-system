@@ -1,0 +1,282 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  TUTOR
+  STUDENT
+  GUEST
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Course {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String
+  requirements String[]
+  category     String?
+  price        Float?     @default(0)
+  discount     Int?       @default(0)
+  rating       Int?
+  image        String?
+  tutorId      String?    @db.ObjectId
+  userId       String?    @db.ObjectId
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  tutor        Tutor?     @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  user         User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  students     Student[]
+  tasks        Task[]
+  modules      Module[]
+  progress     Progress[]
+}
+
+model Module {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  courseId String?  @db.ObjectId
+  lessons  Lesson[]
+  course   Course?  @relation(fields: [courseId], references: [id])
+}
+
+model Lesson {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  video       String?
+  file        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  module   Module? @relation(fields: [moduleId], references: [id])
+  moduleId String? @db.ObjectId
+}
+
+model Tutor {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  about     String
+  rating    Float      @default(0.0)
+  active    Boolean?   @default(false)
+  userId    String     @db.ObjectId
+  date      DateTime   @default(now())
+  courses   Course[]
+  questions Question[]
+  socials   Social[]
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Student {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  courses     String[]
+  about       String
+  certificate String[]
+  active      Boolean?     @default(false)
+  courseId    String?      @db.ObjectId
+  userId      String       @db.ObjectId
+  date        DateTime     @default(now())
+  assessments Assessment[]
+  socials     Social[]
+  Course      Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Social {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  username  String?
+  link      String?
+  tutorId   String?  @db.ObjectId
+  studentId String?  @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Student   Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  Tutor     Tutor?   @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+}
+
+model Post {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String    @db.ObjectId
+  title      String?   @unique
+  content    String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  headlines  String?
+  categories String[]
+  tags       String[]
+  image      String?
+  published  Boolean?  @default(false)
+  comments   Comment[]
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  postId    String   @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Question {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  answer       String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  tutorId      String?     @db.ObjectId
+  assessmentId String?     @db.ObjectId
+  question     String
+  options      Json[]
+  Assessment   Assessment? @relation(fields: [assessmentId], references: [id])
+  tutor        Tutor?      @relation(fields: [tutorId], references: [id])
+}
+
+model Assessment {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  studentId   String?    @db.ObjectId
+  date        DateTime   @default(now())
+  questionId  String?
+  title       String
+  description String?
+  Student     Student?   @relation(fields: [studentId], references: [id])
+  grades      Grade[]
+  questions   Question[]
+  progress    Progress[]
+}
+
+model Grade {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  taskScore       Int?
+  assessmentScore Int?
+  assessmentId    String?     @db.ObjectId
+  taskId          String?     @db.ObjectId
+  assessment      Assessment? @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  tasks           Task?       @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user            User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String?     @db.ObjectId
+}
+
+model User {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  email         String       @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  username      String?      @unique
+  avatar        String?
+  name          String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  role          String?      @default("user")
+  accounts      Account[]
+  comments      Comment[]
+  courses       Course[]
+  grades        Grade[]
+  posts         Post[]
+  tasks         Task[]
+  sessions      Session[]
+  students      Student[]
+  tutors        Tutor[]
+  submissions   Submission[]
+  progress      Progress[]
+  visits        Visit[]
+}
+
+model Task {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  point       Int
+  deadline    DateTime
+  assignedTo  String[]
+  user        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  courseId    String?      @db.ObjectId
+  attachment  String?
+  grades      Grade[]
+  userId      String       @db.ObjectId
+  course      Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  submissions Submission[]
+  progress    Progress[]
+}
+
+model Progress {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  user         User?       @relation(fields: [userId], references: [id])
+  userId       String?     @db.ObjectId
+  course       Course?     @relation(fields: [courseId], references: [id])
+  courseId     String?     @db.ObjectId
+  assessment   Assessment? @relation(fields: [assessmentId], references: [id])
+  assessmentId String?     @db.ObjectId
+  task         Task?       @relation(fields: [taskId], references: [id])
+  taskId       String?     @db.ObjectId
+  isCompleted  Boolean?    @default(false)
+  createdAt    DateTime    @default(now())
+}
+
+model Submission {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task        Task?     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId      String?   @db.ObjectId
+  submission  String?
+  score       Int?
+  graded      Boolean   @default(false)
+  gradedBy    String?
+  feedback    String?
+  regraded    Boolean   @default(false)
+  userId      String?   @db.ObjectId
+  category    String    @default("general")
+  submittedAt DateTime  @default(now())
+  gradedAt    DateTime?
+}
+
+model Visit {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String   @db.ObjectId
+  lastVisit     DateTime
+  lastOperation String?
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}

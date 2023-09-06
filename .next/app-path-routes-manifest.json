@@ -1,0 +1,14 @@
+{
+  "/favicon.ico/route": "/favicon.ico",
+  "/api/assessment/route": "/api/assessment",
+  "/api/uploadthing/route": "/api/uploadthing",
+  "/(main)/(routes)/page": "/",
+  "/(dashboard)/student/assessment/page": "/student/assessment",
+  "/(dashboard)/student/courses/page": "/student/courses",
+  "/(dashboard)/student/dashboard/page": "/student/dashboard",
+  "/(dashboard)/student/tasks/page": "/student/tasks",
+  "/(dashboard)/student/posts/page": "/student/posts",
+  "/(dashboard)/student/assessment/[id]/page": "/student/assessment/[id]",
+  "/(protected)/(auth)/(routes)/sign-in/[[...sign-in]]/page": "/sign-in/[[...sign-in]]",
+  "/(protected)/(auth)/(routes)/sign-up/[[...sign-up]]/page": "/sign-up/[[...sign-up]]"
+}
