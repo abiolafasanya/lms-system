@@ -22,7 +22,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressContentEditableWarning>
-        <body className={cn(plusJakartaSans.className, "bg-special-50 dark:bg-special-500")}>
+        <body
+          className={cn(
+            plusJakartaSans.className,
+            "bg-special-50 dark:bg-special-500"
+          )}
+        >
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
