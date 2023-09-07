@@ -21,7 +21,6 @@ const QuestionPage = ({ assessment }: { assessment: AssessmentType }) => {
   const {
     score,
     currentIndex,
-    formatQuestion,
     handleNext,
     handlePrevious,
     percentage,
@@ -50,19 +49,81 @@ const QuestionPage = ({ assessment }: { assessment: AssessmentType }) => {
             </div>
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-5 my-5">
-            {questions[currentIndex]?.options.map((option, i) => (
-              <CardDescription
-                key={i}
-                onClick={() => selectedOption(option, currentIndex)}
-                className={`${styles.option} ${
-                  selectedAnswer[currentIndex]?.answer == formatQuestion(option)
-                    ? styles.selected
-                    : ""
-                }`}
-              >
-                {option !== null && formatQuestion(option)}
-              </CardDescription>
-            ))}
+            <CardDescription
+              onClick={() =>
+                selectedOption(
+                  questions[currentIndex]?.option1,
+                  questions[currentIndex]?.answer,
+                  currentIndex
+                )
+              }
+              className={`${styles.option} ${
+                selectedAnswer[currentIndex]?.answer ==
+                questions[currentIndex]?.option1
+                  ? styles.selected
+                  : ""
+              }`}
+            >
+              {questions[currentIndex]?.option1 !== null &&
+                questions[currentIndex]?.option1}
+            </CardDescription>
+
+            <CardDescription
+              onClick={() =>
+                selectedOption(
+                  questions[currentIndex]?.option2,
+                  questions[currentIndex]?.answer,
+                  currentIndex
+                )
+              }
+              className={`${styles.option} ${
+                selectedAnswer[currentIndex]?.answer ==
+                questions[currentIndex]?.option2
+                  ? styles.selected
+                  : ""
+              }`}
+            >
+              {questions[currentIndex]?.option2 !== null &&
+                questions[currentIndex]?.option2}
+            </CardDescription>
+
+            <CardDescription
+              onClick={() =>
+                selectedOption(
+                  questions[currentIndex]?.option3,
+                  questions[currentIndex]?.answer,
+                  currentIndex
+                )
+              }
+              className={`${styles.option} ${
+                selectedAnswer[currentIndex]?.answer ==
+                questions[currentIndex]?.option3
+                  ? styles.selected
+                  : ""
+              }`}
+            >
+              {questions[currentIndex]?.option3 !== null &&
+                questions[currentIndex]?.option3}
+            </CardDescription>
+
+            <CardDescription
+              onClick={() =>
+                selectedOption(
+                  questions[currentIndex]?.option4,
+                  questions[currentIndex]?.answer,
+                  currentIndex
+                )
+              }
+              className={`${styles.option} ${
+                selectedAnswer[currentIndex]?.answer ==
+                questions[currentIndex]?.option4
+                  ? styles.selected
+                  : ""
+              }`}
+            >
+              {questions[currentIndex]?.option4 !== null &&
+                questions[currentIndex]?.option4}
+            </CardDescription>
           </CardContent>
           <CardFooter className="flex justify-end gap-5">
             <Button onClick={handlePrevious}>Prev</Button>
@@ -83,7 +144,8 @@ const QuestionPage = ({ assessment }: { assessment: AssessmentType }) => {
 const styles = {
   option:
     "flex items-center py-2 text-base hover:bg-primary hover:text-primary-foreground cursor-pointer border-2 dark:border-special-400 font-semibold border-solid px-5 rounded-full",
-  selected: "bg-primary dark:bg-secondary dark:text-white text-primary-foreground",
+  selected:
+    "bg-primary dark:bg-secondary dark:text-white text-primary-foreground",
 };
 
 export default QuestionPage;

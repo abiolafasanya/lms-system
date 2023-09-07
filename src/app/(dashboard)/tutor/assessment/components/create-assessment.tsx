@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import AssessmentForm from "./assessment-form";
 
-const CreateAssessmentForm = () => {
+const CreateAssessmentForm = ({toggle}: {toggle: () => void}) => {
   return (
     <Card className="mt-20 dark:bg-special-600">
       <CardHeader>
@@ -17,7 +17,7 @@ const CreateAssessmentForm = () => {
         </CardContent>
         <CardContent>
           <CardDescription>
-            <AssessmentForm />
+            <AssessmentForm toggle={toggle} />
           </CardDescription>
         </CardContent>
       </CardHeader>

@@ -8,7 +8,7 @@ const AssessmentPage = async ({ params }: { params: { id: string } }) => {
     include: {
       questions: true,
     },
-  });
+  }).finally(async () => await db.$disconnect());;
   const data = assessments[0];
   return (
     <div>

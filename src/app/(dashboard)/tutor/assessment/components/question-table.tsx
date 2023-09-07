@@ -9,12 +9,12 @@ import {
 } from "@/components/ui/table";
 import { Fragment } from "react";
 import useQuestion from "../hooks/useQuestion";
-import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Delete, Edit, Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 
 const QuestionTable = () => {
-  const { questions, isLoading } = useQuestion();
+  const { questions, isLoading, handleDelete } = useQuestion();
+  console.log(questions)
   return (
     <Fragment>
       {Array.isArray(questions) && questions.length > 0 ? (
@@ -57,7 +57,7 @@ const QuestionTable = () => {
                     <Button variant="outline">
                       <Edit size={16} />
                     </Button>
-                    <Button>
+                    <Button onClick={() =>handleDelete(question.id)}>
                       <Trash size={16} />
                     </Button>
                   </TableCell>
@@ -67,7 +67,7 @@ const QuestionTable = () => {
           </Table>
         </section>
       ) : isLoading ? (
-        <span>Loading</span>
+        <span>loading...</span>
       ) : (
         <p>No question has been added!</p>
       )}

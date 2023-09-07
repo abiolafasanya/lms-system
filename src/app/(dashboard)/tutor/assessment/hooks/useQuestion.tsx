@@ -28,7 +28,7 @@ const defaultValues: FormSchemaType = {
 };
 
 const useQuestion = () => {
-  const {id} = useParams()
+  const params = useParams();
 
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
@@ -38,21 +38,30 @@ const useQuestion = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    setIsLoading(true);
-    fetchQuestions().then(() => {});
+    fetchQuestions();
   }, []);
   const fetchQuestions = async () => {
-    const { status, data } = await axios.get<Question[]>(`/api/assessment/${id}`);
+    setIsLoading(true);
+    const { status, data } = await axios.get<Question[]>(
+      `/api/assessment/${params.id}`
+    );
     if (status === 200) {
-      // console.log(data);
-      setQuestions(data);
-      setIsLoading(false);
+      console.log(data);
+      setQuestions(() => data);
+    }
+    setIsLoading(false);
+  };
+
+  const handleUpdateQuestions = () => fetchQuestions();
+
+  const handleDelete = async (id: string) => {
+    const {data, status} = await axios.delete(`/api/assessment/${params.id}?questionId=${id}`)
+    if(status === 200) {
+     await fetchQuestions()
     }
   }
 
-  const handleUpdateQuestions = () =>  fetchQuestions().then(() => {})
-
-  return { form, isLoading, handleUpdateQuestions, questions };
+  return { form, isLoading, handleUpdateQuestions, questions, handleDelete };
 };
 
 export default useQuestion;

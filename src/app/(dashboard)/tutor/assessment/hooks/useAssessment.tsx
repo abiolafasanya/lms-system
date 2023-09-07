@@ -27,21 +27,37 @@ const useAssessment = () => {
   const [assessements, setAssessments] = useState<Assessment[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    setIsLoading(true);
     fetchAssessment().then(() => {});
   }, []);
   const fetchAssessment = async () => {
+    setIsLoading(true);
     const { status, data } = await axios.get<Assessment[]>("/api/assessment");
     if (status === 200) {
       console.log(data);
-      setAssessments(data);
+      setAssessments(() => data);
       setIsLoading(false);
     }
-  }
+  };
 
-  const handleUpdateAssessment = () =>  fetchAssessment().then(() => {})
+  const handleUpdateAssessment = async() => await fetchAssessment();
 
-  return { form, isLoading, assessements, fetchAssessment, handleUpdateAssessment };
+  const handleDelete = async (id: string) => {
+    const { data, status } = await axios.delete(
+      `/api/assessment?assessmentId=${id}`
+    );
+    if (status === 200) {
+      await fetchAssessment();
+    }
+  };
+
+  return {
+    form,
+    isLoading,
+    assessements,
+    fetchAssessment,
+    handleUpdateAssessment,
+    handleDelete,
+  };
 };
 
 export default useAssessment;

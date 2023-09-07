@@ -19,7 +19,7 @@ model Course {
   updatedAt    DateTime  @updatedAt
   user         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   Task         Task[]
-  Category     Category? @relation(fields: [categoryId], references: [id])
+  Category     Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId   String?   @db.ObjectId
 
   @@index([categoryId])
@@ -37,7 +37,7 @@ model Module {
   description String?
   courseId    String   @db.ObjectId
   lessons     Lesson[]
-  course      Course   @relation(fields: [courseId], references: [id])
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@index([courseId])
 }
@@ -51,7 +51,7 @@ model Lesson {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  module   Module? @relation(fields: [moduleId], references: [id])
+  module   Module? @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   moduleId String? @db.ObjectId
 }
 
@@ -94,7 +94,7 @@ model Question {
   answer       String
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  Assessment   Assessment? @relation(fields: [assessmentId], references: [id])
+  Assessment   Assessment? @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
 
   @@index([assessmentId])
 }
@@ -112,8 +112,8 @@ model Grade {
   userId String @db.ObjectId
   taskId String @db.ObjectId
   score  Int
-  User   User   @relation(fields: [userId], references: [id])
-  Task   Task   @relation(fields: [taskId], references: [id])
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
 }
 
 enum UserRole {
@@ -148,7 +148,7 @@ model Track {
 
   tasks  Task[]
   userId String? @db.ObjectId
-  User   User?   @relation(fields: [userId], references: [id])
+  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Task {
@@ -164,9 +164,9 @@ model Task {
   grades      Grade[]
   submissions Submission[]
   user        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Course      Course?      @relation(fields: [courseId], references: [id])
+  Course      Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    String?      @db.ObjectId
-  Track       Track?       @relation(fields: [trackId], references: [id])
+  Track       Track?       @relation(fields: [trackId], references: [id], onDelete: Cascade)
   trackId     String?      @db.ObjectId
 
   @@index([userId])

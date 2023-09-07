@@ -17,8 +17,8 @@ import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import AlertMessage from "@/app/(dashboard)/component/alert";
 
-const AssessmentForm = () => {
-  const { form } = useAssessment();
+const AssessmentForm = ({toggle}: {toggle: () => void}) => {
+  const { form, handleUpdateAssessment } = useAssessment();
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -37,6 +37,7 @@ const AssessmentForm = () => {
         setMessage(data?.message || "Success!");
         setSuccess(true);
         setError(false);
+        await handleUpdateAssessment()
         form.reset()
       }
     } catch (error) {
@@ -91,7 +92,8 @@ const AssessmentForm = () => {
           )}
         />
 
-        <div className="flex justify-end mt-5">
+        <div className="flex justify-end mt-5 gap-2">
+        <Button variant="outline" type="button" onClick={toggle}>Close</Button>
           <Button disabled={isLoading}>Create</Button>
         </div>
       </form>

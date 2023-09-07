@@ -17,13 +17,13 @@ import AlertMessage from "@/app/(dashboard)/component/alert";
 import axios, { AxiosError } from "axios";
 import { useParams } from "next/navigation";
 
-const QuestionForm = ({toggle}: {toggle: () => void}) => {
-  const params = useParams()
+const QuestionForm = ({ toggle }: { toggle: () => void }) => {
+  const params = useParams();
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const { form } = useQuestion();
+  const { form, handleUpdateQuestions } = useQuestion();
   const isLoading = form.formState.isSubmitting;
   async function onSubmit(values: FormSchemaType) {
     setMessage("");
@@ -33,12 +33,16 @@ const QuestionForm = ({toggle}: {toggle: () => void}) => {
     // ✅ This will be type-safe and validated.
     // console.log(values);
     try {
-      const { status, data } = await axios.post(`/api/assessment/${params.id}`, values);
+      const { status, data } = await axios.post(
+        `/api/assessment/${params.id}`,
+        values
+      );
       if (status === 200 || status === 201) {
         setMessage(data?.message || "Success!");
+        await handleUpdateQuestions();
         setSuccess(true);
         setError(false);
-        form.reset()
+        form.reset();
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -163,7 +167,14 @@ const QuestionForm = ({toggle}: {toggle: () => void}) => {
         </div>
 
         <div className="flex justify-end mt-5 gap-2">
-          <Button variant="outline" type="button" onClick={toggle} disabled={isLoading}>Close</Button>
+          <Button
+            variant="outline"
+            type="button"
+            onClick={toggle}
+            disabled={isLoading}
+          >
+            Close
+          </Button>
           <Button disabled={isLoading}>Add</Button>
         </div>
       </form>

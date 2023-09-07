@@ -18,9 +18,11 @@ export async function GET(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const questions = await db.question.findMany({
-    where: { assessmentId: params.id },
-  });
+  const questions = await db.question
+    .findMany({
+      where: { assessmentId: params.id },
+    })
+    .finally(async () => await db.$disconnect());
   if (questions) {
     return NextResponse.json(questions);
   } else return NextResponse.json({ error: "No question found" });
@@ -42,7 +44,9 @@ export async function POST(
       requestBody;
     if (user?.emailAddresses[0].emailAddress) {
       const email = user?.emailAddresses[0].emailAddress;
-      const findEligibleUser = await db.user.findFirst({ where: { email } });
+      const findEligibleUser = await db.user
+        .findFirst({ where: { email } })
+        .finally(async () => await db.$disconnect());
       if (findEligibleUser?.role === UserRole.TUTOR) {
         const assessmentQuestion = await db.question.create({
           data: {
@@ -77,4 +81,26 @@ export async function POST(
       );
     }
   }
+}
+
+export async function DELETE(req: NextRequest) {
+  const { userId } = getAuth(req);
+
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const questionId = req.nextUrl.searchParams.get("questionId") || "";
+
+  const question = await db.question
+    .delete({
+      where: { id: questionId },
+    })
+    .finally(async () => await db.$disconnect());
+  if (question) {
+    console.log(question, 'deleted');
+    return NextResponse.json(
+      { success: true, message: "Question removed!" },
+      { status: 200 }
+    );
+  } else return NextResponse.json({ error: "Not found" });
 }

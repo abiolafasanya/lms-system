@@ -12,9 +12,11 @@ import { Fragment } from "react";
 import useAssessment from "../hooks/useAssessment";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Trash } from "lucide-react";
 
 const AssessmentTable = () => {
-  const { assessements, fetchAssessment, isLoading } = useAssessment();
+  const { assessements, fetchAssessment, isLoading, handleDelete } =
+    useAssessment();
   return (
     <Fragment>
       {Array.isArray(assessements) && assessements.length > 0 ? (
@@ -41,10 +43,13 @@ const AssessmentTable = () => {
                   <TableCell className="text-ellipsis">
                     {formatDate(assessment.createdAt as unknown as string)}
                   </TableCell>
-                  <TableCell className="text-ellipsis">
+                  <TableCell className="text-ellipsis flex gap-2">
                     <Link href={`/tutor/assessment/${assessment.id}`}>
-                      <Button>View</Button>
+                      <Button variant="outline">View</Button>
                     </Link>
+                    <Button onClick={() => handleDelete(assessment.id)}>
+                      <Trash size={16} />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}

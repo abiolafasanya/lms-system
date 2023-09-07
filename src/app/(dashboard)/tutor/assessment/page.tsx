@@ -18,7 +18,7 @@ const Assessment = () => {
         <h2 className="text-xl font-semibold">Assessments</h2>
         <Button onClick={toggleCreateAssessment}>Create Assessment</Button>
       </section>
-      {openCreateAssessment ? <CreateAssessmentForm /> : null}
+      {openCreateAssessment ? <CreateAssessmentForm toggle={toggleCreateAssessment} /> : null}
       <AssessmentTable />
     </div>
   );
