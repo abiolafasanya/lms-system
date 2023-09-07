@@ -25,7 +25,7 @@ export default function RootLayout({
         <body className={cn(plusJakartaSans.className, "bg-special-50 dark:bg-special-500")}>
           <ThemeProvider
             attribute="class"
-            defaultTheme="dark"
+            defaultTheme="light"
             enableSystem={false}
             storageKey="lms-theme"
           >
