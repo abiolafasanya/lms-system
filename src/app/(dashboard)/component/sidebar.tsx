@@ -1,12 +1,12 @@
-"use client"
-
 import { Input } from "@/components/ui/input";
 import { sideBarMenus } from "@/data/menus";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import Logo from "@/app/(dashboard)/component/logo";
 
-const SideBar = () => {
+type SideBarProps = typeof sideBarMenus[0]
+
+const SideBar = ({sidebar}: {sidebar: SideBarProps[]}) => {
   return (
     <div className="flex flex-col gap-2 w-1/4 max-w-[300px] bg-gray-50 dark:bg-special-600 dark:text-gray-200 h-screen overflow-hidden px-5 pt-5">
       <Logo />
@@ -15,7 +15,7 @@ const SideBar = () => {
         <Search className="absolute top-7 right-2 text-gray-500" />
       </div>
       <menu>
-        {sideBarMenus.map((menu, i) => (
+        {sidebar.map((menu, i) => (
           <Link
           key={i*Date.now()}
             href={menu.link}

@@ -109,7 +109,7 @@ body,
 
 @layer components {
   body {
-    @apply max-w-[1920px] m-auto
+    @apply max-w-[1440px] m-auto
   }
   .dark-bg {
     @apply bg-[#313338]

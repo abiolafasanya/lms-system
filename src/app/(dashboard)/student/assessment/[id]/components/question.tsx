@@ -11,6 +11,7 @@ import {
 import { Assessment, Question } from "@prisma/client";
 import useAssessment from "../hooks/useAssessment";
 import { Fragment } from "react";
+import ScoreCard from "./score-card";
 
 interface AssessmentType extends Assessment {
   questions: Question[];
@@ -33,22 +34,12 @@ const QuestionPage = ({ assessment }: { assessment: AssessmentType }) => {
 
   return (
     <Card className="max-w-6xl mx-auto mt-10 dark:bg-special-600 border-special-600">
-      {showScore ? (
-        <Fragment>
-          <CardHeader>
-            <CardTitle>Score</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <CardDescription>Total Score: {score}</CardDescription>
-            <CardDescription>Total Percentage: {percentage}</CardDescription>
-          </CardContent>
-        </Fragment>
-      ) : null}
+      {showScore ? <ScoreCard percentage={percentage} score={score} /> : null}
       {!showScore ? (
         <Fragment>
           <CardHeader>
             <CardTitle className="text-center">
-              {questions[currentIndex].question}
+              {questions[currentIndex]?.question}
             </CardTitle>
             <div className="flex items-center justify-center space-x-2">
               <span className="rounded-full flex items-center justify-center h-8 w-8 p-1 text-primary-foreground bg-primary">
@@ -59,7 +50,7 @@ const QuestionPage = ({ assessment }: { assessment: AssessmentType }) => {
             </div>
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-5 my-5">
-            {questions[currentIndex].options.map((option, i) => (
+            {questions[currentIndex]?.options.map((option, i) => (
               <CardDescription
                 key={i}
                 onClick={() => selectedOption(option, currentIndex)}
@@ -91,8 +82,8 @@ const QuestionPage = ({ assessment }: { assessment: AssessmentType }) => {
 
 const styles = {
   option:
-    "flex items-center py-2 text-base hover:bg-primary hover:text-primary-foreground dark:hover:bg-specail-800 cursor-pointer dark:bg-special-700 border-special-600 font-semibold border-2 border-solid px-5 rounded-full",
-  selected: "bg-primary text-primary-foreground",
+    "flex items-center py-2 text-base hover:bg-primary hover:text-primary-foreground cursor-pointer border-2 dark:border-special-400 font-semibold border-solid px-5 rounded-full",
+  selected: "bg-primary dark:bg-secondary dark:text-white text-primary-foreground",
 };
 
 export default QuestionPage;

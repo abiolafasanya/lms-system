@@ -1,5 +1,5 @@
 "use client";
-import { Card } from "@/components/ui/card";
+
 import {
   Table,
   TableBody,
@@ -10,16 +10,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { tasks } from "@/data/taskDemo";
-import { useRouter } from "next/navigation";
 
 const TaskTable = () => {
-  const { push } = useRouter();
-  const handleTask = (task: (typeof tasks)[0]) => {
-    push(`/student/task/${task.id}`);
-  };
   return (
-    <Card className="dark:bg-special-600">
-      <Table className="">
+    <section className="mt-20 rounded-md flex">
+      <Table className="dark:bg-special-600">
         <TableCaption>React Tasks</TableCaption>
         <TableHeader>
           <TableRow>
@@ -31,11 +26,7 @@ const TaskTable = () => {
         </TableHeader>
         <TableBody>
           {tasks.map((task, i) => (
-            <TableRow
-              key={task.id}
-              className="capitalize"
-              onClick={() => handleTask(task)}
-            >
+            <TableRow key={i * Date.now()} className="capitalize">
               <TableCell className="font-medium">{task.title}</TableCell>
               <TableCell>{task.Deadline}</TableCell>
               <TableCell>{task.score}</TableCell>
@@ -44,7 +35,7 @@ const TaskTable = () => {
           ))}
         </TableBody>
       </Table>
-    </Card>
+    </section>
   );
 };
 

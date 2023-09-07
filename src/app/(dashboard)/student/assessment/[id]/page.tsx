@@ -1,7 +1,6 @@
 import { db } from "@/lib/db";
 import QuestionPage from "./components/question";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import BackNavigation from "@/app/(dashboard)/component/back";
 
 const AssessmentPage = async ({ params }: { params: { id: string } }) => {
   const assessments = await db.assessment.findMany({
@@ -15,13 +14,7 @@ const AssessmentPage = async ({ params }: { params: { id: string } }) => {
     <div>
       <section className="mt-20">
         <h2 className="text-xl font-semibold">Assessments</h2>
-        <div className="text-gray-500 flex gap-1">
-          <span>
-            <Link href="/student/assessment" className="flex gap-1">
-              <ArrowLeft className="back-arrow" /> Back
-            </Link>
-          </span>
-        </div>
+        <BackNavigation url="/student/assessment" />
       </section>
       <QuestionPage assessment={data} />
     </div>

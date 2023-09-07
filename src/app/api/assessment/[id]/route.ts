@@ -8,20 +8,28 @@ interface CustomError extends Error {
   response: { status: number; data: any };
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const { userId } = getAuth(req);
 
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const assessments = await db.assessment.findMany();
-  if (assessments) {
-    return NextResponse.json(assessments);
-  } else return NextResponse.json({ error: "No assessment found" });
+  const questions = await db.question.findMany({
+    where: { assessmentId: params.id },
+  });
+  if (questions) {
+    return NextResponse.json(questions);
+  } else return NextResponse.json({ error: "No question found" });
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const { userId } = getAuth(req);
 
   if (!userId) {
@@ -30,20 +38,26 @@ export async function POST(req: NextRequest) {
   try {
     const requestBody = await req.json();
     const user = userId ? await clerkClient.users.getUser(userId) : null;
-    const { title, description } = requestBody;
+    const { question, option1, option2, option3, option4, answer } =
+      requestBody;
     if (user?.emailAddresses[0].emailAddress) {
       const email = user?.emailAddresses[0].emailAddress;
       const findEligibleUser = await db.user.findFirst({ where: { email } });
       if (findEligibleUser?.role === UserRole.TUTOR) {
-        const assessment = await db.assessment.create({
+        const assessmentQuestion = await db.question.create({
           data: {
-            title,
-            description,
+            assessmentId: params.id,
+            question,
+            option1,
+            option2,
+            option3,
+            option4,
+            answer,
           },
         });
-        if (assessment) {
+        if (assessmentQuestion) {
           return NextResponse.json(
-            { message: "Assessment created!", assessment },
+            { message: "Question created!", assessmentQuestion },
             { status: 201 }
           );
         } else {

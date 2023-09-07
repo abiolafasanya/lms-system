@@ -4,7 +4,7 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import Loader from "@/components/shared/loader/loader";
 
-const Main = ({ children }: { children: ReactNode }) => {
+const Main = ({ children, role = 'User' }: { children: ReactNode, role?: string }) => {
   const { user } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const handleLoading = () => setIsLoading(false);
@@ -18,7 +18,7 @@ const Main = ({ children }: { children: ReactNode }) => {
         <section className="w-4/5 py-5 px-14 h-screen overflow-auto">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
-              <h3 className="font-semibold">Student: KI-STD-01</h3>
+              <h3 className="font-semibold">{role}</h3>
             </div>
             <div className="flex items-center gap-5">
               <h4>{user?.fullName || user?.username}</h4>
