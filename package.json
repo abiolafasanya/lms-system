@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "gen:migrate": "prisma generate",
+    "build": "prisma generate --schema=./src/prisma/schema.prisma && next build",
+    "gen:migrate": "prisma generate --schema=./src/prisma/schema.prisma",
     "gen:prisma": "prisma init",
     "start": "next start",
     "lint": "next lint",
