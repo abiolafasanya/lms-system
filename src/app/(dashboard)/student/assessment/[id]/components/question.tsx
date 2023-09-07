@@ -8,10 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Assessment, Question } from "@prisma/client";
 import useAssessment from "../hooks/useAssessment";
 import { Fragment } from "react";
 import ScoreCard from "./score-card";
+import { Assessment, Question } from "@prisma/client";
 
 interface AssessmentType extends Assessment {
   questions: Question[];
