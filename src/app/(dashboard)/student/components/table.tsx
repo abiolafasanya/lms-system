@@ -33,7 +33,7 @@ const TaskTable = () => {
   const fetchTasks = async () => {
     const { status, data } = await axios.get<I_Task[]>("/api/task");
     setTasks(() => data);
-    console.log(status, data);
+    // console.log(status, data);
   };
   const { push } = useRouter();
   const handleTask = (task: (typeof tasks)[0]) => {
