@@ -10,12 +10,12 @@ const AlertMessage = ({ error, success, message }: AlertProps) => {
   return (
     <Fragment>
       {error ? (
-        <Alert className="bg-error-100 text-error-500 mb-5">
+        <Alert className="bg-red-100 text-red-500 mb-5 border-red-500">
           <AlertDescription>{message}</AlertDescription>
         </Alert>
       ) : null}
       {success ? (
-        <Alert className="bg-emerald-100 text-emerald-500 mb-5">
+        <Alert className="bg-emerald-100 text-emerald-500 border-emerald-500 mb-5">
           <AlertDescription>{message}</AlertDescription>
         </Alert>
       ) : null}

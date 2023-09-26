@@ -33,7 +33,7 @@ const useAssessment = () => {
     setIsLoading(true);
     const { status, data } = await axios.get<Assessment[]>("/api/assessment");
     if (status === 200) {
-      console.log(data);
+      // console.log(data);
       setAssessments(() => data);
       setIsLoading(false);
     }

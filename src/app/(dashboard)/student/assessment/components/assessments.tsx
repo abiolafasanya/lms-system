@@ -11,9 +11,10 @@ import Link from "next/link";
 
 const Assessments = async () => {
   const assessments = await db.assessment.findMany();
+  console.log(assessments)
   return (
     <section className="flex flex-col space-y-5 mt-10 w-full">
-      {assessments.length > 0 ? (
+      {Array.isArray(assessments) && assessments.length > 0 ? (
         assessments.map((assessment) => (
           <Card className="rounded-md shadow-md dark:bg-special-600 dark:border-0" key={assessment.id}>
             <CardHeader className="p-0 px-6 pt-2">

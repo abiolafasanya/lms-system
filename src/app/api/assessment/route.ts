@@ -36,8 +36,15 @@ export async function POST(req: NextRequest) {
     if (user?.emailAddresses[0].emailAddress) {
       const email = user?.emailAddresses[0].emailAddress;
       const findEligibleUser = await db.user
-        .findFirst({ where: { email } })
-        .finally(async () => await db.$disconnect());
+      .findFirst({ where: { email } })
+      .finally(async () => await db.$disconnect());
+      console.log(findEligibleUser)
+      if(findEligibleUser?.role === UserRole.STUDENT ){
+        return NextResponse.json(
+            { message: "UnAuthorized!", error: true },
+            { status: 401 }
+          );
+      }
       if (findEligibleUser?.role === UserRole.TUTOR) {
         const assessment = await db.assessment
           .create({
@@ -61,8 +68,8 @@ export async function POST(req: NextRequest) {
       }
     }
   } catch (error) {
-    console.error("Error Encountered while doing registration", error);
     if (error instanceof Error) {
+      console.error("Error Encountered while doing registration", error);
       return NextResponse.json(
         { error: error.message || error.cause || error },
         { status: 500 }

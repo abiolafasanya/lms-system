@@ -42,12 +42,10 @@ const AssessmentForm = ({toggle}: {toggle: () => void}) => {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error.message || error);
+        console.log(error?.response?.data.message);
+        setMessage(error?.response?.data.message)
         setSuccess(false);
         setError(true);
-        if (error.message) {
-          setMessage(error.message);
-        }
       }
     }
   }

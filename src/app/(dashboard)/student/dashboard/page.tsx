@@ -8,11 +8,11 @@ const Dashboard = () => {
   return (
     <Fragment>
       <Status />
-      <section className="flex my-10 gap-10">
-        <Card className="w-2/5 py-3 px-5 space-y-5 dark:bg-special-600">
+      <section className="flex flex-col md:flex-row my-10 gap-10">
+        <Card className="w-full md:w-2/5 py-3 px-5 space-y-5 dark:bg-special-600">
           <ProgressIndicator />
         </Card>
-        <Card className="w-3/5 px-5 py-3 dark:bg-special-600">
+        <Card className="w-full md:w-3/5 px-5 py-3 dark:bg-special-600">
           <h3 className="text-lg font-semibold">Recent Task</h3>
           <TaskTable />
         </Card>

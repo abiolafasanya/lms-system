@@ -16,7 +16,7 @@ const Status = () => {
   return (
     <div className="flex flex-col justify-center mt-10 lg:mt-20 md:flex-row items-center gap-4">
       {defaultData.map((status) => (
-        <Card key={status.id} className="w-64 dark:bg-special-600">
+        <Card key={status.id} className="w-full md:w-64 dark:bg-special-600">
           <CardHeader className="flex flex-col items-center">
             <CardTitle className="text-lg font-semibold">{status.title}</CardTitle>
             <CardDescription className="text-lg font-semibold">{status.count}</CardDescription>
