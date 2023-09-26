@@ -15,7 +15,7 @@ import Link from "next/link";
 import { Trash } from "lucide-react";
 
 const AssessmentTable = () => {
-  const { assessements, fetchAssessment, isLoading, handleDelete } =
+  const { assessements, isLoading, handleDelete } =
     useAssessment();
   return (
     <Fragment>

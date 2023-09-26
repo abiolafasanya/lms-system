@@ -8,6 +8,7 @@ enum Role {
   ADMIN = "admin",
   TUTOR = "tutor",
   STUDENT = "student",
+  GUEST = "student",
 }
 export default async function Home() {
   const user = await currentUser();
@@ -38,7 +39,10 @@ export default async function Home() {
     if (locate) {
       if (locate.role) {
         console.log((`/${Role[locate.role]}/dashboard`))
-        return redirect(`/${Role[locate.role]}/dashboard`)
+        if(Role[locate.role] == Role.STUDENT) return redirect(`/${Role[locate.role]}/dashboard`)
+        if( Role[locate.role] == Role.TUTOR) return redirect(`/${Role[locate.role]}/dashboard`)
+        if(Role[locate.role] == Role.GUEST) return;
+        // return redirect(`/${Role[locate.role]}/dashboard`)
       };
       console.log((`/${Role[locate.role]}/dashboard`))
     }

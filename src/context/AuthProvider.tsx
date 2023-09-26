@@ -4,7 +4,6 @@ type PropTypes = { [name: string]: React.Context<{}> | React.PropsWithChildren |
 
 const AuthContext = createContext<PropTypes>({});
 
-
 export const AuthProvider: React.FC<PropTypes> = ({ children }) => {
   const [auth, setAuth] = useState({});
   return (

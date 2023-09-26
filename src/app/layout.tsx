@@ -25,7 +25,7 @@ export default function RootLayout({
         <body
           className={cn(
             plusJakartaSans.className,
-            "bg-special-50 dark:bg-special-500"
+            "bg-special-50 dark:bg-special-500 overflow-hidden"
           )}
         >
           <ThemeProvider

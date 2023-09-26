@@ -8,7 +8,7 @@ type SideBarProps = typeof sideBarMenus[0]
 
 const SideBar = ({sidebar}: {sidebar: SideBarProps[]}) => {
   return (
-    <div className="flex flex-col gap-2 w-1/4 max-w-[300px] bg-gray-50 dark:bg-special-600 dark:text-gray-200 h-screen overflow-hidden px-5 pt-5">
+    <div className="hidden md:flex flex-col gap-2 w-1/4 max-w-[300px] bg-gray-50 dark:bg-special-600 dark:text-gray-200 h-screen overflow-hidden px-5 pt-5">
       <Logo />
       <div className="relative py-5">
         <Input type="search" className="dark:bg-special-500"/>

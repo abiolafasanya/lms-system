@@ -9,10 +9,32 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { tasks } from "@/data/taskDemo";
+import { formatDate } from "@/utils/formatter";
+
+import { Task } from "@prisma/client";
+import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+interface I_Task extends Task {
+  user: {
+    name: string | null;
+  } | null;
+  graded: {
+    graded: boolean;
+  } | null;
+}
 
 const TaskTable = () => {
+  const [tasks, setTasks] = useState<I_Task[]>([]);
+  useEffect(() => {
+    fetchTasks().then(() => console.log("fectching tasks"));
+  }, []);
+  const fetchTasks = async () => {
+    const { status, data } = await axios.get<I_Task[]>("/api/task");
+    setTasks(() => data);
+    console.log(status, data);
+  };
   const { push } = useRouter();
   const handleTask = (task: (typeof tasks)[0]) => {
     push(`/student/task/${task.id}`);
@@ -37,9 +59,13 @@ const TaskTable = () => {
               onClick={() => handleTask(task)}
             >
               <TableCell className="font-medium">{task.title}</TableCell>
-              <TableCell>{task.Deadline}</TableCell>
-              <TableCell>{task.score}</TableCell>
-              <TableCell className="text-emerald-500">{task.status}</TableCell>
+              <TableCell>
+                {formatDate(new Date(task.deadline).toUTCString())}
+              </TableCell>
+              <TableCell>{task.point}</TableCell>
+              <TableCell className="text-emerald-500">
+                {task?.graded?.graded}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

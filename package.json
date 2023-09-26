@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate --schema=./src/prisma/schema.prisma && next build",
-    "gen:migrate": "prisma generate --schema=./src/prisma/schema.prisma",
-    "gen:prisma": "prisma init",
+    "prisma:generate": "prisma generate --schema=./src/prisma/schema.prisma",
+    "prisma:init": "prisma init",
+    "prisma:studio": "prisma studio --schema=./src/prisma/schema.prisma",
     "start": "next start",
     "lint": "next lint",
     "gen:key": "openssl rand -base64 32"
@@ -22,6 +23,8 @@
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-select": "^1.2.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-switch": "^1.0.3",
+    "@tanstack/react-table": "^8.9.7",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
@@ -43,6 +46,7 @@
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.46.1",
     "react-icons": "^4.10.1",
+    "react-quill": "^2.0.0",
     "react-spinners": "^0.13.8",
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",

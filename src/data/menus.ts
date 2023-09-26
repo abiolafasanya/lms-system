@@ -8,15 +8,15 @@ export const sideBarMenus = [
   { name: "Courses", icon: Book, link: "/student/courses" },
   { name: "Assessment", icon: MdAssessment, link: "/student/assessment" },
   { name: "Task", icon: FaTasks, link: "/student/task" },
-  { name: "Post", icon: MdArticle, link: "/student/post" },
+  { name: "Post", icon: MdArticle, link: "/student#post" },
 ];
 
 export const tutorSidebar = [
   { name: "Dashboard", icon: LayoutDashboard, link: "/tutor/dashboard" },
-  { name: "Courses", icon: GoFileDirectory, link: "/tutor/course" },
+  // { name: "Courses", icon: GoFileDirectory, link: "/tutor/course" },
   { name: "Assessment", icon: MdAssessment, link: "/tutor/assessment" },
   { name: "Task", icon: FaTasks, link: "/tutor/task" },
-  { name: "Post", icon: MdArticle, link: "/tutor/post" },
+  // { name: "Post", icon: MdArticle, link: "/tutor/post" },
 ];
 
 export const adminSideBar = [

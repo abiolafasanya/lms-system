@@ -7,6 +7,149 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  TUTOR
+  STUDENT
+  GUEST
+}
+
+model User {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  email       String       @unique
+  password    String?
+  image       String?
+  username    String?      @unique
+  avatar      String?
+  name        String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  role        UserRole     @default(STUDENT)
+  comments    Comment[]
+  courses     Course[]
+  grades      Grade[]
+  posts       Post[]
+  tasks       Task[]
+  submissions Submission[]
+  track       Track[]
+}
+
+model Track {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  tasks  Task[]
+  userId String? @db.ObjectId
+  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Task {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String       @db.ObjectId
+  title       String
+  description String
+  resources   String[]
+  point       Int
+  deadline    DateTime
+  isFile      Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  submissions Submission[]
+  user        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Course      Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId    String?      @db.ObjectId
+  Track       Track?       @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  trackId     String?      @db.ObjectId
+  Grade       Grade?       @relation(fields: [gradeId], references: [id])
+  gradeId     String?      @db.ObjectId
+
+  @@index([userId])
+  @@index([trackId])
+}
+
+model Submission {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  taskId      String   @db.ObjectId
+  attachment  String
+  track       String   @default("general")
+  submittedAt DateTime @default(now())
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task        Task?    @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  grade       Grade?   @relation(fields: [gradeId], references: [id], onDelete: Cascade)
+  gradeId     String?  @db.ObjectId
+
+  @@index([taskId])
+  @@index([userId])
+}
+
+model Grade {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String       @db.ObjectId
+  submissionId String       @db.ObjectId
+  graded       Boolean      @default(false)
+  score        Int
+  regraded     Boolean?     @default(false)
+  feedback     String       @default("You have been graded!")
+  User         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Task         Task[]
+  Submission   Submission[]
+
+  @@index([userId])
+}
+
+model Question {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  assessmentId String      @db.ObjectId
+  question     String
+  option1      String
+  option2      String
+  option3      String
+  option4      String
+  answer       String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  Assessment   Assessment? @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+}
+
+model Assessment {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  questions   Question[]
+  createdAt   DateTime   @default(now())
+}
+
+model Post {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @db.ObjectId
+  title     String?
+  body      String?
+  tags      String[]
+  image     String?
+  published Boolean?  @default(false)
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  postId    String   @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([postId])
+}
+
 model Course {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   userId       String    @db.ObjectId
@@ -53,139 +196,4 @@ model Lesson {
 
   module   Module? @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   moduleId String? @db.ObjectId
-}
-
-model Post {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String    @db.ObjectId
-  title     String?
-  body      String?
-  tags      String[]
-  image     String?
-  published Boolean?  @default(false)
-  comments  Comment[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Comment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
-  postId    String   @db.ObjectId
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([postId])
-}
-
-model Question {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  assessmentId String      @db.ObjectId
-  question     String
-  option1      String
-  option2      String
-  option3      String
-  option4      String
-  answer       String
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  Assessment   Assessment? @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-
-  @@index([assessmentId])
-}
-
-model Assessment {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String?
-  questions   Question[]
-  createdAt   DateTime   @default(now())
-}
-
-model Grade {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  taskId String @db.ObjectId
-  score  Int
-  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
-}
-
-enum UserRole {
-  ADMIN
-  TUTOR
-  STUDENT
-}
-
-model User {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  email       String       @unique
-  password    String?
-  image       String?
-  username    String?      @unique
-  avatar      String?
-  name        String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  role        UserRole     @default(STUDENT)
-  comments    Comment[]
-  courses     Course[]
-  grades      Grade[]
-  posts       Post[]
-  tasks       Task[]
-  submissions Submission[]
-  track       Track[]
-}
-
-model Track {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-
-  tasks  Task[]
-  userId String? @db.ObjectId
-  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Task {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String       @db.ObjectId
-  title       String
-  description String
-  resources   String[]
-  point       Int
-  deadline    DateTime
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  grades      Grade[]
-  submissions Submission[]
-  user        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Course      Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  courseId    String?      @db.ObjectId
-  Track       Track?       @relation(fields: [trackId], references: [id], onDelete: Cascade)
-  trackId     String?      @db.ObjectId
-
-  @@index([userId])
-  @@index([trackId])
-}
-
-model Submission {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String   @db.ObjectId
-  taskId      String   @db.ObjectId
-  file        String
-  graded      Boolean  @default(false)
-  regraded    Boolean  @default(false)
-  feedback    String?
-  track       String   @default("general")
-  submittedAt DateTime @default(now())
-  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  task        Task?    @relation(fields: [taskId], references: [id], onDelete: Cascade)
-
-  @@index([taskId])
-  @@index([userId])
 }

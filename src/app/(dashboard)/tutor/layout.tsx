@@ -17,7 +17,7 @@ export default function RootLayout({
       <body>
         <div className="flex">
           <SideBar sidebar={tutorSidebar}/>
-          <Main role="TUTOR: KI-TUT-001">{children}</Main>
+          <Main role="Tutor - Dashboard">{children}</Main>
         </div>
       </body>
     </html>
