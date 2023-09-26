@@ -52,7 +52,7 @@ const TaskTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {tasks.map((task, i) => (
+          {tasks?.map((task, i) => (
             <TableRow
               key={task.id}
               className="capitalize"

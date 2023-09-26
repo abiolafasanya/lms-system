@@ -8,7 +8,7 @@ export const sideBarMenus = [
   { name: "Courses", icon: Book, link: "/student/courses" },
   { name: "Assessment", icon: MdAssessment, link: "/student/assessment" },
   { name: "Task", icon: FaTasks, link: "/student/task" },
-  { name: "Post", icon: MdArticle, link: "/student#post" },
+  // { name: "Post", icon: MdArticle, link: "/student#post" },
 ];
 
 export const tutorSidebar = [
