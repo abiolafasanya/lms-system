@@ -52,17 +52,17 @@ const TaskTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {tasks?.map((task, i) => (
+          {Array.isArray(tasks) && tasks?.map((task, i) => (
             <TableRow
-              key={task.id}
+              key={task?.id}
               className="capitalize"
               onClick={() => handleTask(task)}
             >
-              <TableCell className="font-medium">{task.title}</TableCell>
+              <TableCell className="font-medium">{task?.title}</TableCell>
               <TableCell>
-                {formatDate(new Date(task.deadline).toUTCString())}
+                {formatDate(new Date(task?.deadline).toUTCString())}
               </TableCell>
-              <TableCell>{task.point}</TableCell>
+              <TableCell>{task?.point}</TableCell>
               <TableCell className="text-emerald-500">
                 {task?.graded?.graded}
               </TableCell>
