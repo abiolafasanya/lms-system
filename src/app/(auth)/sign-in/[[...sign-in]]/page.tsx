@@ -46,7 +46,7 @@ export default function Page() {
   );
 }
 
-export function SignInForm() {
+function SignInForm() {
   const { form, onSubmit, error, signInWith } = useSubmit();
   return (
     <Card className="p-4 max-w-sm w-full">
