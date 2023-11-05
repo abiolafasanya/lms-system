@@ -1,6 +1,5 @@
-import { NextRequest } from "next/server";
+import { NextRequest } from 'next/server';
 
-
-export function GET(request: NextRequest){
-    return new Response('Yet to be implemented')
+export function GET(request: NextRequest) {
+  return new Response('Yet to be implemented');
 }

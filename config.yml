@@ -1,0 +1,4 @@
+url: http://localhost:8000
+tunnel: db208b6b-71ea-41f1-87a6-2acfdb501c70
+credentials-file: /home/abiola/.cloudflared/db208b6b-71ea-41f1-87a6-2acfdb501c70.json
+# /root/.cloudflared/db208b6b-71ea-41f1-87a6-2acfdb501c70.json

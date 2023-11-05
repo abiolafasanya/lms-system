@@ -1,26 +1,25 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react';
 
 export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
-    const [value, setValue] = useState<T>(() => {
-    const jsonValue = typeof window !== 'undefined' ? localStorage.getItem(key): null
-    if(jsonValue != null) return JSON.parse(jsonValue)
+  const [value, setValue] = useState<T>(() => {
+    const jsonValue = typeof window !== 'undefined' ? localStorage.getItem(key) : null;
+    if (jsonValue != null) return JSON.parse(jsonValue);
 
-    if (typeof initialValue === "function") {
-        return (initialValue as () => T)()
+    if (typeof initialValue === 'function') {
+      return (initialValue as () => T)();
     } else {
-        return initialValue
+      return initialValue;
     }
- })
+  });
 
- useEffect(() => {
-    const controller = new AbortController()
-        localStorage.setItem(key, JSON.stringify(value))
-        return () => {
-            controller.abort();
-        }
- }, [key, value])
+  useEffect(() => {
+    const controller = new AbortController();
+    localStorage.setItem(key, JSON.stringify(value));
+    return () => {
+      controller.abort();
+    };
+  }, [key, value]);
 
- return [value, setValue] as [typeof value, typeof setValue]
-//  return [value, setValue] as [T, T]
+  return [value, setValue] as [typeof value, typeof setValue];
+  //  return [value, setValue] as [T, T]
 }
-

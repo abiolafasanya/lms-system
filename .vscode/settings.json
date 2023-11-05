@@ -1,0 +1,9 @@
+{
+  "references.preferredLocation": "view",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
+}

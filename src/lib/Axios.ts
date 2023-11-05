@@ -12,5 +12,4 @@ const Axios = axios.create({
   baseURL: API_URI,
 });
 
-
 export default Axios;
