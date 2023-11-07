@@ -1,18 +1,15 @@
 'use client';
-import BackNavigation from '@/app/dashboard/component/back';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import CreateQuestionForm from '../components/create-question';
 import QuestionTable from '../components/question-table';
-import useQuestion from '../hooks/useQuestion';
 import Breadcrumbs from '@/components/shared/breadcrumb/Breadcrumbs';
+import { Modal } from '@/app/components/modals/Modal';
+import QuestionForm from '../components/question-form';
 
 const AssessmentDetail = ({ params }: { params: { id: string } }) => {
-  const { handleUpdateQuestions } = useQuestion();
   const [openAddQuestion, setOpenAddQuestion] = useState(false);
   const toggleCreateAssessment = () => {
     setOpenAddQuestion((open) => !open);
-    handleUpdateQuestions().then(() => {});
   };
   return (
     <div>
@@ -21,7 +18,9 @@ const AssessmentDetail = ({ params }: { params: { id: string } }) => {
         <Button onClick={toggleCreateAssessment}>Add Question</Button>
       </section>
       <Breadcrumbs />
-      {openAddQuestion ? <CreateQuestionForm toggle={toggleCreateAssessment} /> : null}
+      <Modal isOpen={openAddQuestion} toggle={toggleCreateAssessment} title="Add New Question">
+        <QuestionForm toggle={toggleCreateAssessment} />
+      </Modal>
       <QuestionTable />
     </div>
   );

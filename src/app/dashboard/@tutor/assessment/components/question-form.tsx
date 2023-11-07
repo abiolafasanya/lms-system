@@ -3,52 +3,35 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-import useQuestion, { FormSchemaType } from '../hooks/useQuestion';
+import { FormSchemaType, useQuestion } from '../hooks/useQuestion';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import AlertMessage from '@/app/dashboard/component/alert';
-import axios, { AxiosError } from 'axios';
-import { useParams } from 'next/navigation';
+import { AlertError } from '@/app/components/alert/Error';
+import { AlertSuccess } from '@/app/components/alert/Success';
 
 const QuestionForm = ({ toggle }: { toggle: () => void }) => {
-  const params = useParams();
   const [message, setMessage] = useState('');
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
 
-  const { form, handleUpdateQuestions } = useQuestion();
+  const { form, post } = useQuestion();
   const isLoading = form.formState.isSubmitting;
   async function onSubmit(values: FormSchemaType) {
     setMessage('');
-    setSuccess(false);
-    setError(false);
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     // console.log(values);
-    try {
-      const { status, data } = await axios.post(`/api/assessment/${params.id}`, values);
-      if (status === 200 || status === 201) {
-        setMessage(data?.message || 'Success!');
-        await handleUpdateQuestions();
-        setSuccess(true);
-        setError(false);
-        form.reset();
-      }
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(error.message || error);
-        setSuccess(false);
-        setError(true);
-        if (error.message) {
-          setMessage(error.message);
-        }
-      }
+    post.mutate(values);
+    if (post.isError) {
+      setMessage(post.error.message || '');
+    }
+    if (post.isSuccess) {
+      setMessage(post.data?.message || '');
     }
   }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        {message && <AlertMessage error={error} success={success} message={message} />}
+        {post.isError ? <AlertError message={message} /> : null}
+        {post.isSuccess ? <AlertSuccess message={message} /> : null}
         <FormField
           control={form.control}
           name="question"
@@ -142,38 +125,3 @@ const QuestionForm = ({ toggle }: { toggle: () => void }) => {
 };
 
 export default QuestionForm;
-/**
- * 
- * <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
-                <FormItem>
-                  <FormLabel>Option 1</FormLabel>
-                  <FormControl>
-                    <Input className="dark:bg-special-500 border" {...field} disabled={isLoading} />
-                  </FormControl>
-                </FormItem>
-                <FormItem>
-                  <FormLabel>Option 2</FormLabel>
-                  <FormControl>
-                    <Input className="dark:bg-special-500 border" {...field} disabled={isLoading} />
-                  </FormControl>
-                </FormItem>
-                <FormItem>
-                  <FormLabel>Option 3</FormLabel>
-                  <FormControl>
-                    <Input {...field} disabled={isLoading} />
-                  </FormControl>
-                </FormItem>
-                <FormItem>
-                  <FormLabel>Option 4</FormLabel>
-                  <FormControl>
-                    <Input {...field} disabled={isLoading} />
-                  </FormControl>
-                </FormItem>
-                <FormItem>
-                  <FormLabel>Answer</FormLabel>
-                  <FormControl>
-                    <Input {...field} disabled={isLoading} />
-                  </FormControl>
-                </FormItem>
-              </div>
- */

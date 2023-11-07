@@ -25,7 +25,7 @@ const QuestionPage = ({ assessment }: { assessment: AssessmentType }) => {
   } = useAssessment(assessment);
 
   return (
-    <Card className="max-w-6xl mx-auto mt-10 dark:bg-special-600 border-special-600">
+    <Card className="max-w-6xl mx-auto mt-10">
       {showScore ? <ScoreCard percentage={percentage} score={score} /> : null}
       {!showScore ? (
         <Fragment>
@@ -98,8 +98,8 @@ const QuestionPage = ({ assessment }: { assessment: AssessmentType }) => {
 
 const styles = {
   option:
-    'flex items-center py-2 text-base hover:bg-primary hover:text-primary-foreground cursor-pointer border-2 dark:border-special-400 font-semibold border-solid px-5 rounded-full',
-  selected: 'bg-primary dark:bg-secondary dark:text-white text-primary-foreground',
+    'flex items-center py-2 text-base hover:bg-primary hover:text-primary-foreground cursor-pointer border-2 font-semibold border-solid px-5 rounded-full',
+  selected: 'bg-primary text-primary-foreground',
 };
 
 export default QuestionPage;

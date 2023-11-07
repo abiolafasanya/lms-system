@@ -22,7 +22,6 @@ export async function GET(req: NextRequest) {
   const user = userId ? await clerkClient.users.getUser(userId) : null;
   if (user?.emailAddresses[0].emailAddress) {
     const email = user?.emailAddresses[0].emailAddress;
-    console.log(email);
     const findUser = await db.user.findFirst({ where: { email } }).finally(async () => await db.$disconnect());
     if (!findUser) return new Response('User account not found', { status: 400 });
     const gradedTask = await db.grade.findUnique({
@@ -51,6 +50,7 @@ export async function POST(req: NextRequest) {
       const findEligibleUser = await db.user
         .findFirst({ where: { email } })
         .finally(async () => await db.$disconnect());
+      console.log(findEligibleUser);
       if (findEligibleUser?.role === UserRole.TUTOR) {
         const data = {
           userId: findEligibleUser.id,
@@ -91,7 +91,6 @@ export async function DELETE(req: NextRequest) {
     })
     .finally(async () => await db.$disconnect());
   if (task) {
-    console.log(task, 'deleted');
     return NextResponse.json({ success: true, message: 'Task deleted!' }, { status: 200 });
   } else return NextResponse.json({ error: 'Not found' });
 }

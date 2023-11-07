@@ -3,15 +3,18 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Assessment } from '@prisma/client';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/components/ui/use-toast';
-import { useState } from 'react';
 
 const formSchema = z.object({
   title: z.string().nonempty(),
   description: z.string().nonempty(),
 });
+
+interface ResponseData {
+  data: { message: string; assessment: Assessment };
+}
 
 export type FormSchemaType = z.infer<typeof formSchema>;
 
@@ -26,74 +29,66 @@ const useAssessment = () => {
     defaultValues,
   });
 
-  const [assessments, setAssessments] = useState<Assessment[]>([]);
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const { isLoading, data: assessmentData } = useQuery({
-    queryKey: ['categoryNameData'],
+  const get = useQuery({
+    queryKey: ['AssessmentData'],
     queryFn: async () => {
       const { data } = await axios.get<Assessment[]>('/api/assessment');
-      setAssessments(data);
       return data;
     },
   });
 
-  const {
-    mutate,
-    isPending: isSubmitting,
-    isError,
-    isSuccess,
-    data,
-    error,
-  } = useMutation({
+  const post = useMutation({
     mutationFn: async (values: FormSchemaType) => {
-      const { data } = await axios.post<FormSchemaType, { data: { message: string; assessment: Assessment } }>(
-        '/api/assessment',
-        values,
-      );
+      const { data } = await axios.post<FormSchemaType, ResponseData>('/api/assessment', values);
       form.reset();
-      if (assessmentData) {
-        console.log(data.assessment);
-        setAssessments([data.assessment, ...assessmentData]);
-      }
-      return { assessment: data.assessment, message: data.message };
+      return data;
+    },
+    onError(error, variables, context) {
+      console.log(error.message);
+      toast({
+        title: 'Error',
+        description: 'Assessment was not created',
+        variant: 'destructive',
+      });
+    },
+    onSuccess(data, variables, context) {
+      queryClient.invalidateQueries({ queryKey: ['AssessmentData'] });
+      toast({
+        title: 'Success',
+        description: 'You have added a new assessment',
+      });
     },
   });
 
-  const { isPending, mutate: handleDelete } = useMutation({
+  const remove = useMutation({
     mutationFn: async (id: string) => {
-      const { data, status } = await axios.delete(`/api/assessment?assessmentId=${id}`);
-      if (status === 200) {
-        toast({
-          title: 'Assessment deleted',
-          description: 'You have successfully deleted the assessment',
-        });
-        if (assessmentData) {
-          const filterData = assessmentData.filter((data) => data.id !== id);
-          setAssessments(filterData);
-        }
-      } else {
-        toast({
-          title: 'Assessment not deleted',
-          description: 'Process was disrupted',
-        });
-      }
+      const { data } = await axios.delete(`/api/assessment?assessmentId=${id}`);
       return data;
+    },
+    onError(error, variables, context) {
+      console.log(error.message);
+      toast({
+        title: 'Error',
+        description: 'Assessment not deleted',
+        variant: 'destructive',
+      });
+    },
+    onSuccess(data, variables, context) {
+      queryClient.invalidateQueries({ queryKey: ['AssessmentData'] });
+      toast({
+        title: 'Assessment deleted',
+        description: 'You have successfully deleted the assessment',
+      });
     },
   });
 
   return {
     form,
-    isLoading,
-    assessments: assessments ? assessments : (assessmentData as Assessment[]),
-    handleDelete,
-    error,
-    mutate,
-    isSuccess,
-    response: data?.message as string,
-    isError,
-    isPending,
-    isSubmitting,
+    get,
+    post,
+    remove,
   };
 };
 

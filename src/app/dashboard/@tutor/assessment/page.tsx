@@ -4,26 +4,12 @@ import AssessmentTable from './components/assessment-table';
 import { useState } from 'react';
 import { Modal } from '@/app/components/modals/Modal';
 import AssessmentForm from './components/assessment-form';
-import useAssessment from './hooks/useAssessment';
 
 const Assessment = () => {
   const [openCreateAssessment, setOpenCreateAssessment] = useState(false);
   const toggleCreateAssessment = () => {
     setOpenCreateAssessment((open) => !open);
   };
-  const {
-    form,
-    mutate,
-    isLoading,
-    isSubmitting,
-    isPending,
-    isSuccess,
-    isError,
-    error,
-    response,
-    assessments,
-    handleDelete,
-  } = useAssessment();
   return (
     <div>
       <section className="mt-20 flex justify-between">
@@ -31,23 +17,9 @@ const Assessment = () => {
         <Button onClick={toggleCreateAssessment}>Create Assessment</Button>
       </section>
       <Modal isOpen={openCreateAssessment} toggle={toggleCreateAssessment} title="Create New Assessment">
-        <AssessmentForm
-          toggle={toggleCreateAssessment}
-          form={form}
-          mutate={mutate}
-          isSuccess={isSuccess}
-          isError={isError}
-          error={error}
-          response={response}
-          isSubmitting={isSubmitting}
-        />
+        <AssessmentForm toggle={toggleCreateAssessment} />
       </Modal>
-      <AssessmentTable
-        assessments={assessments}
-        isPending={isPending}
-        isLoading={isLoading}
-        handleDelete={handleDelete}
-      />
+      <AssessmentTable />
     </div>
   );
 };

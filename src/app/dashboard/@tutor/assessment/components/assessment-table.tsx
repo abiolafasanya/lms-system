@@ -6,11 +6,13 @@ import Link from 'next/link';
 import { Trash } from 'lucide-react';
 import { AssessmentTable } from '@/types';
 import { Assessment } from '@prisma/client';
+import useAssessment from '../hooks/useAssessment';
 
-const AssessmentTable = ({ assessments, handleDelete, isLoading, isPending }: AssessmentTable) => {
+const AssessmentTable = () => {
+  const { get, remove } = useAssessment();
   return (
     <Fragment>
-      {Array.isArray(assessments) && assessments.length > 0 ? (
+      {Array.isArray(get.data) && get.data.length > 0 ? (
         <section className="mt-20 rounded-md flex">
           <Table className="">
             <TableCaption>Assessments List</TableCaption>
@@ -23,16 +25,21 @@ const AssessmentTable = ({ assessments, handleDelete, isLoading, isPending }: As
               </TableRow>
             </TableHeader>
             <TableBody>
-              {Array.isArray(assessments) &&
-                assessments.length > 0 &&
-                assessments.map((assessment, i) => (
-                  <TableRowData key={i} assessment={assessment} handleDelete={handleDelete} isPending={isPending} />
+              {Array.isArray(get.data) &&
+                get.data.length > 0 &&
+                get.data.map((assessment, i) => (
+                  <TableRowData
+                    key={i}
+                    assessment={assessment}
+                    handleDelete={remove.mutate}
+                    isPending={remove.isPending}
+                  />
                 ))}
             </TableBody>
           </Table>
         </section>
       ) : (
-        <p>{isLoading ? 'loading...' : 'No assessement has been created!'}</p>
+        <p>{get.isLoading ? 'loading...' : 'No assessement has been created!'}</p>
       )}
     </Fragment>
   );

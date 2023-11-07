@@ -4,6 +4,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { formatDate } from '@/utils/formatter';
 
 import { Task } from '@prisma/client';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 interface I_Task extends Task {
@@ -22,8 +23,8 @@ const TaskTable = ({ tasks }: { tasks: Task[] }) => {
   };
   function graded(val: string) {}
   return (
-    <Card className="dark:bg-special-600">
-      <Table className="">
+    <Card>
+      <Table>
         <TableCaption>React Tasks</TableCaption>
         <TableHeader>
           <TableRow>

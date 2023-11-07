@@ -3,50 +3,38 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-import { FormSchemaType } from '../hooks/useAssessment';
+import useAssessment, { FormSchemaType } from '../hooks/useAssessment';
 import { Button } from '@/components/ui/button';
 
 import { useState } from 'react';
 import { AlertError } from '@/app/components/alert/Error';
 import { AlertSuccess } from '@/app/components/alert/Success';
-import { AssessmentProps } from '@/types';
 
-const AssessmentForm = ({
-  toggle,
-  error,
-  isSubmitting,
-  form,
-  isError,
-  isSuccess,
-  mutate,
-  response,
-}: AssessmentProps & { toggle: () => void }) => {
+const AssessmentForm = ({ toggle }: { toggle: () => void }) => {
+  const { form, post } = useAssessment();
   const [message, setMessage] = useState('');
-  const [success, setSuccess] = useState(false);
 
-  const isLoading = form.formState.isSubmitting || isSubmitting;
+  const isLoading = form.formState.isSubmitting || post.isPending;
   async function onSubmit(values: FormSchemaType) {
     setMessage('');
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     // console.log(values);
-    mutate(values);
-    if (isSuccess) {
-      setMessage(response || 'Success!');
-      setSuccess(isSuccess);
+    post.mutate(values);
+    if (post.isSuccess) {
+      setMessage(post.data?.message || 'Success!');
       form.reset();
     }
 
-    if (error) {
-      console.log(error.message);
-      setMessage(error.message);
-      setSuccess(isSuccess);
+    if (post.isError) {
+      console.log(post.error.message);
+      setMessage(post.error.message);
     }
   }
   return (
     <Form {...form}>
-      {isError ? <AlertError message={message} /> : null}
-      {isSuccess ? <AlertSuccess message={response} /> : null}
+      {post.isError ? <AlertError message={message} /> : null}
+      {post.isSuccess ? <AlertSuccess message={message} /> : null}
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}

@@ -9,7 +9,7 @@ const Assessments = async () => {
     <section className="flex flex-col space-y-5 mt-10 w-full">
       {Array.isArray(assessments) && assessments.length > 0 ? (
         assessments.map((assessment) => (
-          <Card className="rounded-md shadow-md dark:bg-special-600 dark:border-0" key={assessment.id}>
+          <Card key={assessment.id}>
             <CardHeader className="p-0 px-6 pt-2">
               <CardTitle className="text-lg">{assessment.title}</CardTitle>
             </CardHeader>

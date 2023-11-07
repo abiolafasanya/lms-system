@@ -8,6 +8,7 @@ import { SubmissionAttached } from '@/types/submission-attached';
 
 const Submissions = ({ submissions }: { submissions: SubmissionAttached[] }) => {
   const data = submissionsData;
+  console.log(submissions);
   return (
     <Card className="mt-20">
       <CardHeader>

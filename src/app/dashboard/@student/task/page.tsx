@@ -1,16 +1,15 @@
 import { db } from '@/lib/db';
 import TaskTable from '../components/table';
-import axios from 'axios';
-import { Task } from '@prisma/client';
+// import { Task } from '@prisma/client';
 
-interface I_Task extends Task {
-  user: {
-    name: string | null;
-  } | null;
-  graded: {
-    graded: boolean;
-  } | null;
-}
+// interface I_Task extends Task {
+//   user: {
+//     name: string | null;
+//   } | null;
+//   graded: {
+//     graded: boolean;
+//   } | null;
+// }
 
 async function getTasks() {
   const tasks = await db.task.findMany({});

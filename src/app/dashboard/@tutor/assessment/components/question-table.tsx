@@ -1,15 +1,15 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Fragment } from 'react';
-import useQuestion from '../hooks/useQuestion';
+import { useQuestion } from '../hooks/useQuestion';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash } from 'lucide-react';
 
 const QuestionTable = () => {
-  const { questions, isLoading, handleDelete } = useQuestion();
-  console.log(questions);
+  const { get, remove } = useQuestion();
+  console.log(get.data);
   return (
     <Fragment>
-      {Array.isArray(questions) && questions.length > 0 ? (
+      {Array.isArray(get.data) && get.data.length > 0 ? (
         <section className="mt-20 rounded-md flex">
           <Table className="dark:bg-special-600">
             <TableCaption>Question List</TableCaption>
@@ -25,7 +25,7 @@ const QuestionTable = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {questions.map((question, i) => (
+              {get.data.map((question, i) => (
                 <TableRow key={i * Date.now()} className="capitalize">
                   <TableCell className="truncate max-w-[200px]">{question.question}</TableCell>
                   <TableCell className="text-ellipsis">{question.option1}</TableCell>
@@ -37,7 +37,7 @@ const QuestionTable = () => {
                     <Button variant="outline">
                       <Edit size={16} />
                     </Button>
-                    <Button onClick={() => handleDelete(question.id)}>
+                    <Button onClick={() => remove.mutate(question.id)}>
                       <Trash size={16} />
                     </Button>
                   </TableCell>
@@ -46,8 +46,10 @@ const QuestionTable = () => {
             </TableBody>
           </Table>
         </section>
-      ) : isLoading ? (
+      ) : get.isLoading ? (
         <span>loading...</span>
+      ) : get.isError ? (
+        <p>An Error occured while fetching data</p>
       ) : (
         <p>No question has been added!</p>
       )}

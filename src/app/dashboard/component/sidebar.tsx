@@ -23,7 +23,7 @@ const SideBar = ({ sidebar }: { sidebar: SideBarProps[] }) => {
           const isActive = menu.link === pathName;
           return (
             <Link
-              key={i * Date.now()}
+              key={menu.name}
               href={menu.link}
               className={clsx('flex gap-4 px-1 py-2 w-full hover:bg-primary-foreground/90 rounded-md cursor-pointer', {
                 'dark:bg-primary-foreground bg-primary/10': isActive,

@@ -53,7 +53,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
           },
         });
         if (assessmentQuestion) {
-          return NextResponse.json({ message: 'Question created!', assessmentQuestion }, { status: 201 });
+          return NextResponse.json({ message: 'Question created!', data: assessmentQuestion }, { status: 201 });
         } else {
           return NextResponse.json({ error: true, message: 'Creation failed!' }, { status: 400 });
         }

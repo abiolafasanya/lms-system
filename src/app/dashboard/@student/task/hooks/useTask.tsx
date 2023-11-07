@@ -28,7 +28,7 @@ interface ResponseData {
   data: { message: string; task: Task };
 }
 
-const useTasks = () => {
+export function useTasks() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -38,7 +38,7 @@ const useTasks = () => {
   });
 
   const get = useQuery({
-    queryKey: ['taskData'],
+    queryKey: ['student_tasks'],
     queryFn: async () => {
       const { data } = await axios.get<{ tasks: Task[] }>('/api/task');
       return data;
@@ -60,7 +60,7 @@ const useTasks = () => {
       });
     },
     onSuccess(data, variables, context) {
-      queryClient.invalidateQueries({ queryKey: ['taskData'] });
+      queryClient.invalidateQueries({ queryKey: ['student_tasks'] });
       toast({
         title: 'Success',
         description: 'You have added a new assessment',
@@ -85,7 +85,7 @@ const useTasks = () => {
       });
     },
     onSuccess(data, variables, context) {
-      queryClient.invalidateQueries({ queryKey: ['taskData'] });
+      queryClient.invalidateQueries({ queryKey: ['student_tasks'] });
       toast({
         title: 'Assessment deleted',
         description: 'You have successfully deleted the assessment',
@@ -94,6 +94,6 @@ const useTasks = () => {
   });
 
   return { get, remove, form, post };
-};
+}
 
 export default useTasks;
