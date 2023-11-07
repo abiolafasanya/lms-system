@@ -6,7 +6,7 @@ const CourseListing = () => {
     <section className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {Array.isArray(courseLists) &&
         courseLists?.sort().map((course, i) => (
-          <Card key={i} className="dark:bg-special-600 dark:border-special-600">
+          <Card key={i}>
             <CardHeader>
               <CardTitle>{course.title}</CardTitle>
             </CardHeader>

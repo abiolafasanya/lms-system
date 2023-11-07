@@ -1,6 +1,3 @@
-'use client';
-
-import { Card } from '@/components/ui/card';
 import CourseBar from './components/course-bar';
 import CourseListing from './components/course-listing';
 
